@@ -1,0 +1,35 @@
+{
+  "name": "gf-magazine",
+  "private": true,
+  "version": "0.1.0",
+  "description": "GF Magazine — headless Next.js + Sanity monorepo",
+  "scripts": {
+    "claw-dev": "npm run claude:local",
+    "dev": "concurrently \"pnpm --filter web dev\" \"pnpm --filter studio dev\" --names \"web,studio\" --prefix-colors \"cyan,magenta\"",
+    "dev:web": "pnpm --filter web dev",
+    "dev:studio": "pnpm --filter studio dev",
+    "build": "pnpm --filter web build",
+    "build:web": "pnpm --filter web build",
+    "build:studio": "pnpm --filter studio build",
+    "status": "npm run ollama:status",
+    "doctor": "npm run ollama:doctor",
+    "ollama:status": "node scripts/dev.js --status",
+    "ollama:doctor": "node scripts/dev.js --doctor",
+    "claude:local": "powershell -ExecutionPolicy Bypass -File scripts/run-local-agent.ps1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "sanity>react": "18 || 19"
+      }
+    }
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@10.32.1"
+}

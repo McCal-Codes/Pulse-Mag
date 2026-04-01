@@ -1,0 +1,55 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "verify-local-ollama-status",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"status"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "verify-local-only-guard",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"doctor"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "doctor-local-agent",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"doctor"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "status-local-agent",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"status"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "start-local-agent",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"claw-dev"
+			],
+			"isBackground": false
+		}
+	]
+}
