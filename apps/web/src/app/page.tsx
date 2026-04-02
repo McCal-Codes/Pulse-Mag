@@ -1,10 +1,18 @@
-import { getSanityServerClient } from '@/lib/sanity.client'
+import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
 import { homepageSettingsQuery, allPostsQuery } from '@/lib/queries'
 import { HeroPost } from '@/components/HeroPost'
 import { PostGrid } from '@/components/PostGrid'
 
 // ISR: revalidate page every 60 seconds
 export const revalidate = 60
+
+type HomePost = Parameters<typeof PostGrid>[0]['posts'][number]
+
+type HomepageSettings = {
+  heroText?: string
+  featuredPost?: HomePost | null
+  featuredPosts?: HomePost[]
+}
 
 export default async function HomePage() {
   const sanityServerClient = await getSanityServerClient()
@@ -19,8 +27,8 @@ export default async function HomePage() {
 
   // Fetch homepage settings and all posts in parallel
   const [settings, allPosts] = await Promise.all([
-    sanityServerClient.fetch(homepageSettingsQuery),
-    sanityServerClient.fetch(allPostsQuery),
+    safeSanityFetch<HomepageSettings | null>(sanityServerClient, homepageSettingsQuery, {}, null),
+    safeSanityFetch<HomePost[]>(sanityServerClient, allPostsQuery, {}, []),
   ])
 
   const featuredPost = settings?.featuredPost

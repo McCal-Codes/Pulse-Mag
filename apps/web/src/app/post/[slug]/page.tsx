@@ -3,19 +3,32 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
-import { sanityClient, getSanityServerClient } from '@/lib/sanity.client'
+import { sanityClient, getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
 import { postBySlugQuery, allPostSlugsQuery } from '@/lib/queries'
-import { urlFor } from '@/lib/sanity.image'
+import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
 
 // In Next.js 15, params is a Promise — always await it
 type Props = { params: Promise<{ slug: string }> }
+
+type PortableTextValue = Array<Record<string, unknown>>
+
+type PostData = {
+  title: string
+  excerpt?: string
+  mainImage?: SanityImageSource
+  publishedAt?: string
+  body?: PortableTextValue
+  author?: { name: string }
+  issue?: { issueNumber: number }
+  categories?: Array<{ title: string; slug: { current: string } }>
+}
 
 export async function generateStaticParams() {
   if (!sanityClient) {
     return []
   }
 
-  const slugs: Array<{ slug: string }> = await sanityClient.fetch(allPostSlugsQuery)
+  const slugs = await safeSanityFetch<Array<{ slug: string }>>(sanityClient, allPostSlugsQuery, {}, [])
   return slugs.map(({ slug }) => ({ slug }))
 }
 
@@ -24,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!sanityServerClient) return {}
 
   const { slug } = await params
-  const post = await sanityServerClient.fetch(postBySlugQuery, { slug })
+  const post = await safeSanityFetch<PostData | null>(sanityServerClient, postBySlugQuery, { slug }, null)
   if (!post) return {}
 
   return {
@@ -47,16 +60,19 @@ export default async function PostPage({ params }: Props) {
   if (!sanityServerClient) notFound()
 
   const { slug } = await params
-  const post = await sanityServerClient.fetch(postBySlugQuery, { slug })
+  const post = await safeSanityFetch<PostData | null>(sanityServerClient, postBySlugQuery, { slug }, null)
 
   if (!post) notFound()
+
+  const categories = post.categories ?? []
+  const body = Array.isArray(post.body) ? post.body : []
 
   return (
     <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-14">
       {/* Categories */}
-      {post.categories?.length > 0 && (
+      {categories.length > 0 && (
         <div className="flex gap-3 mb-4">
-          {post.categories.map((cat: { title: string; slug: { current: string } }) => (
+          {categories.map((cat: { title: string; slug: { current: string } }) => (
             <Link
               key={cat.slug.current}
               href={`/category/${cat.slug.current}`}
@@ -115,11 +131,11 @@ export default async function PostPage({ params }: Props) {
       )}
 
       {/* Body */}
-      {post.body && (
+      {body.length > 0 && (
         <div className="prose prose-lg prose-gray max-w-none font-sans
           prose-headings:font-serif prose-headings:font-bold
           prose-a:text-accent prose-a:no-underline hover:prose-a:underline">
-          <PortableText value={post.body} />
+          <PortableText value={body as any} />
         </div>
       )}
     </article>

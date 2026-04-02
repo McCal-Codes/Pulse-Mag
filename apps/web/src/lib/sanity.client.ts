@@ -11,6 +11,8 @@ function isValidSanityProjectId(value: string | undefined): value is string {
 
 const projectId = sanitizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID)
 const dataset = sanitizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET) ?? 'production'
+const serverProjectId = sanitizeEnvValue(process.env.SANITY_PROJECT_ID) ?? projectId
+const serverDataset = sanitizeEnvValue(process.env.SANITY_DATASET) ?? dataset
 const apiVersion = sanitizeEnvValue(process.env.NEXT_PUBLIC_SANITY_API_VERSION) ?? '2024-01-01'
 
 export const config = {
@@ -20,6 +22,7 @@ export const config = {
 }
 
 export const hasValidSanityConfig = isValidSanityProjectId(projectId)
+const hasValidServerSanityConfig = isValidSanityProjectId(serverProjectId)
 
 // Public, fast, cache-friendly client for published content.
 // Safe to use in both Server and Client Components (no token).
@@ -39,18 +42,39 @@ export const sanityClient = hasValidSanityConfig
  * - draft mode: drafts perspective with read token
  */
 export async function getSanityServerClient() {
-  if (!hasValidSanityConfig) {
+  if (!hasValidServerSanityConfig) {
     return null
   }
 
   const { isEnabled } = await draftMode()
 
   return createClient({
-    projectId,
-    dataset,
+    projectId: serverProjectId,
+    dataset: serverDataset,
     apiVersion,
     useCdn: !isEnabled,
     perspective: isEnabled ? 'drafts' : 'published',
     token: isEnabled ? process.env.SANITY_API_READ_TOKEN : undefined,
   })
+}
+
+type SanityFetchClient = {
+  fetch<T>(query: string, params?: Record<string, unknown>): Promise<T>
+}
+
+export async function safeSanityFetch<T>(
+  client: SanityFetchClient | null,
+  query: string,
+  params: Record<string, unknown> = {},
+  fallback: T
+) {
+  if (!client) {
+    return fallback
+  }
+
+  try {
+    return await client.fetch<T>(query, params)
+  } catch {
+    return fallback
+  }
 }
