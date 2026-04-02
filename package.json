@@ -15,6 +15,10 @@
     "doctor": "npm run ollama:doctor",
     "ollama:status": "node scripts/dev.js --status",
     "ollama:doctor": "node scripts/dev.js --doctor",
+    "ollama:install": "node scripts/install-models.js",
+    "ollama:compare": "node scripts/model-compare.js",
+    "cascade": "node scripts/cascade-launcher.js",
+    "cascade:select": "node scripts/cascade-launcher.js --select",
     "claude:local": "powershell -ExecutionPolicy Bypass -File scripts/run-local-agent.ps1"
   },
   "devDependencies": {

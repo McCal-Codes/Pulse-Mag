@@ -42,12 +42,22 @@
 			"isBackground": false
 		},
 		{
-			"label": "start-local-agent",
+			"label": "start-cascade",
 			"type": "shell",
 			"command": "npm",
 			"args": [
 				"run",
-				"claw-dev"
+				"cascade"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "start-cascade-with-model-select",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"cascade:select"
 			],
 			"isBackground": false
 		}
