@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { urlFor } from '@/lib/sanity.image'
+import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
 
 type HeroPostProps = {
   post: {
     title: string
     slug: { current: string }
     excerpt?: string
-    mainImage?: unknown
+    mainImage?: SanityImageSource
     publishedAt?: string
     author?: { name: string }
     categories?: Array<{ title: string; slug: { current: string } }>
@@ -19,7 +19,7 @@ export function HeroPost({ post }: HeroPostProps) {
     <section className="relative h-[80vh] min-h-[520px] flex items-end overflow-hidden">
       {post.mainImage ? (
         <Image
-          src={urlFor(post.mainImage as Parameters<typeof urlFor>[0]).width(1920).height(1080).url()}
+          src={urlFor(post.mainImage).width(1920).height(1080).url()}
           alt={post.title}
           fill
           className="object-cover"

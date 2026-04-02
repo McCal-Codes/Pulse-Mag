@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { urlFor } from '@/lib/sanity.image'
+import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
 
 type Category = {
   title: string
@@ -12,7 +12,7 @@ type Post = {
   title: string
   slug: { current: string }
   excerpt?: string
-  mainImage?: unknown
+  mainImage?: SanityImageSource
   publishedAt?: string
   author?: { name: string }
   categories?: Category[]
@@ -24,7 +24,7 @@ export function ArticleCard({ post }: { post: Post }) {
       {post.mainImage && (
         <div className="relative aspect-video overflow-hidden">
           <Image
-            src={urlFor(post.mainImage as Parameters<typeof urlFor>[0]).width(640).height(360).url()}
+            src={urlFor(post.mainImage).width(640).height(360).url()}
             alt={post.title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
