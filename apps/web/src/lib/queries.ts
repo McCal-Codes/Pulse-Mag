@@ -10,7 +10,7 @@ const postFields = groq`
   excerpt,
   mainImage,
   publishedAt,
-  "author": author->{ name, slug, image },
+  "author": author->{ name, "slug": slug, image },
   "categories": categories[]->{ title, slug }
 `
 
@@ -66,4 +66,30 @@ export const categoryBySlugQuery = groq`
     title,
     description
   }
+`
+
+/** Author profile by slug — includes bio and social links */
+export const authorBySlugQuery = groq`
+  *[_type == "author" && slug.current == $slug][0] {
+    _id,
+    name,
+    slug,
+    image,
+    role,
+    bio,
+    twitter,
+    website
+  }
+`
+
+/** All posts by a given author (matched by _id) */
+export const postsByAuthorQuery = groq`
+  *[_type == "post" && author._ref == $authorId] | order(publishedAt desc) {
+    ${postFields}
+  }
+`
+
+/** Used by generateStaticParams for /author/[slug] */
+export const allAuthorSlugsQuery = groq`
+  *[_type == "author" && defined(slug.current)]{ "slug": slug.current }
 `

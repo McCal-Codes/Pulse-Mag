@@ -18,12 +18,12 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: 'GF Magazine',
-    template: '%s | GF Magazine',
+    default: 'Pulse Magazine',
+    template: '%s | Pulse Magazine',
   },
-  description: 'A modern literary and editorial publication.',
+  description: 'Independent journalism at the pulse of culture.',
   openGraph: {
-    siteName: 'GF Magazine',
+    siteName: 'Pulse Magazine',
     type: 'website',
   },
 }

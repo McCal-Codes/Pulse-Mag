@@ -6,9 +6,9 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex flex-col items-center md:items-start gap-1">
           <Link href="/" className="font-serif text-xl font-bold tracking-tight text-ink">
-            GF Magazine
+            Pulse Magazine
           </Link>
-          <p className="text-xs text-gray-400">A modern literary and editorial publication.</p>
+          <p className="text-xs text-gray-400">Independent journalism at the pulse of culture.</p>
         </div>
 
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-500">
@@ -19,7 +19,7 @@ export function Footer() {
         </nav>
 
         <p className="text-xs text-gray-400">
-          &copy; {new Date().getFullYear()} GF Magazine
+          &copy; {new Date().getFullYear()} Pulse Magazine
         </p>
       </div>
     </footer>

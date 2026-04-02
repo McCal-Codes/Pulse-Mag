@@ -4,6 +4,9 @@ node_modules/
 .env
 .env.*
 !.env.example
+!.env.local.example
+apps/studio/.env
+.claude/settings.local.json
 
 .next/
 .turbo/

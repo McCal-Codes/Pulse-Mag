@@ -5,6 +5,18 @@ export default defineCliConfig({
     projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
     dataset: process.env.SANITY_STUDIO_DATASET ?? 'production',
   },
-  // Disable auto-updates to keep version pinned in package.json
+
   autoUpdates: false,
+
+  // Allow Vite to serve files from the project root on any drive (e.g. exFAT I: drive)
+  // https://vite.dev/config/server-options.html#server-fs-allow
+  vite: (config) => ({
+    ...config,
+    server: {
+      ...config.server,
+      fs: {
+        allow: ['..'],
+      },
+    },
+  }),
 })

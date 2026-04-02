@@ -3,11 +3,11 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemas'
 
-const singletonTypes = new Set(['homepageSettings'])
+const singletonTypes = new Set(['homepageSettings', 'editorialGuide'])
 
 export default defineConfig({
-  name: 'gf-magazine',
-  title: 'GF Magazine Studio',
+  name: 'pulse-magazine',
+  title: 'Pulse Magazine Studio',
 
   projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_DATASET ?? 'production',
@@ -19,15 +19,22 @@ export default defineConfig({
           .title('Content')
           .items([
             S.listItem()
+              .title('Editorial Guide')
+              .id('editorialGuide')
+              .icon(() => '📖')
+              .child(S.document().schemaType('editorialGuide').documentId('editorialGuide')),
+            S.divider(),
+            S.listItem()
               .title('Homepage Settings')
               .id('homepageSettings')
+              .icon(() => '🏠')
               .child(S.document().schemaType('homepageSettings').documentId('homepageSettings')),
+            S.divider(),
             ...S.documentTypeListItems().filter(
               (listItem) => !singletonTypes.has(listItem.getId() ?? '')
             ),
           ]),
     }),
-    // Vision lets you run GROQ queries directly in the Studio — useful during development
     visionTool(),
   ],
 

@@ -15,7 +15,7 @@ export function Navigation() {
           href="/"
           className="font-serif text-2xl font-bold tracking-tight text-ink hover:text-accent transition-colors"
         >
-          GF Magazine
+          Pulse Magazine
         </Link>
 
         <ul className="hidden sm:flex items-center gap-6">

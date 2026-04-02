@@ -14,7 +14,7 @@ type Post = {
   excerpt?: string
   mainImage?: SanityImageSource
   publishedAt?: string
-  author?: { name: string }
+  author?: { name: string; slug?: { current: string } }
   categories?: Category[]
 }
 
@@ -55,7 +55,16 @@ export function ArticleCard({ post }: { post: Post }) {
 
         <div className="flex items-center gap-3 mt-auto pt-3 border-t border-gray-100">
           {post.author && (
-            <span className="text-xs text-gray-500">{post.author.name}</span>
+            post.author.slug?.current ? (
+              <Link
+                href={`/author/${post.author.slug.current}`}
+                className="text-xs text-gray-500 hover:text-accent transition-colors"
+              >
+                {post.author.name}
+              </Link>
+            ) : (
+              <span className="text-xs text-gray-500">{post.author.name}</span>
+            )
           )}
           {post.publishedAt && (
             <time

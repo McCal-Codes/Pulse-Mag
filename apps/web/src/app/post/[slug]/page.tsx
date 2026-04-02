@@ -18,7 +18,7 @@ type PostData = {
   mainImage?: SanityImageSource
   publishedAt?: string
   body?: PortableTextValue
-  author?: { name: string }
+  author?: { name: string; slug?: { current: string } }
   issue?: { issueNumber: number }
   categories?: Array<{ title: string; slug: { current: string } }>
 }
@@ -93,7 +93,17 @@ export default async function PostPage({ params }: Props) {
       <div className="flex items-center gap-4 text-sm text-gray-500 mb-8">
         {post.author && (
           <span>
-            By <span className="font-medium text-ink">{post.author.name}</span>
+            By{' '}
+            {post.author.slug?.current ? (
+              <Link
+                href={`/author/${post.author.slug.current}`}
+                className="font-medium text-ink hover:text-accent transition-colors"
+              >
+                {post.author.name}
+              </Link>
+            ) : (
+              <span className="font-medium text-ink">{post.author.name}</span>
+            )}
           </span>
         )}
         {post.publishedAt && (
