@@ -8,12 +8,18 @@ import { PostGrid } from '@/components/PostGrid'
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
+  if (!sanityClient) {
+    return []
+  }
+
   const slugs: Array<{ slug: string }> = await sanityClient.fetch(allCategorySlugsQuery)
   return slugs.map(({ slug }) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const sanityServerClient = await getSanityServerClient()
+  if (!sanityServerClient) return {}
+
   const { slug } = await params
   const category = await sanityServerClient.fetch(categoryBySlugQuery, { slug })
 
@@ -27,6 +33,8 @@ export const revalidate = 60
 
 export default async function CategoryPage({ params }: Props) {
   const sanityServerClient = await getSanityServerClient()
+  if (!sanityServerClient) notFound()
+
   const { slug } = await params
   const [posts, category] = await Promise.all([
     sanityServerClient.fetch(postsByCategoryQuery, { slug }),

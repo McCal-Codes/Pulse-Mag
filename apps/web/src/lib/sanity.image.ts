@@ -1,8 +1,6 @@
 import createImageUrlBuilder from '@sanity/image-url'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
-import { config } from './sanity.client'
-
-const imageBuilder = createImageUrlBuilder(config)
+import { config, hasValidSanityConfig } from './sanity.client'
 
 /**
  * Build a Sanity image URL with the image-url builder.
@@ -10,7 +8,14 @@ const imageBuilder = createImageUrlBuilder(config)
  * Usage: urlFor(post.mainImage).width(800).height(600).url()
  */
 export function urlFor(source: SanityImageSource) {
-  return imageBuilder.image(source)
+  if (!hasValidSanityConfig || !config.projectId) {
+    throw new Error('Sanity image configuration is missing')
+  }
+
+  return createImageUrlBuilder({
+    projectId: config.projectId,
+    dataset: config.dataset,
+  }).image(source)
 }
 
 export type { SanityImageSource }

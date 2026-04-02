@@ -9,6 +9,14 @@ export const revalidate = 60
 export default async function HomePage() {
   const sanityServerClient = await getSanityServerClient()
 
+  if (!sanityServerClient) {
+    return (
+      <div className="h-64 flex items-center justify-center text-gray-400 text-sm">
+        Configure Sanity environment variables to load magazine content.
+      </div>
+    )
+  }
+
   // Fetch homepage settings and all posts in parallel
   const [settings, allPosts] = await Promise.all([
     sanityServerClient.fetch(homepageSettingsQuery),
