@@ -1,7 +1,8 @@
 import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
-import { homepageSettingsQuery, allPostsQuery } from '@/lib/queries'
+import { homepageSettingsQuery, allPostsQuery, latestWeeklyBlogQuery } from '@/lib/queries'
 import { HeroPost } from '@/components/HeroPost'
 import { PostGrid } from '@/components/PostGrid'
+import { WeeklyBlogCard } from '@/components/WeeklyBlogCard'
 
 // ISR: revalidate page every 60 seconds
 export const revalidate = 60
@@ -12,6 +13,17 @@ type HomepageSettings = {
   heroText?: string
   featuredPost?: HomePost | null
   featuredPosts?: HomePost[]
+}
+
+type WeeklyBlog = {
+  _id: string
+  title: string
+  slug: { current: string }
+  excerpt?: string
+  publishedAt: string
+  weekNumber?: number
+  year?: number
+  featuredImage?: { asset?: { _ref: string } }
 }
 
 export default async function HomePage() {
@@ -25,10 +37,11 @@ export default async function HomePage() {
     )
   }
 
-  // Fetch homepage settings and all posts in parallel
-  const [settings, allPosts] = await Promise.all([
+  // Fetch homepage settings, all posts, and latest weekly blog in parallel
+  const [settings, allPosts, latestWeeklyBlog] = await Promise.all([
     safeSanityFetch<HomepageSettings | null>(sanityServerClient, homepageSettingsQuery, {}, null),
     safeSanityFetch<HomePost[]>(sanityServerClient, allPostsQuery, {}, []),
+    safeSanityFetch<WeeklyBlog | null>(sanityServerClient, latestWeeklyBlogQuery, {}, null),
   ])
 
   const featuredPost = settings?.featuredPost
@@ -48,6 +61,15 @@ export default async function HomePage() {
         <div className="h-64 flex items-center justify-center text-gray-400 text-sm">
           Add content in Sanity Studio to get started.
         </div>
+      )}
+
+      {latestWeeklyBlog && (
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10 border-b border-gray-200">
+          <h2 className="font-serif text-xl font-bold mb-6 text-ink">This Week at Pulse</h2>
+          <div className="max-w-2xl">
+            <WeeklyBlogCard blog={latestWeeklyBlog} />
+          </div>
+        </section>
       )}
 
       {gridPosts.length > 0 && (

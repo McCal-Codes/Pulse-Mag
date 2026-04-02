@@ -5,6 +5,7 @@ const navLinks = [
   { label: 'Politics', href: '/category/politics' },
   { label: 'Technology', href: '/category/technology' },
   { label: 'Fiction', href: '/category/fiction' },
+  { label: 'Submit', href: '/submit' },
 ]
 
 export function Navigation() {

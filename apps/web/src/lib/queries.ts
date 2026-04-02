@@ -89,6 +89,33 @@ export const postsByAuthorQuery = groq`
   }
 `
 
+/** Latest published weekly blog */
+export const latestWeeklyBlogQuery = groq`
+  *[_type == "weeklyBlog" && isPublished == true] | order(publishedAt desc)[0] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    publishedAt,
+    weekNumber,
+    year,
+    featuredImage
+  }
+`
+
+/** All open issues accepting submissions */
+export const openIssuesQuery = groq`
+  *[_type == "issue" && defined(slug.current)] | order(issueNumber desc) {
+    _id,
+    title,
+    slug,
+    issueNumber,
+    description,
+    publishedAt,
+    coverImage
+  }
+`
+
 /** Used by generateStaticParams for /author/[slug] */
 export const allAuthorSlugsQuery = groq`
   *[_type == "author" && defined(slug.current)]{ "slug": slug.current }

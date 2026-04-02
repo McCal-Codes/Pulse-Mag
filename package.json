@@ -19,6 +19,7 @@
     "ollama:compare": "node scripts/model-compare.js",
     "cascade": "node scripts/cascade-launcher.js",
     "cascade:select": "node scripts/cascade-launcher.js --select",
+    "dev:local": "node scripts/local-dev.js",
     "claude:local": "powershell -ExecutionPolicy Bypass -File scripts/run-local-agent.ps1"
   },
   "devDependencies": {
