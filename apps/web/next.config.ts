@@ -29,8 +29,10 @@ export default process.env.NEXT_PUBLIC_SENTRY_DSN
       // Route Sentry requests through /monitoring to avoid ad-blockers
       tunnelRoute: '/monitoring',
 
-      // Hide source maps from the client bundle
-      hideSourceMaps: true,
+      // Remove client sourcemaps after upload so they do not ship publicly
+      sourcemaps: {
+        deleteSourcemapsAfterUpload: true,
+      },
 
       // Remove Sentry SDK debug logging from production bundles
       disableLogger: true,
