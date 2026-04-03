@@ -26,7 +26,7 @@ export function BlogCard({ post }: BlogCardProps) {
   return (
     <Link
       href={`/blog/${post.slug.current}`}
-      className="group block overflow-hidden rounded-[1.75rem] border border-black/10 bg-white/90 shadow-[0_20px_48px_-28px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1"
+      className="group block overflow-hidden rounded-[1.75rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.88)_0%,rgba(248,241,229,0.95)_100%)] shadow-[0_20px_52px_-30px_rgba(20,17,15,0.24)] transition-all duration-300 hover:-translate-y-1"
     >
       <div className="grid gap-0 sm:grid-cols-[0.92fr_1.08fr]">
         {post.featuredImage && (
@@ -44,11 +44,11 @@ export function BlogCard({ post }: BlogCardProps) {
         <div className="flex flex-col justify-between p-6">
           <div>
             <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-gray-400">
-              <span>From the desk</span>
+              <span>Notebook</span>
               <span>{formattedDate}</span>
             </div>
 
-            <h3 className="mt-4 font-serif text-3xl leading-none tracking-[-0.03em] text-ink transition-colors group-hover:text-accent">
+            <h3 className="mt-4 font-serif text-3xl leading-none tracking-[-0.035em] text-ink transition-colors group-hover:text-accent">
               {post.title}
             </h3>
 

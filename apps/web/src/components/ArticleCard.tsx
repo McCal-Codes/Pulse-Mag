@@ -14,7 +14,7 @@ type Post = {
 
 export function ArticleCard({ post }: { post: Post }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-black/10 bg-white/90 shadow-[0_20px_48px_-28px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-1">
+    <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-black/10 bg-[#fbf7f0]/92 shadow-[0_20px_52px_-30px_rgba(20,17,15,0.24)] transition-all duration-300 hover:-translate-y-1">
       {post.mainImage && (
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
@@ -42,7 +42,7 @@ export function ArticleCard({ post }: { post: Post }) {
         </div>
 
         <Link href={`/post/${post.slug.current}`}>
-          <h2 className="font-serif text-3xl leading-none tracking-[-0.03em] text-ink transition-colors group-hover:text-accent">
+          <h2 className="font-serif text-3xl leading-none tracking-[-0.035em] text-ink transition-colors group-hover:text-accent">
             {post.title}
           </h2>
         </Link>
@@ -69,9 +69,9 @@ export function ArticleCard({ post }: { post: Post }) {
 
           <Link
             href={`/post/${post.slug.current}`}
-            className="text-sm font-medium text-ink transition-colors hover:text-accent"
+            className="text-sm font-medium text-ink transition-colors group-hover:text-accent"
           >
-            Read
+            Open story
           </Link>
         </div>
       </div>

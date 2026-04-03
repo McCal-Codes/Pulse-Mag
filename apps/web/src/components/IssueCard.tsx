@@ -8,7 +8,7 @@ type IssueCardProps = {
 export function IssueCard({ issue, compact = false }: IssueCardProps) {
   return (
     <article
-      className={`rounded-[2rem] border border-black/10 bg-white/90 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.24)] ${
+      className={`rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.88)_0%,rgba(251,246,238,0.96)_100%)] shadow-[0_24px_60px_-28px_rgba(20,17,15,0.24)] ${
         compact ? 'p-6' : 'p-8'
       }`}
     >
@@ -25,7 +25,7 @@ export function IssueCard({ issue, compact = false }: IssueCardProps) {
       </div>
 
       <h2
-        className={`mt-6 font-serif leading-none text-ink ${compact ? 'text-3xl sm:text-4xl' : 'text-4xl sm:text-5xl'}`}
+        className={`mt-6 font-serif leading-none tracking-[-0.04em] text-ink ${compact ? 'text-3xl sm:text-4xl' : 'text-4xl sm:text-5xl'}`}
       >
         {issue.title}
       </h2>
@@ -49,14 +49,14 @@ export function IssueCard({ issue, compact = false }: IssueCardProps) {
         <button
           type="button"
           disabled
-          className="rounded-full border border-black/10 bg-paper px-5 py-2 text-sm font-medium text-gray-400"
+          className="cursor-not-allowed rounded-full border border-black/10 bg-paper px-5 py-2 text-sm font-medium text-gray-500"
         >
           Read Brief
         </button>
         <button
           type="button"
           disabled
-          className="rounded-full border border-black/10 bg-paper px-5 py-2 text-sm font-medium text-gray-400"
+          className="cursor-not-allowed rounded-full border border-black/10 bg-paper px-5 py-2 text-sm font-medium text-gray-500"
         >
           Read Notes
         </button>

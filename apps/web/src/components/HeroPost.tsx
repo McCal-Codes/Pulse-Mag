@@ -15,7 +15,7 @@ type HeroPostProps = {
 
 export function HeroPost({ post }: HeroPostProps) {
   return (
-    <section className="relative min-h-[34rem] overflow-hidden rounded-[2rem] bg-ink text-paper shadow-[0_30px_80px_-32px_rgba(15,23,42,0.45)]">
+    <section className="relative min-h-[35rem] overflow-hidden rounded-[2rem] bg-ink text-paper shadow-[0_34px_86px_-34px_rgba(20,17,15,0.52)]">
       {post.mainImage ? (
         <Image
           src={urlFor(post.mainImage).width(1800).height(1200).url()}
@@ -26,14 +26,16 @@ export function HeroPost({ post }: HeroPostProps) {
           sizes="(min-width: 1024px) 60vw, 100vw"
         />
       ) : (
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,#161615_0%,#2b2521_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,#14110f_0%,#2f241d_100%)]" />
       )}
 
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(22,22,21,0.15)_0%,rgba(22,22,21,0.78)_62%,rgba(22,22,21,0.96)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(141,82,53,0.28),transparent_34%),linear-gradient(180deg,rgba(20,17,15,0.08)_0%,rgba(20,17,15,0.64)_52%,rgba(20,17,15,0.96)_100%)]" />
 
-      <div className="relative flex min-h-[34rem] flex-col justify-between p-8 sm:p-10">
+      <div className="relative flex min-h-[35rem] flex-col justify-between p-8 sm:p-10">
         <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] uppercase tracking-[0.28em] text-paper/65">
-          <span>Lead story</span>
+          <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+            Lead story
+          </span>
           {post.publishedAt && (
             <time dateTime={post.publishedAt}>
               {new Date(post.publishedAt).toLocaleDateString('en-US', {
@@ -47,7 +49,7 @@ export function HeroPost({ post }: HeroPostProps) {
 
         <div className="max-w-3xl">
           <Link href={`/post/${post.slug.current}`}>
-            <h2 className="font-serif text-5xl leading-none tracking-[-0.04em] text-paper transition-colors hover:text-paper/85 sm:text-6xl lg:text-7xl">
+            <h2 className="font-serif text-5xl leading-none tracking-[-0.045em] text-paper transition-colors hover:text-paper/84 sm:text-6xl lg:text-7xl">
               {post.title}
             </h2>
           </Link>
@@ -62,7 +64,7 @@ export function HeroPost({ post }: HeroPostProps) {
             {post.author && <span>{post.author.name}</span>}
             <Link
               href={`/post/${post.slug.current}`}
-              className="rounded-full border border-white/15 bg-white/10 px-5 py-2 font-medium text-paper shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-all hover:-translate-y-px hover:bg-white/15"
+              className="rounded-full border border-white/14 bg-accent px-5 py-2 font-medium text-paper shadow-[0_12px_28px_-16px_rgba(141,82,53,0.65)] transition-all hover:-translate-y-px hover:bg-[#a7603f]"
             >
               Read the story
             </Link>

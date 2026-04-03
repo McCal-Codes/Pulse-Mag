@@ -5,9 +5,11 @@
   --font-sans: var(--font-outfit), system-ui, sans-serif;
   --font-serif: var(--font-cormorant), Georgia, serif;
 
-  --color-ink: #161615;
-  --color-paper: #f8f2e8;
-  --color-accent: #a54c32;
+  --color-ink: #14110f;
+  --color-paper: #f5eee3;
+  --color-paper-soft: #eee1cd;
+  --color-paper-deep: #e2cfb3;
+  --color-accent: #8d5235;
 
   --spacing-container: clamp(1rem, 5vw, 2rem);
 }
@@ -20,15 +22,27 @@
 
 html {
   background:
-    radial-gradient(circle at top left, rgba(165, 76, 50, 0.08), transparent 34%),
-    radial-gradient(circle at 80% 20%, rgba(31, 41, 55, 0.05), transparent 30%),
-    #f8f2e8;
+    radial-gradient(circle at 12% 0%, rgba(141, 82, 53, 0.14), transparent 32%),
+    radial-gradient(circle at 100% 10%, rgba(20, 17, 15, 0.08), transparent 24%),
+    linear-gradient(180deg, #fbf7f0 0%, #f5eee3 42%, #efe4d3 100%);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 body {
+  position: relative;
   background: transparent;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, rgba(20, 17, 15, 0.045) 1px, transparent 1px);
+  background-size: 24rem 100%;
+  mask-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.6) 18%, rgba(0, 0, 0, 0.6) 82%, transparent);
+  opacity: 0.18;
 }
 
 img,

@@ -3,7 +3,7 @@ import { currentIssue } from '@/lib/issues'
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-black/10 bg-[#f6f2ea]">
+    <footer className="mt-24 border-t border-black/10 bg-paper-soft/70">
       <div className="container mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:px-8">
         <div className="space-y-4">
           <Link href="/" className="font-serif text-3xl leading-none tracking-[-0.04em] text-ink">
