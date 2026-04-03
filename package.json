@@ -11,6 +11,11 @@
     "build": "pnpm --filter web build",
     "build:web": "pnpm --filter web build",
     "build:studio": "pnpm --filter studio build",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "type-check": "pnpm --filter web type-check && pnpm --filter studio type-check",
     "status": "npm run ollama:status",
     "doctor": "npm run ollama:doctor",
     "ollama:status": "node scripts/dev.js --status",
@@ -23,7 +28,14 @@
     "claude:local": "powershell -ExecutionPolicy Bypass -File scripts/run-local-agent.ps1"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "@eslint/eslintrc": "^3.3.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.23.0",
+    "eslint-config-next": "^15.2.4",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.5",
+    "prettier": "^3.5.3"
   },
   "pnpm": {
     "peerDependencyRules": {
