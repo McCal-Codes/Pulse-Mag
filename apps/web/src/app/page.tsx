@@ -54,10 +54,10 @@ export default async function HomePage() {
 
   return (
     <div className="pb-16">
-      <section className="container mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
         <div className="grid gap-8 xl:grid-cols-[0.56fr_1.04fr]">
-          <div className="grid gap-8">
-            <div className="rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.86)_0%,rgba(248,241,229,0.95)_100%)] p-8 shadow-[0_24px_58px_-30px_rgba(20,17,15,0.28)]">
+          <div className="order-2 grid gap-8 xl:order-1">
+            <div className="rounded-[1.75rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.86)_0%,rgba(248,241,229,0.95)_100%)] p-6 shadow-[0_24px_58px_-30px_rgba(20,17,15,0.28)] sm:rounded-[2rem] sm:p-8">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.32em] text-accent">Magazine front</p>
@@ -70,7 +70,7 @@ export default async function HomePage() {
                 </span>
               </div>
 
-              <h1 className="mt-6 max-w-xl font-serif text-5xl leading-none tracking-[-0.05em] text-ink sm:text-6xl">
+              <h1 className="mt-6 max-w-xl font-serif text-[2.9rem] leading-none tracking-[-0.05em] text-ink sm:text-6xl">
                 Stories worth the second sitting.
               </h1>
 
@@ -78,16 +78,16 @@ export default async function HomePage() {
                 {heroText}
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
                   href="/issues"
-                  className="rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent"
+                  className="w-full rounded-full bg-ink px-5 py-2 text-center text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent sm:w-auto"
                 >
                   Browse issues
                 </Link>
                 <Link
                   href="/submit"
-                  className="rounded-full border border-black/10 bg-paper px-5 py-2 text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent"
+                  className="w-full rounded-full border border-black/10 bg-paper px-5 py-2 text-center text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent sm:w-auto"
                 >
                   Submit work
                 </Link>
@@ -95,19 +95,19 @@ export default async function HomePage() {
 
               <dl className="mt-10 grid gap-4 border-t border-black/10 pt-6 sm:grid-cols-3">
                 <div>
-                  <dt className="text-[11px] uppercase tracking-[0.24em] text-gray-400">Lead</dt>
+                  <dt className="text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">Lead</dt>
                   <dd className="mt-2 text-sm text-gray-700">
                     {featuredPost ? 'Hero story live' : 'Awaiting hero post'}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[11px] uppercase tracking-[0.24em] text-gray-400">Desk</dt>
+                  <dt className="text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">Desk</dt>
                   <dd className="mt-2 text-sm text-gray-700">
                     {latestBlog ? 'Notebook updated' : 'Quiet for now'}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[11px] uppercase tracking-[0.24em] text-gray-400">Next</dt>
+                  <dt className="text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">Next</dt>
                   <dd className="mt-2 text-sm text-gray-700">
                     {upcomingIssues.length} upcoming issue{upcomingIssues.length === 1 ? '' : 's'}
                   </dd>
@@ -116,9 +116,9 @@ export default async function HomePage() {
             </div>
 
             {latestBlog ? (
-              <aside className="rounded-[2rem] border border-black/10 bg-paper-soft/72 p-7">
+              <aside className="rounded-[1.75rem] border border-black/10 bg-paper-soft/72 p-6 sm:rounded-[2rem] sm:p-7">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Notebook</p>
-                <h2 className="mt-4 font-serif text-3xl leading-none tracking-[-0.04em] text-ink">
+                <h2 className="mt-4 font-serif text-[2rem] leading-none tracking-[-0.04em] text-ink sm:text-3xl">
                   <Link href={`/blog/${latestBlog.slug.current}`} className="transition-colors hover:text-accent">
                     {latestBlog.title}
                   </Link>
@@ -126,7 +126,7 @@ export default async function HomePage() {
                 {latestBlog.excerpt && (
                   <p className="mt-4 text-sm leading-7 text-gray-600">{latestBlog.excerpt}</p>
                 )}
-                <div className="mt-6 flex items-center justify-between gap-4 border-t border-black/10 pt-4 text-sm">
+                <div className="mt-6 flex flex-col items-start gap-3 border-t border-black/10 pt-4 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                   <span className="text-gray-500">{latestBlog.author?.name ?? 'Pulse editorial'}</span>
                   <Link href={`/blog/${latestBlog.slug.current}`} className="font-medium text-ink transition-colors hover:text-accent">
                     Read note
@@ -140,11 +140,11 @@ export default async function HomePage() {
             )}
           </div>
 
-          <div className="grid gap-8">
+          <div className="order-1 grid gap-8 xl:order-2">
             {featuredPost ? (
               <HeroPost post={featuredPost} />
             ) : (
-              <div className="flex min-h-[35rem] items-center justify-center rounded-[2rem] border border-black/10 bg-white/80 text-sm text-gray-400">
+              <div className="flex min-h-[30rem] items-center justify-center rounded-[1.75rem] border border-black/10 bg-white/80 p-6 text-sm text-gray-400 sm:min-h-[35rem] sm:rounded-[2rem]">
                 Add a featured post in Sanity Studio to build the front page.
               </div>
             )}
@@ -152,7 +152,7 @@ export default async function HomePage() {
             <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
               {currentIssue && <IssueCard issue={currentIssue} compact />}
 
-              <div className="rounded-[2rem] border border-black/10 bg-paper-soft/74 p-7">
+              <div className="rounded-[1.75rem] border border-black/10 bg-paper-soft/74 p-6 sm:rounded-[2rem] sm:p-7">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Coming next</p>
                 <div className="mt-5 space-y-5">
                   {upcomingIssues.length > 0 ? (
@@ -161,7 +161,7 @@ export default async function HomePage() {
                         key={issue.id}
                         className="border-t border-black/10 pt-5 first:border-t-0 first:pt-0"
                       >
-                        <p className="font-serif text-3xl leading-none tracking-[-0.04em] text-ink">
+                        <p className="font-serif text-[2rem] leading-none tracking-[-0.04em] text-ink sm:text-3xl">
                           {issue.title}
                         </p>
                         <p className="mt-2 text-sm text-gray-500">{issue.window}</p>
@@ -190,7 +190,7 @@ export default async function HomePage() {
         <div className="mb-8 grid gap-4 border-b border-black/10 pb-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Selected stories</p>
-            <h2 className="mt-3 font-serif text-4xl leading-none tracking-[-0.04em] text-ink">
+            <h2 className="mt-3 font-serif text-[2.35rem] leading-none tracking-[-0.04em] text-ink sm:text-4xl">
               On the page now
             </h2>
           </div>
@@ -200,7 +200,7 @@ export default async function HomePage() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[1.06fr_0.94fr]">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="order-2 grid gap-6 md:grid-cols-2 lg:order-1">
             {leadStories.length > 0 ? (
               leadStories.map((post) => <ArticleCard key={post._id} post={post} />)
             ) : (
@@ -210,9 +210,9 @@ export default async function HomePage() {
             )}
           </div>
 
-          <aside className="rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.82)_0%,rgba(248,241,229,0.95)_100%)] p-8 shadow-[0_24px_58px_-30px_rgba(20,17,15,0.24)]">
+          <aside className="order-1 rounded-[1.75rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.82)_0%,rgba(248,241,229,0.95)_100%)] p-6 shadow-[0_24px_58px_-30px_rgba(20,17,15,0.24)] sm:rounded-[2rem] sm:p-8 lg:order-2">
             <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Issue desk</p>
-            <h3 className="mt-4 font-serif text-4xl leading-none tracking-[-0.04em] text-ink">
+            <h3 className="mt-4 font-serif text-[2.25rem] leading-none tracking-[-0.04em] text-ink sm:text-4xl">
               {currentIssue?.title ?? 'Current issue'}
             </h3>
             <p className="mt-2 text-sm text-gray-500">
@@ -234,16 +234,16 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href="/issues"
-                className="rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent"
+                className="w-full rounded-full bg-ink px-5 py-2 text-center text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent sm:w-auto"
               >
                 View issues
               </Link>
               <Link
                 href="/submit"
-                className="rounded-full border border-black/10 bg-paper px-5 py-2 text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent"
+                className="w-full rounded-full border border-black/10 bg-paper px-5 py-2 text-center text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent sm:w-auto"
               >
                 Submit work
               </Link>
@@ -252,7 +252,7 @@ export default async function HomePage() {
         </div>
 
         {moreStories.length > 0 && (
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-6 md:mt-12 md:grid-cols-2 xl:grid-cols-4">
             {moreStories.map((post) => (
               <ArticleCard key={post._id} post={post} />
             ))}

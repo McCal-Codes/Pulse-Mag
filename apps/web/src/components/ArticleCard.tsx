@@ -14,7 +14,7 @@ type Post = {
 
 export function ArticleCard({ post }: { post: Post }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-black/10 bg-[#fbf7f0]/92 shadow-[0_20px_52px_-30px_rgba(20,17,15,0.24)] transition-all duration-300 hover:-translate-y-1">
+    <article className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-black/10 bg-[#fbf7f0]/92 shadow-[0_20px_52px_-30px_rgba(20,17,15,0.24)] transition-all duration-300 hover:-translate-y-1 sm:rounded-[1.75rem]">
       {post.mainImage && (
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
@@ -27,8 +27,8 @@ export function ArticleCard({ post }: { post: Post }) {
         </div>
       )}
 
-      <div className="flex flex-1 flex-col gap-4 p-6">
-        <div className="flex items-center justify-between gap-4 text-[11px] uppercase tracking-[0.24em] text-gray-400">
+      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
+        <div className="flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">
           <span>Story</span>
           {post.publishedAt && (
             <time dateTime={post.publishedAt}>
@@ -42,7 +42,7 @@ export function ArticleCard({ post }: { post: Post }) {
         </div>
 
         <Link href={`/post/${post.slug.current}`}>
-          <h2 className="font-serif text-3xl leading-none tracking-[-0.035em] text-ink transition-colors group-hover:text-accent">
+          <h2 className="font-serif text-[2rem] leading-none tracking-[-0.035em] text-ink transition-colors group-hover:text-accent sm:text-3xl">
             {post.title}
           </h2>
         </Link>

@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 
 export default function IssuesPage() {
   return (
-    <div className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <header className="grid gap-10 border-b border-black/10 pb-12 lg:grid-cols-[1.2fr_0.8fr]">
+    <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <header className="grid gap-8 border-b border-black/10 pb-10 sm:gap-10 sm:pb-12 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
           <p className="text-[11px] uppercase tracking-[0.32em] text-accent">Issues</p>
-          <h1 className="mt-4 max-w-4xl font-serif text-5xl leading-none text-ink sm:text-6xl">
+          <h1 className="mt-4 max-w-4xl font-serif text-[2.9rem] leading-none text-ink sm:text-6xl">
             The magazine is organized in seasonal briefs, not endless buckets.
           </h1>
         </div>
@@ -23,16 +23,16 @@ export default function IssuesPage() {
             Each Pulse issue is a temporary editorial desk: a theme, a reading packet,
             and a submission window. The buttons below are placeholders until the briefs publish.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href="/submit"
-              className="rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent"
+              className="w-full rounded-full bg-ink px-5 py-2 text-center text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent sm:w-auto"
             >
               Submit to the desk
             </Link>
             <a
               href="mailto:submissions@pulsemagazine.com"
-              className="rounded-full border border-black/10 bg-white px-5 py-2 text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent"
+              className="w-full rounded-full border border-black/10 bg-white px-5 py-2 text-center text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent sm:w-auto"
             >
               Ask an editor
             </a>
@@ -43,9 +43,11 @@ export default function IssuesPage() {
       <section className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
         {currentIssue && <IssueCard issue={currentIssue} />}
 
-        <div className="rounded-[2rem] border border-black/10 bg-[#f2eadf] p-8">
+        <div className="rounded-[1.75rem] border border-black/10 bg-[#f2eadf] p-6 sm:rounded-[2rem] sm:p-8">
           <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Desk note</p>
-          <h2 className="mt-4 font-serif text-4xl leading-none text-ink">What happens next</h2>
+          <h2 className="mt-4 font-serif text-[2.25rem] leading-none text-ink sm:text-4xl">
+            What happens next
+          </h2>
           <div className="mt-6 space-y-5 text-sm leading-7 text-gray-600">
             <p>
               We post issue briefs first, then open the reading window. Until those packets are live,

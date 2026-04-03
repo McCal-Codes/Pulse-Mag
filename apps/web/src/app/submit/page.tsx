@@ -2,17 +2,17 @@ import Link from 'next/link'
 import { currentIssue } from '@/lib/issues'
 
 export const metadata = {
-  title: 'Submit Your Work — Pulse Magazine',
+  title: 'Submit Your Work - Pulse Magazine',
   description: 'Submission guidance for essays, criticism, fiction, photography, and artwork at Pulse Magazine.',
 }
 
 export default function SubmitPage() {
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-      <header className="grid gap-10 border-b border-black/10 pb-12 lg:grid-cols-[1.1fr_0.9fr]">
+    <div className="container mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <header className="grid gap-8 border-b border-black/10 pb-10 sm:gap-10 sm:pb-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <p className="text-[11px] uppercase tracking-[0.32em] text-accent">Submit</p>
-          <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-none text-ink sm:text-6xl">
+          <h1 className="mt-4 max-w-3xl font-serif text-[2.9rem] leading-none text-ink sm:text-6xl">
             We want pitches with a point of view, not content dressed as momentum.
           </h1>
         </div>
@@ -30,7 +30,7 @@ export default function SubmitPage() {
       </header>
 
       <section className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-[2rem] border border-black/10 bg-[#f2eadf] p-8">
+        <div className="rounded-[1.75rem] border border-black/10 bg-[#f2eadf] p-6 sm:rounded-[2rem] sm:p-8">
           <p className="text-[11px] uppercase tracking-[0.24em] text-gray-400">What to send</p>
           <ul className="mt-5 space-y-4 text-sm leading-7 text-gray-600">
             <li>A short pitch or artist note with the angle, stakes, and intended form.</li>
@@ -40,7 +40,7 @@ export default function SubmitPage() {
           </ul>
         </div>
 
-        <div className="rounded-[2rem] border border-black/10 bg-white/90 p-8 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.24)]">
+        <div className="rounded-[1.75rem] border border-black/10 bg-white/90 p-6 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.24)] sm:rounded-[2rem] sm:p-8">
           <p className="text-[11px] uppercase tracking-[0.24em] text-gray-400">How it works</p>
           <ol className="mt-5 space-y-5 text-sm leading-7 text-gray-600">
             <li>Read the current issue lineup to understand what the desk is commissioning right now.</li>
@@ -48,16 +48,16 @@ export default function SubmitPage() {
             <li>If the piece fits, we will reply with next steps, edit expectations, and delivery details.</li>
           </ol>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href="/issues"
-              className="rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent"
+              className="w-full rounded-full bg-ink px-5 py-2 text-center text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent sm:w-auto"
             >
               Browse issues
             </Link>
             <a
               href="mailto:submissions@pulsemagazine.com?subject=Pulse%20Magazine%20Pitch"
-              className="rounded-full border border-black/10 bg-paper px-5 py-2 text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent"
+              className="w-full rounded-full border border-black/10 bg-paper px-5 py-2 text-center text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent sm:w-auto"
             >
               Email the desk
             </a>
