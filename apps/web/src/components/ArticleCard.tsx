@@ -14,9 +14,9 @@ type Post = {
 
 export function ArticleCard({ post }: { post: Post }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-black/10 bg-[#fbf7f0]/92 shadow-[0_20px_52px_-30px_rgba(20,17,15,0.24)] transition-all duration-300 hover:-translate-y-1 sm:rounded-[1.75rem]">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-black/10 bg-white/70 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
       {post.mainImage && (
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-paper-deep)]">
           <Image
             src={urlFor(post.mainImage).width(960).height(720).url()}
             alt={post.title}
@@ -27,8 +27,8 @@ export function ArticleCard({ post }: { post: Post }) {
         </div>
       )}
 
-      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
-        <div className="flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">
+      <div className="flex flex-1 flex-col gap-3 p-5">
+        <div className="flex items-center justify-between gap-4 text-[0.6rem] uppercase tracking-widest text-gray-400">
           <span>Story</span>
           {post.publishedAt && (
             <time dateTime={post.publishedAt}>
@@ -42,13 +42,13 @@ export function ArticleCard({ post }: { post: Post }) {
         </div>
 
         <Link href={`/post/${post.slug.current}`}>
-          <h2 className="font-serif text-[2rem] leading-none tracking-[-0.035em] text-ink transition-colors group-hover:text-accent sm:text-3xl">
+          <h2 className="font-serif text-xl leading-snug text-ink transition-colors group-hover:text-[var(--color-nav)] sm:text-2xl">
             {post.title}
           </h2>
         </Link>
 
         {post.excerpt && (
-          <p className="text-sm leading-7 text-gray-600">{post.excerpt}</p>
+          <p className="line-clamp-3 text-sm leading-7 text-gray-600">{post.excerpt}</p>
         )}
 
         <div className="mt-auto flex items-center justify-between gap-4 border-t border-black/8 pt-4">
@@ -56,22 +56,22 @@ export function ArticleCard({ post }: { post: Post }) {
             post.author.slug?.current ? (
               <Link
                 href={`/author/${post.author.slug.current}`}
-                className="text-sm text-gray-500 transition-colors hover:text-accent"
+                className="text-xs text-gray-500 transition-colors hover:text-[var(--color-nav)]"
               >
                 {post.author.name}
               </Link>
             ) : (
-              <span className="text-sm text-gray-500">{post.author.name}</span>
+              <span className="text-xs text-gray-500">{post.author.name}</span>
             )
           ) : (
-            <span className="text-sm text-gray-400">Pulse editorial</span>
+            <span className="text-xs text-gray-400">Pulse editorial</span>
           )}
 
           <Link
             href={`/post/${post.slug.current}`}
-            className="text-sm font-medium text-ink transition-colors group-hover:text-accent"
+            className="text-xs font-medium text-ink transition-colors group-hover:text-[var(--color-nav)]"
           >
-            Open story
+            Read →
           </Link>
         </div>
       </div>

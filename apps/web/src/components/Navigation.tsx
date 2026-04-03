@@ -1,52 +1,54 @@
+'use client'
+
 import Link from 'next/link'
-import { currentIssue } from '@/lib/issues'
+import { useState } from 'react'
 
 const navLinks = [
-  { label: 'Issues', href: '/issues' },
-  { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/about' },
-  { label: 'Team', href: '/about/team' },
+  { label: 'Issues', href: '/issues' },
+  { label: 'Submit', href: '/submit' },
+  { label: 'Events', href: '/events' },
 ]
 
 export function Navigation() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-paper/84 backdrop-blur-md">
-      <div className="border-b border-black/6">
-        <div className="container mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2.5 text-[9px] uppercase tracking-[0.24em] text-gray-500 sm:px-6 sm:py-3 sm:text-[10px] sm:tracking-[0.3em] lg:px-8">
-          <span className="min-w-0 truncate">
-            {currentIssue?.status ?? 'Issue desk'}: {currentIssue?.title ?? 'Pulse Magazine'}
+    <header className="sticky top-0 z-50 bg-paper shadow-[0_1px_0_rgba(0,0,0,0.08)]">
+      {/* Logo block */}
+      <div className="flex flex-col items-center py-4 px-4">
+        <Link href="/" className="group flex flex-col items-center gap-1">
+          {/* Starburst + PULSE wordmark */}
+          <div className="flex items-center gap-1.5">
+            <span
+              className="text-[1.1rem] leading-none text-[var(--color-nav)] transition-colors group-hover:text-accent"
+              aria-hidden="true"
+            >
+              ✦
+            </span>
+            <span className="font-serif text-[2.2rem] leading-none tracking-[0.12em] text-ink transition-colors group-hover:text-accent sm:text-[2.6rem]">
+              PULSE
+            </span>
+          </div>
+          <span className="font-sans text-[0.65rem] italic tracking-[0.18em] text-gray-500 sm:text-[0.7rem]">
+            Literary &amp; Arts Magazine
           </span>
-          <Link href="/issues" className="shrink-0 text-accent transition-colors hover:text-ink">
-            Issue lineup
-          </Link>
-        </div>
+        </Link>
       </div>
 
-      <nav className="container mx-auto max-w-7xl px-4 py-4 sm:flex sm:h-20 sm:items-center sm:justify-between sm:px-6 sm:py-0 lg:px-8">
-        <div className="flex items-start justify-between gap-4">
-          <Link href="/" className="group min-w-0">
-            <span className="block text-[10px] uppercase tracking-[0.28em] text-gray-400 transition-colors group-hover:text-accent sm:tracking-[0.34em]">
-              Pulse Magazine
-            </span>
-            <span className="block font-serif text-[1.65rem] leading-none tracking-[-0.045em] text-ink sm:text-[2.2rem]">
-              The long read, reset.
-            </span>
-          </Link>
-
-          <Link
-            href="/submit"
-            className="shrink-0 rounded-full border border-black/10 bg-ink px-4 py-2 text-sm font-medium text-paper shadow-[0_10px_28px_-16px_rgba(20,17,15,0.55)] transition-all hover:-translate-y-px hover:bg-accent sm:px-5"
-          >
-            Submit
-          </Link>
-        </div>
-
-        <ul className="hidden items-center gap-6 sm:flex">
+      {/* Nav bar */}
+      <nav
+        className="w-full"
+        style={{ backgroundColor: 'var(--color-nav)' }}
+        aria-label="Main navigation"
+      >
+        {/* Desktop */}
+        <ul className="hidden items-center justify-center gap-10 py-2.5 sm:flex">
           {navLinks.map(({ label, href }) => (
             <li key={href}>
               <Link
                 href={href}
-                className="text-sm font-medium text-gray-600 transition-colors hover:text-accent"
+                className="text-sm font-medium text-white/90 underline-offset-4 transition-colors hover:text-white hover:underline"
               >
                 {label}
               </Link>
@@ -54,17 +56,43 @@ export function Navigation() {
           ))}
         </ul>
 
-        <div className="-mx-1 mt-4 flex gap-2 overflow-x-auto pb-1 sm:hidden">
-          {navLinks.map(({ label, href }) => (
-            <Link
-              key={href}
-              href={href}
-              className="shrink-0 rounded-full border border-black/10 bg-white/76 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-accent"
-            >
-              {label}
-            </Link>
-          ))}
+        {/* Mobile: hamburger */}
+        <div className="flex items-center justify-between px-4 py-2.5 sm:hidden">
+          <span className="text-xs font-medium tracking-wider text-white/80">Menu</span>
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+            className="flex h-8 w-8 flex-col items-center justify-center gap-1.5"
+          >
+            <span
+              className={`block h-px w-5 bg-white transition-all duration-200 ${menuOpen ? 'translate-y-[3px] rotate-45' : ''}`}
+            />
+            <span
+              className={`block h-px w-5 bg-white transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`}
+            />
+            <span
+              className={`block h-px w-5 bg-white transition-all duration-200 ${menuOpen ? '-translate-y-[3px] -rotate-45' : ''}`}
+            />
+          </button>
         </div>
+
+        {/* Mobile dropdown */}
+        {menuOpen && (
+          <ul className="border-t border-white/20 px-4 pb-3 sm:hidden">
+            {navLinks.map(({ label, href }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block py-2.5 text-sm font-medium text-white/90 transition-colors hover:text-white"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </nav>
     </header>
   )

@@ -1,20 +1,12 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
-import { homepageSettingsQuery, allPostsQuery, latestBlogPostQuery } from '@/lib/queries'
-import { HeroPost } from '@/components/HeroPost'
-import { ArticleCard } from '@/components/ArticleCard'
-import { IssueCard } from '@/components/IssueCard'
-import { currentIssue, upcomingIssues } from '@/lib/issues'
+import { allBlogPostsQuery, siteSettingsQuery } from '@/lib/queries'
+import { urlFor, type SanityImageSource } from '@/lib/sanity.image'
+import { currentIssue } from '@/lib/issues'
+import { DiamondDivider } from '@/components/DiamondDivider'
 
 export const revalidate = 60
-
-type HomePost = Parameters<typeof ArticleCard>[0]['post']
-
-type HomepageSettings = {
-  heroText?: string
-  featuredPost?: HomePost | null
-  featuredPosts?: HomePost[]
-}
 
 type BlogPost = {
   _id: string
@@ -26,237 +18,201 @@ type BlogPost = {
   author?: { name: string; slug?: { current: string } }
 }
 
+type SiteSettings = {
+  welcomeText?: string
+}
+
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export default async function HomePage() {
-  const sanityServerClient = await getSanityServerClient()
+  const client = await getSanityServerClient()
 
-  if (!sanityServerClient) {
-    return (
-      <div className="flex h-64 items-center justify-center text-sm text-gray-400">
-        Configure Sanity environment variables to load magazine content.
-      </div>
-    )
-  }
-
-  const [settings, allPosts, latestBlog] = await Promise.all([
-    safeSanityFetch<HomepageSettings | null>(sanityServerClient, homepageSettingsQuery, {}, null),
-    safeSanityFetch<HomePost[]>(sanityServerClient, allPostsQuery, {}, []),
-    safeSanityFetch<BlogPost | null>(sanityServerClient, latestBlogPostQuery, {}, null),
+  const [blogPosts, settings] = await Promise.all([
+    client
+      ? safeSanityFetch<BlogPost[]>(client, allBlogPostsQuery, {}, [])
+      : Promise.resolve([]),
+    client
+      ? safeSanityFetch<SiteSettings | null>(client, siteSettingsQuery, {}, null)
+      : Promise.resolve(null),
   ])
 
-  const featuredPost = settings?.featuredPost ?? allPosts?.[0] ?? null
-  const frontPool = (settings?.featuredPosts?.length ? settings.featuredPosts : allPosts ?? []).filter(
-    (post) => post._id !== featuredPost?._id
-  )
-  const leadStories = frontPool.slice(0, 2)
-  const moreStories = frontPool.slice(2, 6)
-  const heroText = settings?.heroText ?? 'Pulse is a seasonal magazine for criticism, essays, and fiction.'
-  const frontCount = (featuredPost ? 1 : 0) + leadStories.length + moreStories.length
+  const featuredPost = blogPosts[0] ?? null
+  const morePosts = blogPosts.slice(1, 4)
+
+  const welcomeText =
+    settings?.welcomeText ??
+    'Pulse Literary & Arts Magazine is an annual multimedia literary and arts magazine led by students at Point Park University. As a multimedia magazine, we publish all art forms, including literature, poetry, scripts, art, photography, dance, and music.'
 
   return (
     <div className="pb-16">
-      <section className="container mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
-        <div className="grid gap-8 xl:grid-cols-[0.56fr_1.04fr]">
-          <div className="order-2 grid gap-8 xl:order-1">
-            <div className="rounded-[1.75rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.86)_0%,rgba(248,241,229,0.95)_100%)] p-6 shadow-[0_24px_58px_-30px_rgba(20,17,15,0.28)] sm:rounded-[2rem] sm:p-8">
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.32em] text-accent">Magazine front</p>
-                  <p className="mt-2 text-sm text-gray-500">
-                    {currentIssue?.season ?? 'Current cycle'}
-                  </p>
-                </div>
-                <span className="rounded-full border border-black/10 bg-paper px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-gray-500">
-                  {frontCount} stories in play
-                </span>
-              </div>
-
-              <h1 className="mt-6 max-w-xl font-serif text-[2.9rem] leading-none tracking-[-0.05em] text-ink sm:text-6xl">
-                Stories worth the second sitting.
-              </h1>
-
-              <p className="mt-5 max-w-[34rem] text-base leading-8 text-gray-600">
-                {heroText}
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/issues"
-                  className="w-full rounded-full bg-ink px-5 py-2 text-center text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent sm:w-auto"
-                >
-                  Browse issues
-                </Link>
-                <Link
-                  href="/submit"
-                  className="w-full rounded-full border border-black/10 bg-paper px-5 py-2 text-center text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent sm:w-auto"
-                >
-                  Submit work
-                </Link>
-              </div>
-
-              <dl className="mt-10 grid gap-4 border-t border-black/10 pt-6 sm:grid-cols-3">
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">Lead</dt>
-                  <dd className="mt-2 text-sm text-gray-700">
-                    {featuredPost ? 'Hero story live' : 'Awaiting hero post'}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">Desk</dt>
-                  <dd className="mt-2 text-sm text-gray-700">
-                    {latestBlog ? 'Notebook updated' : 'Quiet for now'}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.2em] text-gray-400 sm:text-[11px] sm:tracking-[0.24em]">Next</dt>
-                  <dd className="mt-2 text-sm text-gray-700">
-                    {upcomingIssues.length} upcoming issue{upcomingIssues.length === 1 ? '' : 's'}
-                  </dd>
-                </div>
-              </dl>
-            </div>
-
-            {latestBlog ? (
-              <aside className="rounded-[1.75rem] border border-black/10 bg-paper-soft/72 p-6 sm:rounded-[2rem] sm:p-7">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Notebook</p>
-                <h2 className="mt-4 font-serif text-[2rem] leading-none tracking-[-0.04em] text-ink sm:text-3xl">
-                  <Link href={`/blog/${latestBlog.slug.current}`} className="transition-colors hover:text-accent">
-                    {latestBlog.title}
-                  </Link>
-                </h2>
-                {latestBlog.excerpt && (
-                  <p className="mt-4 text-sm leading-7 text-gray-600">{latestBlog.excerpt}</p>
-                )}
-                <div className="mt-6 flex flex-col items-start gap-3 border-t border-black/10 pt-4 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                  <span className="text-gray-500">{latestBlog.author?.name ?? 'Pulse editorial'}</span>
-                  <Link href={`/blog/${latestBlog.slug.current}`} className="font-medium text-ink transition-colors hover:text-accent">
-                    Read note
-                  </Link>
-                </div>
-              </aside>
-            ) : (
-              <div className="rounded-[2rem] border border-dashed border-black/10 bg-white/60 p-8 text-sm text-gray-500">
-                Publish a blog post to surface a desk note here.
-              </div>
-            )}
-          </div>
-
-          <div className="order-1 grid gap-8 xl:order-2">
-            {featuredPost ? (
-              <HeroPost post={featuredPost} />
-            ) : (
-              <div className="flex min-h-[30rem] items-center justify-center rounded-[1.75rem] border border-black/10 bg-white/80 p-6 text-sm text-gray-400 sm:min-h-[35rem] sm:rounded-[2rem]">
-                Add a featured post in Sanity Studio to build the front page.
-              </div>
-            )}
-
-            <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-              {currentIssue && <IssueCard issue={currentIssue} compact />}
-
-              <div className="rounded-[1.75rem] border border-black/10 bg-paper-soft/74 p-6 sm:rounded-[2rem] sm:p-7">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Coming next</p>
-                <div className="mt-5 space-y-5">
-                  {upcomingIssues.length > 0 ? (
-                    upcomingIssues.map((issue) => (
-                      <div
-                        key={issue.id}
-                        className="border-t border-black/10 pt-5 first:border-t-0 first:pt-0"
-                      >
-                        <p className="font-serif text-[2rem] leading-none tracking-[-0.04em] text-ink sm:text-3xl">
-                          {issue.title}
-                        </p>
-                        <p className="mt-2 text-sm text-gray-500">{issue.window}</p>
-                        <p className="mt-3 text-sm leading-7 text-gray-600">{issue.summary}</p>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-sm leading-7 text-gray-600">
-                      The next issue line is still being assembled.
-                    </p>
-                  )}
-                </div>
-
-                <div className="mt-6 border-t border-black/10 pt-4">
-                  <Link href="/issues" className="text-sm font-medium text-ink transition-colors hover:text-accent">
-                    View the full issue desk
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* ── Welcome ── */}
+      <section className="mx-auto max-w-2xl px-6 pt-14 pb-10 text-center">
+        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Welcome</h1>
+        <DiamondDivider className="mt-3 mb-6" />
+        <p className="text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">{welcomeText}</p>
       </section>
 
-      <section className="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8 grid gap-4 border-b border-black/10 pb-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Selected stories</p>
-            <h2 className="mt-3 font-serif text-[2.35rem] leading-none tracking-[-0.04em] text-ink sm:text-4xl">
-              On the page now
-            </h2>
-          </div>
-          <p className="max-w-2xl text-sm leading-7 text-gray-600">
-            A tighter front, a visible issue desk, and enough room for stories to feel chosen rather than merely recent.
-          </p>
-        </div>
+      {/* ── Featured Issue ── */}
+      {currentIssue && (
+        <section className="mx-auto mb-14 flex justify-center px-6">
+          <Link
+            href="/issues"
+            className="group relative flex w-56 flex-col overflow-hidden rounded-xl border border-black/10 shadow-[0_16px_40px_-20px_rgba(20,17,15,0.3)] transition-all hover:-translate-y-1 hover:shadow-[0_24px_50px_-18px_rgba(20,17,15,0.38)] sm:w-64"
+          >
+            {/* Cover image area */}
+            <div className="relative aspect-[3/4] bg-[var(--color-paper-deep)]">
+              <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
+                <p
+                  className="font-serif text-xl leading-tight text-white sm:text-2xl"
+                  style={{ color: 'var(--color-amber)' }}
+                >
+                  {currentIssue.title}
+                </p>
+                <p className="mt-0.5 font-serif text-3xl font-bold leading-none text-white/30">
+                  {String(1).padStart(2, '0')}
+                </p>
+              </div>
+              {/* Subtle grain overlay */}
+              <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.75\' numOctaves=\'4\'/%3E%3C/filter%3E%3Crect width=\'300\' height=\'300\' filter=\'url(%23n)\' opacity=\'1\'/%3E%3C/svg%3E")' }} />
+            </div>
+            {/* Caption */}
+            <div className="bg-paper-soft px-4 py-3 text-center">
+              <p className="text-[0.6rem] uppercase tracking-[0.2em] text-gray-500">
+                {currentIssue.status === 'Current issue' ? 'Available Now' : 'Coming Soon'}
+              </p>
+              <p className="mt-0.5 text-[0.7rem] text-gray-500">{currentIssue.season}</p>
+            </div>
+          </Link>
+        </section>
+      )}
 
-        <div className="grid gap-8 lg:grid-cols-[1.06fr_0.94fr]">
-          <div className="order-2 grid gap-6 md:grid-cols-2 lg:order-1">
-            {leadStories.length > 0 ? (
-              leadStories.map((post) => <ArticleCard key={post._id} post={post} />)
-            ) : (
-              <div className="rounded-[1.75rem] border border-dashed border-black/10 bg-white/70 p-8 text-sm text-gray-500 md:col-span-2">
-                Add more featured posts in Sanity Studio to populate the front page deck.
+      <hr className="mx-auto max-w-4xl border-black/10 px-6" />
+
+      {/* ── Pulse News ── */}
+      <section className="mx-auto max-w-5xl px-6 pt-12">
+        <h2 className="mb-1 text-center font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+          Pulse News
+        </h2>
+        <div className="mx-auto mb-10 mt-1 h-px max-w-xs bg-black/15" />
+
+        {blogPosts.length === 0 ? (
+          <p className="text-center text-sm text-gray-400">
+            No posts yet — publish blog posts in Sanity Studio to populate this section.
+          </p>
+        ) : (
+          <>
+            {/* Featured post */}
+            {featuredPost && (
+              <div className="mb-10 grid gap-6 sm:grid-cols-2 sm:gap-8">
+                {/* Text side */}
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-serif text-2xl leading-snug text-ink sm:text-3xl">
+                      {featuredPost.title}
+                    </h3>
+                    <p className="mt-1 text-[0.7rem] tracking-wider text-gray-400">
+                      {formatDate(featuredPost.publishedAt)}
+                    </p>
+                    {featuredPost.excerpt && (
+                      <div className="mt-4 rounded border border-black/10 p-4">
+                        <p className="text-sm leading-7 text-gray-600">{featuredPost.excerpt}</p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-5">
+                    <Link
+                      href={`/blog/${featuredPost.slug.current}`}
+                      className="inline-block rounded border border-black/20 px-5 py-2 text-sm font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
+                    >
+                      Read More
+                    </Link>
+                  </div>
+                </div>
+                {/* Image side */}
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)] sm:aspect-auto sm:min-h-[14rem]">
+                  {featuredPost.featuredImage?.asset ? (
+                    <Image
+                      src={urlFor(featuredPost.featuredImage as SanityImageSource)
+                        .width(600)
+                        .height(400)
+                        .fit('crop')
+                        .url()}
+                      alt={featuredPost.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-[0.65rem] uppercase tracking-widest text-gray-400">
+                      Featured Image
+                    </div>
+                  )}
+                </div>
               </div>
             )}
-          </div>
 
-          <aside className="order-1 rounded-[1.75rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.82)_0%,rgba(248,241,229,0.95)_100%)] p-6 shadow-[0_24px_58px_-30px_rgba(20,17,15,0.24)] sm:rounded-[2rem] sm:p-8 lg:order-2">
-            <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Issue desk</p>
-            <h3 className="mt-4 font-serif text-[2.25rem] leading-none tracking-[-0.04em] text-ink sm:text-4xl">
-              {currentIssue?.title ?? 'Current issue'}
-            </h3>
-            <p className="mt-2 text-sm text-gray-500">
-              {currentIssue?.window ?? 'Reading window to be announced.'}
-            </p>
-            <p className="mt-5 text-sm leading-7 text-gray-600">
-              {currentIssue?.summary ??
-                'Pulse organizes the magazine around issues rather than endless categories.'}
-            </p>
-
-            <div className="mt-8 space-y-4 border-t border-black/10 pt-5 text-sm text-gray-600">
-              <div className="flex items-center justify-between gap-4">
-                <span>Current brief</span>
-                <span className="text-gray-400">Placeholder read</span>
+            {/* Smaller posts grid */}
+            {morePosts.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-3">
+                {morePosts.map((post) => (
+                  <article key={post._id} className="flex flex-col">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)]">
+                      {post.featuredImage?.asset ? (
+                        <Image
+                          src={urlFor(post.featuredImage as SanityImageSource)
+                            .width(400)
+                            .height(300)
+                            .fit('crop')
+                            .url()}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition-transform duration-300 hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, 33vw"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-[0.6rem] uppercase tracking-widest text-gray-400">
+                          Featured Image
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="mt-3 font-serif text-lg leading-snug text-ink">{post.title}</h3>
+                    <p className="mt-0.5 text-[0.65rem] tracking-wider text-gray-400">
+                      {formatDate(post.publishedAt)}
+                    </p>
+                    {post.excerpt && (
+                      <div className="mt-2 rounded border border-black/10 p-3">
+                        <p className="line-clamp-3 text-xs leading-6 text-gray-600">{post.excerpt}</p>
+                      </div>
+                    )}
+                    <div className="mt-3">
+                      <Link
+                        href={`/blog/${post.slug.current}`}
+                        className="inline-block rounded border border-black/15 px-3 py-1.5 text-xs font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
+                      >
+                        Read More
+                      </Link>
+                    </div>
+                  </article>
+                ))}
               </div>
-              <div className="flex items-center justify-between gap-4">
-                <span>Notes package</span>
-                <span className="text-gray-400">Placeholder read</span>
-              </div>
-            </div>
+            )}
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            {/* Read all link */}
+            <div className="mt-10 text-center">
               <Link
-                href="/issues"
-                className="w-full rounded-full bg-ink px-5 py-2 text-center text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent sm:w-auto"
+                href="/blog"
+                className="text-sm font-medium text-gray-600 transition-colors hover:text-[var(--color-nav)]"
               >
-                View issues
-              </Link>
-              <Link
-                href="/submit"
-                className="w-full rounded-full border border-black/10 bg-paper px-5 py-2 text-center text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent sm:w-auto"
-              >
-                Submit work
+                Read All Pulse News &rsaquo;&rsaquo;
               </Link>
             </div>
-          </aside>
-        </div>
-
-        {moreStories.length > 0 && (
-          <div className="mt-10 grid gap-6 md:mt-12 md:grid-cols-2 xl:grid-cols-4">
-            {moreStories.map((post) => (
-              <ArticleCard key={post._id} post={post} />
-            ))}
-          </div>
+          </>
         )}
       </section>
     </div>

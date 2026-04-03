@@ -1,85 +1,111 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { IssueCard } from '@/components/IssueCard'
-import { currentIssue, issues, upcomingIssues } from '@/lib/issues'
+import { currentIssue, upcomingIssues, issues } from '@/lib/issues'
+import { DiamondDivider } from '@/components/DiamondDivider'
 
 export const metadata: Metadata = {
   title: 'Issues',
-  description: 'Current and upcoming issue themes from the Pulse Magazine editorial desk.',
+  description: 'Current and upcoming issue themes from Pulse Literary & Arts Magazine.',
 }
 
 export default function IssuesPage() {
   return (
-    <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-      <header className="grid gap-8 border-b border-black/10 pb-10 sm:gap-10 sm:pb-12 lg:grid-cols-[1.2fr_0.8fr]">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.32em] text-accent">Issues</p>
-          <h1 className="mt-4 max-w-4xl font-serif text-[2.9rem] leading-none text-ink sm:text-6xl">
-            The magazine is organized in seasonal briefs, not endless buckets.
-          </h1>
-        </div>
-        <div className="space-y-5 text-sm leading-7 text-gray-600">
-          <p>
-            Each Pulse issue is a temporary editorial desk: a theme, a reading packet,
-            and a submission window. The buttons below are placeholders until the briefs publish.
-          </p>
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/submit"
-              className="w-full rounded-full bg-ink px-5 py-2 text-center text-sm font-medium text-paper transition-all hover:-translate-y-px hover:bg-accent sm:w-auto"
+    <div className="mx-auto max-w-3xl px-6 py-14">
+      {/* Heading */}
+      <div className="mb-10 text-center">
+        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Issues</h1>
+        <DiamondDivider className="mt-3" />
+        <p className="mx-auto mt-5 max-w-lg text-sm leading-7 text-gray-600">
+          Each Pulse issue is built around a seasonal theme — a reading window, an editorial brief,
+          and a submission desk. We organize around ideas, not endless categories.
+        </p>
+      </div>
+
+      {/* Current issue */}
+      {currentIssue && (
+        <section className="mb-10">
+          <div className="overflow-hidden rounded-xl border border-black/10 bg-white/70 shadow-[0_8px_32px_-12px_rgba(158,114,114,0.2)]">
+            {/* Issue number band */}
+            <div
+              className="flex items-center justify-between px-6 py-3 text-white"
+              style={{ backgroundColor: 'var(--color-nav)' }}
             >
-              Submit to the desk
-            </Link>
-            <a
-              href="mailto:submissions@pulsemagazine.com"
-              className="w-full rounded-full border border-black/10 bg-white px-5 py-2 text-center text-sm font-medium text-ink transition-all hover:-translate-y-px hover:border-accent hover:text-accent sm:w-auto"
-            >
-              Ask an editor
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <section className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-        {currentIssue && <IssueCard issue={currentIssue} />}
-
-        <div className="rounded-[1.75rem] border border-black/10 bg-[#f2eadf] p-6 sm:rounded-[2rem] sm:p-8">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Desk note</p>
-          <h2 className="mt-4 font-serif text-[2.25rem] leading-none text-ink sm:text-4xl">
-            What happens next
-          </h2>
-          <div className="mt-6 space-y-5 text-sm leading-7 text-gray-600">
-            <p>
-              We post issue briefs first, then open the reading window. Until those packets are live,
-              the read buttons stay dormant by design.
-            </p>
-            <p>
-              If you already have a piece that fits the current theme, send a concise pitch, a short bio,
-              and links to any previous work. We would rather read a clear note than a generic packet.
-            </p>
-          </div>
-
-          {upcomingIssues.length > 0 && (
-            <div className="mt-8 border-t border-black/10 pt-6">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Coming soon</p>
-              <ul className="mt-4 space-y-4">
-                {upcomingIssues.map((issue) => (
-                  <li key={issue.id}>
-                    <p className="font-serif text-2xl text-ink">{issue.title}</p>
-                    <p className="text-sm text-gray-500">{issue.window}</p>
-                  </li>
-                ))}
-              </ul>
+              <span className="text-[0.6rem] uppercase tracking-[0.28em] text-white/80">
+                {currentIssue.status}
+              </span>
+              <span className="font-serif text-2xl font-bold text-white/30">
+                {String(1).padStart(2, '0')}
+              </span>
             </div>
-          )}
-        </div>
-      </section>
 
-      <section className="mt-12 grid gap-6 md:grid-cols-2">
-        {issues.map((issue) => (
-          <IssueCard key={issue.id} issue={issue} compact />
-        ))}
-      </section>
+            <div className="px-7 py-8">
+              <p className="text-[0.65rem] uppercase tracking-widest text-gray-400">
+                {currentIssue.season}
+              </p>
+              <h2 className="mt-2 font-serif text-3xl leading-tight text-ink sm:text-4xl">
+                {currentIssue.title}
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-gray-600">{currentIssue.summary}</p>
+
+              <div className="mt-6 grid gap-4 border-t border-black/8 pt-5 text-sm sm:grid-cols-2">
+                <div>
+                  <p className="text-[0.6rem] uppercase tracking-widest text-gray-400">Window</p>
+                  <p className="mt-1 text-gray-700">{currentIssue.window}</p>
+                </div>
+                <div>
+                  <p className="text-[0.6rem] uppercase tracking-widest text-gray-400">Status</p>
+                  <p className="mt-1 text-gray-700">{currentIssue.note}</p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/submit"
+                  className="rounded-full px-6 py-2.5 text-sm font-medium text-white transition-all hover:opacity-90"
+                  style={{ backgroundColor: 'var(--color-nav)' }}
+                >
+                  Submit to the Desk
+                </Link>
+                <a
+                  href="mailto:submissions@pulsemag.com"
+                  className="rounded-full border border-black/15 px-6 py-2.5 text-sm font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
+                >
+                  Ask an Editor
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Coming soon */}
+      {upcomingIssues.length > 0 && (
+        <section>
+          <p className="mb-5 text-[0.6rem] uppercase tracking-[0.28em] text-gray-400">Coming Soon</p>
+          <div className="space-y-4">
+            {upcomingIssues.map((issue, i) => (
+              <div
+                key={issue.id}
+                className="rounded-xl border border-black/10 bg-white/50 px-7 py-6"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-[0.6rem] uppercase tracking-widest text-gray-400">
+                      {issue.season}
+                    </p>
+                    <h3 className="mt-1.5 font-serif text-2xl text-ink">{issue.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-gray-600">{issue.summary}</p>
+                  </div>
+                  <span className="shrink-0 font-serif text-3xl font-bold text-black/10">
+                    {String(i + 2).padStart(2, '0')}
+                  </span>
+                </div>
+                <p className="mt-4 text-xs text-gray-400">{issue.window}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

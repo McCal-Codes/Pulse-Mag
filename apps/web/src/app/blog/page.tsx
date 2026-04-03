@@ -4,10 +4,11 @@ import Image from 'next/image'
 import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
 import { allBlogPostsQuery } from '@/lib/queries'
 import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
+import { DiamondDivider } from '@/components/DiamondDivider'
 
 export const metadata: Metadata = {
-  title: 'Blog — Pulse Magazine',
-  description: 'News, updates, and behind-the-scenes from the Pulse Magazine team.',
+  title: 'Pulse News',
+  description: 'News, updates, and behind-the-scenes from Pulse Literary & Arts Magazine.',
 }
 
 export const revalidate = 60
@@ -23,64 +24,72 @@ type BlogPost = {
   author?: { name: string; slug?: { current: string } }
 }
 
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export default async function BlogPage() {
   const client = await getSanityServerClient()
   const posts = await safeSanityFetch<BlogPost[]>(client, allBlogPostsQuery, {}, [])
 
-  return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16">
-      <header className="mb-12 max-w-2xl">
-        <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-2">Blog</p>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-ink mb-4">From the Team</h1>
-        <p className="text-lg text-gray-600">
-          News, updates, and behind-the-scenes from Pulse Magazine.
-        </p>
-      </header>
+  const featured = posts[0] ?? null
+  const rest = posts.slice(1)
 
-      {posts.length > 0 ? (
-        <div className="space-y-8">
-          {posts.map((post) => (
-            <article key={post._id} className="group">
-              <Link
-                href={`/blog/${post.slug.current}`}
-                className="flex flex-col sm:flex-row gap-6 p-6 -mx-6 rounded-xl hover:bg-gray-50 transition-colors"
-              >
-                {post.featuredImage && (
-                  <div className="relative w-full sm:w-48 h-36 flex-shrink-0 rounded-lg overflow-hidden">
-                    <Image
-                      src={urlFor(post.featuredImage).width(384).height(288).url()}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 640px) 192px, 100vw"
-                    />
-                  </div>
-                )}
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <time dateTime={post.publishedAt} className="text-xs text-gray-500">
-                      {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </time>
-                    {post.author && (
-                      <span className="text-xs text-gray-400">· {post.author.name}</span>
-                    )}
-                  </div>
-                  <h2 className="font-serif text-xl font-bold text-ink group-hover:text-accent transition-colors mb-2">
-                    {post.title}
+  return (
+    <div className="mx-auto max-w-5xl px-6 py-14">
+      {/* Heading */}
+      <div className="mb-12 text-center">
+        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Pulse News</h1>
+        <DiamondDivider className="mt-3 mb-5" />
+        <p className="mx-auto max-w-md text-sm leading-7 text-gray-500">
+          News, updates, and behind-the-scenes from the Pulse team.
+        </p>
+      </div>
+
+      {posts.length === 0 ? (
+        <div className="rounded-xl border border-black/10 bg-white/60 px-8 py-14 text-center">
+          <p className="font-serif text-2xl text-ink">No posts yet</p>
+          <p className="mt-2 text-sm text-gray-400">Check back soon.</p>
+        </div>
+      ) : (
+        <>
+          {/* Featured post */}
+          {featured && (
+            <article className="mb-10 grid gap-6 sm:grid-cols-2 sm:gap-8">
+              <div className="flex flex-col justify-between">
+                <div>
+                  <h2 className="font-serif text-2xl leading-snug text-ink sm:text-3xl">
+                    {featured.title}
                   </h2>
-                  {post.excerpt && (
-                    <p className="text-sm text-gray-600 line-clamp-2">{post.excerpt}</p>
+                  <p className="mt-1 text-[0.7rem] tracking-wider text-gray-400">
+                    {formatDate(featured.publishedAt)}
+                    {featured.author && (
+                      <span className="ml-2 text-gray-400">· {featured.author.name}</span>
+                    )}
+                  </p>
+                  {featured.excerpt && (
+                    <div className="mt-4 rounded border border-black/10 p-4">
+                      <p className="text-sm leading-7 text-gray-600">{featured.excerpt}</p>
+                    </div>
                   )}
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex gap-2 mt-3">
-                      {post.tags.map((tag) => (
+                </div>
+                <div className="mt-5 flex items-center gap-4">
+                  <Link
+                    href={`/blog/${featured.slug.current}`}
+                    className="inline-block rounded border border-black/20 px-5 py-2 text-sm font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
+                  >
+                    Read More
+                  </Link>
+                  {featured.tags && featured.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {featured.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full"
+                          className="rounded-full border border-black/10 px-2.5 py-0.5 text-[0.6rem] uppercase tracking-wider text-gray-400"
                         >
                           {tag}
                         </span>
@@ -88,12 +97,90 @@ export default async function BlogPage() {
                     </div>
                   )}
                 </div>
-              </Link>
+              </div>
+
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)] sm:aspect-auto sm:min-h-[14rem]">
+                {featured.featuredImage ? (
+                  <Image
+                    src={urlFor(featured.featuredImage).width(600).height(400).fit('crop').url()}
+                    alt={featured.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-[0.6rem] uppercase tracking-widest text-gray-400">
+                    Featured Image
+                  </div>
+                )}
+              </div>
             </article>
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-500">No blog posts yet. Check back soon.</p>
+          )}
+
+          {/* Rest of posts grid */}
+          {rest.length > 0 && (
+            <>
+              <hr className="mb-10 border-black/10" />
+              <div className="grid gap-6 sm:grid-cols-3">
+                {rest.map((post) => (
+                  <article key={post._id} className="flex flex-col">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)]">
+                      {post.featuredImage ? (
+                        <Image
+                          src={urlFor(post.featuredImage).width(400).height(300).fit('crop').url()}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition-transform duration-300 hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, 33vw"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-[0.6rem] uppercase tracking-widest text-gray-400">
+                          Featured Image
+                        </div>
+                      )}
+                    </div>
+
+                    <h3 className="mt-3 font-serif text-lg leading-snug text-ink">{post.title}</h3>
+                    <p className="mt-0.5 text-[0.65rem] tracking-wider text-gray-400">
+                      {formatDate(post.publishedAt)}
+                      {post.author && <span className="ml-1">· {post.author.name}</span>}
+                    </p>
+
+                    {post.excerpt && (
+                      <div className="mt-2 rounded border border-black/10 p-3">
+                        <p className="line-clamp-3 text-xs leading-6 text-gray-600">
+                          {post.excerpt}
+                        </p>
+                      </div>
+                    )}
+
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {post.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-black/10 px-2 py-0.5 text-[0.55rem] uppercase tracking-wider text-gray-400"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="mt-3">
+                      <Link
+                        href={`/blog/${post.slug.current}`}
+                        className="inline-block rounded border border-black/15 px-3 py-1.5 text-xs font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
+                      >
+                        Read More
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </>
+          )}
+        </>
       )}
     </div>
   )

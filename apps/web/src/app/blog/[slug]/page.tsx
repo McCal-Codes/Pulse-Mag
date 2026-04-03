@@ -29,12 +29,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const client = await getSanityServerClient()
   if (!client) return {}
-
   const { slug } = await params
   const post = await safeSanityFetch<BlogPost | null>(client, blogPostBySlugQuery, { slug }, null)
-
   return {
-    title: post ? `${post.title} — Pulse Magazine Blog` : 'Blog',
+    title: post?.title ?? 'Pulse News',
     openGraph: post?.featuredImage
       ? { images: [urlFor(post.featuredImage).width(1200).height(630).url()] }
       : undefined,
@@ -49,32 +47,34 @@ export default async function BlogPostPage({ params }: Props) {
 
   const { slug } = await params
   const post = await safeSanityFetch<BlogPost | null>(client, blogPostBySlugQuery, { slug }, null)
-
   if (!post) notFound()
 
   const body = Array.isArray(post.content) ? post.content : []
 
   return (
-    <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-14">
+    <article className="mx-auto max-w-2xl px-6 py-14">
+      {/* Back link */}
       <Link
         href="/blog"
-        className="text-xs font-semibold uppercase tracking-widest text-accent hover:opacity-75 transition-opacity mb-4 inline-block"
+        className="mb-8 inline-flex items-center gap-1.5 text-[0.7rem] uppercase tracking-widest text-gray-400 transition-colors hover:text-[var(--color-nav)]"
       >
-        ← Blog
+        <span aria-hidden>←</span> Pulse News
       </Link>
 
-      <h1 className="font-serif text-4xl sm:text-5xl font-bold leading-tight text-ink mb-4">
+      {/* Title */}
+      <h1 className="font-serif text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
         {post.title}
       </h1>
 
-      <div className="flex items-center gap-4 text-sm text-gray-500 mb-8">
+      {/* Byline */}
+      <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-400">
         {post.author && (
           <span>
             By{' '}
             {post.author.slug?.current ? (
               <Link
                 href={`/author/${post.author.slug.current}`}
-                className="font-medium text-ink hover:text-accent transition-colors"
+                className="font-medium text-ink transition-colors hover:text-[var(--color-nav)]"
               >
                 {post.author.name}
               </Link>
@@ -83,6 +83,7 @@ export default async function BlogPostPage({ params }: Props) {
             )}
           </span>
         )}
+        {post.author && <span aria-hidden className="text-black/20">·</span>}
         <time dateTime={post.publishedAt}>
           {new Date(post.publishedAt).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -92,33 +93,37 @@ export default async function BlogPostPage({ params }: Props) {
         </time>
       </div>
 
+      {/* Featured image */}
       {post.featuredImage && (
-        <div className="relative aspect-video mb-10 rounded-lg overflow-hidden">
+        <div className="relative mt-8 aspect-video overflow-hidden rounded-xl">
           <Image
             src={urlFor(post.featuredImage).width(1200).height(675).url()}
             alt={post.title}
             fill
             className="object-cover"
             priority
-            sizes="(min-width: 1024px) 800px, 100vw"
+            sizes="(min-width: 768px) 700px, 100vw"
           />
         </div>
       )}
 
+      {/* Body */}
       {body.length > 0 && (
-        <div className="prose prose-lg prose-gray max-w-none font-sans
-          prose-headings:font-serif prose-headings:font-bold
-          prose-a:text-accent prose-a:no-underline hover:prose-a:underline">
+        <div className="prose prose-gray mt-10 max-w-none font-sans leading-8
+          prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight
+          prose-a:text-[var(--color-nav)] prose-a:no-underline hover:prose-a:underline
+          prose-blockquote:border-l-[var(--color-nav)] prose-blockquote:font-serif prose-blockquote:not-italic">
           <PortableText value={body as Parameters<typeof PortableText>[0]['value']} />
         </div>
       )}
 
+      {/* Tags */}
       {post.tags && post.tags.length > 0 && (
-        <div className="flex gap-2 mt-10 pt-8 border-t border-gray-200">
+        <div className="mt-10 flex flex-wrap gap-2 border-t border-black/8 pt-8">
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs px-3 py-1 bg-gray-100 text-gray-500 rounded-full"
+              className="rounded-full border border-black/10 px-3 py-1 text-[0.6rem] uppercase tracking-wider text-gray-400"
             >
               {tag}
             </span>
@@ -126,9 +131,13 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       )}
 
-      <div className="mt-10">
-        <Link href="/blog" className="text-sm text-gray-500 hover:text-accent transition-colors">
-          ← All blog posts
+      {/* Footer nav */}
+      <div className="mt-10 border-t border-black/8 pt-8">
+        <Link
+          href="/blog"
+          className="text-sm text-gray-400 transition-colors hover:text-[var(--color-nav)]"
+        >
+          ← All Pulse News
         </Link>
       </div>
     </article>

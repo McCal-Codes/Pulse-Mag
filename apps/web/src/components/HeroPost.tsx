@@ -15,7 +15,7 @@ type HeroPostProps = {
 
 export function HeroPost({ post }: HeroPostProps) {
   return (
-    <section className="relative min-h-[30rem] overflow-hidden rounded-[1.75rem] bg-ink text-paper shadow-[0_34px_86px_-34px_rgba(20,17,15,0.52)] sm:min-h-[35rem] sm:rounded-[2rem]">
+    <section className="relative min-h-[30rem] overflow-hidden rounded-xl bg-ink text-paper shadow-[0_34px_86px_-34px_rgba(20,17,15,0.52)] sm:min-h-[35rem]">
       {post.mainImage ? (
         <Image
           src={urlFor(post.mainImage).width(1800).height(1200).url()}
@@ -64,7 +64,8 @@ export function HeroPost({ post }: HeroPostProps) {
             {post.author && <span>{post.author.name}</span>}
             <Link
               href={`/post/${post.slug.current}`}
-              className="rounded-full border border-white/14 bg-accent px-5 py-2 font-medium text-paper shadow-[0_12px_28px_-16px_rgba(141,82,53,0.65)] transition-all hover:-translate-y-px hover:bg-[#a7603f]"
+              className="rounded-full border border-white/14 px-5 py-2 font-medium text-paper shadow-[0_12px_28px_-16px_rgba(158,114,114,0.65)] transition-all hover:-translate-y-px"
+              style={{ backgroundColor: 'var(--color-nav)' }}
             >
               Read the story
             </Link>

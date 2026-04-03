@@ -1,27 +1,18 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { PortableText } from '@portabletext/react'
 import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
 import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
-import { groq } from 'next-sanity'
+import { allAuthorsQuery } from '@/lib/queries'
+import { DiamondDivider } from '@/components/DiamondDivider'
 
 export const metadata: Metadata = {
-  title: 'Our Team — Pulse Magazine',
-  description: 'Meet the editors, writers, and contributors behind Pulse Magazine.',
+  title: 'Our Staff',
+  description: 'Meet the editors and contributors behind Pulse Literary & Arts Magazine.',
 }
 
 export const revalidate = 60
-
-const allAuthorsQuery = groq`
-  *[_type == "author"] | order(name asc) {
-    _id,
-    name,
-    slug,
-    image,
-    role,
-    bio
-  }
-`
 
 type Author = {
   _id: string
@@ -30,6 +21,8 @@ type Author = {
   image?: SanityImageSource
   role?: string
   bio?: unknown[]
+  pronoun?: string
+  lookingFor?: string
 }
 
 export default async function TeamPage() {
@@ -37,62 +30,89 @@ export default async function TeamPage() {
   const authors = await safeSanityFetch<Author[]>(client, allAuthorsQuery, {}, [])
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16">
-      <header className="mb-14 max-w-2xl">
-        <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-2">About</p>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-ink mb-4">Our Team</h1>
-        <p className="text-lg text-gray-600">
-          The editors, writers, and contributors who make Pulse Magazine possible.
+    <div className="mx-auto max-w-4xl px-6 py-14">
+      {/* Heading */}
+      <div className="mb-12 text-center">
+        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Our Staff</h1>
+        <DiamondDivider className="mt-3" />
+      </div>
+
+      {authors.length === 0 ? (
+        <p className="text-center text-sm text-gray-400">
+          Staff members will appear here once Author profiles are created in Sanity Studio.
         </p>
-      </header>
-
-      {authors.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {authors.map((author) => (
-            <Link
-              key={author._id}
-              href={`/author/${author.slug.current}`}
-              className="group flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all"
-            >
-              {author.image ? (
-                <div className="relative w-24 h-24 rounded-full overflow-hidden ring-2 ring-gray-200 group-hover:ring-accent transition-all mb-4">
-                  <Image
-                    src={urlFor(author.image).width(192).height(192).fit('crop').url()}
-                    alt={author.name}
-                    fill
-                    className="object-cover"
-                    sizes="96px"
-                  />
-                </div>
-              ) : (
-                <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mb-4 ring-2 ring-gray-200">
-                  <span className="text-2xl font-serif font-bold text-gray-400">
-                    {author.name.charAt(0)}
-                  </span>
-                </div>
-              )}
-
-              <h2 className="font-serif text-lg font-bold text-ink group-hover:text-accent transition-colors">
-                {author.name}
-              </h2>
-              {author.role && (
-                <p className="text-sm text-gray-500 mt-1">{author.role}</p>
-              )}
-            </Link>
-          ))}
-        </div>
       ) : (
-        <p className="text-gray-500">
-          Team members will appear here once Author profiles are created in the Studio.
-        </p>
+        <div className="space-y-16">
+          {authors.map((author, index) => {
+            const isEven = index % 2 === 0
+            return (
+              <div
+                key={author._id}
+                className={`flex flex-col gap-8 sm:flex-row sm:items-start ${isEven ? '' : 'sm:flex-row-reverse'}`}
+              >
+                {/* Photo */}
+                <div className="flex shrink-0 flex-col items-center gap-2">
+                  <Link href={`/author/${author.slug.current}`} className="group">
+                    <div className="h-48 w-48 overflow-hidden rounded-full ring-2 ring-black/10 transition-all group-hover:ring-[var(--color-nav)] sm:h-56 sm:w-56">
+                      {author.image ? (
+                        <Image
+                          src={urlFor(author.image).width(224).height(224).fit('crop').url()}
+                          alt={author.name}
+                          width={224}
+                          height={224}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div
+                          className="flex h-full w-full items-center justify-center"
+                          style={{ backgroundColor: 'var(--color-amber)' }}
+                        >
+                          <span className="font-serif text-4xl font-bold text-white">
+                            {author.name.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+                  <p className="text-center text-sm font-medium text-ink">{author.name}</p>
+                  {author.role && (
+                    <p className="text-center text-xs text-gray-500">{author.role}</p>
+                  )}
+                </div>
+
+                {/* Bio box */}
+                <div className="flex-1 rounded border border-black/10 bg-white/60 p-6">
+                  <p className="font-serif text-xl text-ink">{author.name}</p>
+                  {author.bio && (author.bio as unknown[]).length > 0 && (
+                    <div className="prose prose-sm prose-gray mt-3 max-w-none font-sans prose-p:leading-7 prose-p:text-gray-600">
+                      <PortableText value={author.bio as any} />
+                    </div>
+                  )}
+                  {author.lookingFor && (
+                    <div className="mt-4 border-t border-black/8 pt-4">
+                      <p className="text-[0.7rem] uppercase tracking-widest text-gray-400">
+                        What {author.pronoun?.split('/')[0] ?? author.name.split(' ')[0]} is looking for in submissions
+                      </p>
+                      <p className="mt-1.5 text-sm italic leading-7 text-gray-600">
+                        {author.lookingFor}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
       )}
 
-      <div className="mt-14 flex gap-4">
+      {/* Join Us CTA */}
+      <div className="mt-16 text-center">
         <Link
-          href="/about"
-          className="inline-flex items-center px-6 py-3 border border-gray-300 text-ink font-medium rounded-lg hover:bg-gray-50 transition-colors"
+          href="/join"
+          className="inline-block rounded-full px-8 py-3 text-sm font-medium text-white shadow-md transition-all hover:-translate-y-px hover:shadow-lg"
+          style={{ backgroundColor: 'var(--color-nav)' }}
         >
-          ← About Pulse Magazine
+          Join Us
         </Link>
       </div>
     </div>

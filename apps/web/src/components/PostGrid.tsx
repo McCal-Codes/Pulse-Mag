@@ -5,7 +5,7 @@ type Post = Parameters<typeof ArticleCard>[0]['post']
 export function PostGrid({ posts }: { posts: Post[] }) {
   if (!posts?.length) {
     return (
-      <p className="text-gray-500 text-center py-12">No posts found.</p>
+      <p className="py-12 text-center text-sm text-gray-400">No posts found.</p>
     )
   }
 

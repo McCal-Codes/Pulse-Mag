@@ -3,7 +3,7 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemas'
 
-const singletonTypes = new Set(['homepageSettings', 'editorialGuide'])
+const singletonTypes = new Set(['homepageSettings', 'editorialGuide', 'siteSettings'])
 const manualListTypes = new Set(['weeklyBlog'])
 
 export default defineConfig({
@@ -23,6 +23,10 @@ export default defineConfig({
               .title('Editorial Guide')
               .id('editorialGuide')
               .child(S.document().schemaType('editorialGuide').documentId('editorialGuide')),
+            S.listItem()
+              .title('Site Settings')
+              .id('siteSettings')
+              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
             S.divider(),
             S.listItem()
               .title('Homepage Settings')
@@ -37,10 +41,18 @@ export default defineConfig({
                   .title('Blog Posts')
                   .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
               ),
+            S.listItem()
+              .title('Events')
+              .id('eventList')
+              .child(
+                S.documentTypeList('event')
+                  .title('Events')
+                  .defaultOrdering([{ field: 'date', direction: 'asc' }])
+              ),
             S.divider(),
             ...S.documentTypeListItems().filter((listItem) => {
               const id = listItem.getId() ?? ''
-              return !singletonTypes.has(id) && !manualListTypes.has(id)
+              return !singletonTypes.has(id) && !manualListTypes.has(id) && id !== 'event'
             }),
           ]),
     }),

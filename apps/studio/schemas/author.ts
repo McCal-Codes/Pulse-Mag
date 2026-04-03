@@ -60,6 +60,19 @@ export default defineType({
       type: 'url',
       description: 'Optional link to the author\'s personal site or portfolio.',
     }),
+    defineField({
+      name: 'pronoun',
+      title: 'Pronouns',
+      type: 'string',
+      description: 'e.g. "they/them", "she/her", "he/him". Used on the team page.',
+    }),
+    defineField({
+      name: 'lookingFor',
+      title: 'Looking For in Submissions',
+      type: 'text',
+      rows: 3,
+      description: 'A sentence or two describing what this editor seeks in submissions. Shown on the team page.',
+    }),
   ],
   preview: {
     select: { title: 'name', subtitle: 'role', media: 'image' },

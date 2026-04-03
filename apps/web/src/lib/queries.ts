@@ -56,7 +56,9 @@ export const authorBySlugQuery = groq`
     role,
     bio,
     twitter,
-    website
+    website,
+    pronoun,
+    lookingFor
   }
 `
 
@@ -120,4 +122,60 @@ export const blogPostBySlugQuery = groq`
 /** Used by generateStaticParams for /blog/[slug] */
 export const allBlogSlugsQuery = groq`
   *[_type == "weeklyBlog" && isPublished == true && defined(slug.current)]{ "slug": slug.current }
+`
+
+// ---------------------------------------------------------------------------
+// Author list query (team page)
+// ---------------------------------------------------------------------------
+
+/** All authors for the team page — includes pronoun and lookingFor */
+export const allAuthorsQuery = groq`
+  *[_type == "author"] | order(name asc) {
+    _id,
+    name,
+    slug,
+    image,
+    role,
+    bio,
+    pronoun,
+    lookingFor
+  }
+`
+
+// ---------------------------------------------------------------------------
+// Events queries
+// ---------------------------------------------------------------------------
+
+/** All events sorted by date ascending */
+export const allEventsQuery = groq`
+  *[_type == "event"] | order(date asc) {
+    _id,
+    title,
+    slug,
+    date,
+    location,
+    description,
+    link,
+    image
+  }
+`
+
+// ---------------------------------------------------------------------------
+// Site settings query
+// ---------------------------------------------------------------------------
+
+/** Global site settings singleton */
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0] {
+    welcomeText,
+    editorQuote,
+    editorQuoteAttribution,
+    submissionWindowOpen,
+    submissionWindowClose,
+    instagramUrl,
+    linkedinUrl,
+    blueskyUrl,
+    pinterestUrl,
+    emailAddress
+  }
 `
