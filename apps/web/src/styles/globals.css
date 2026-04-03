@@ -2,20 +2,16 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* Fonts — variables injected by next/font/google in layout.tsx */
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
 
-  /* Brand palette */
-  --color-ink: #1a1a1a;
-  --color-paper: #fafaf8;
-  --color-accent: #c8102e;
+  --color-ink: #161615;
+  --color-paper: #f8f2e8;
+  --color-accent: #a54c32;
 
-  /* Fluid container */
   --spacing-container: clamp(1rem, 5vw, 2rem);
 }
 
-/* Base resets */
 *,
 *::before,
 *::after {
@@ -23,11 +19,18 @@
 }
 
 html {
+  background:
+    radial-gradient(circle at top left, rgba(165, 76, 50, 0.08), transparent 34%),
+    radial-gradient(circle at 80% 20%, rgba(31, 41, 55, 0.05), transparent 30%),
+    #f8f2e8;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Ensure images never overflow their container */
+body {
+  background: transparent;
+}
+
 img,
 video {
   max-width: 100%;

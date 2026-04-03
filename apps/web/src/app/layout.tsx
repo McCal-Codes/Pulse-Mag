@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Cormorant_Garamond, Outfit } from 'next/font/google'
 import '../styles/globals.css'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-outfit',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-cormorant',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
@@ -30,10 +31,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-paper text-ink font-sans antialiased min-h-screen flex flex-col">
+    <html lang="en" className={`${outfit.variable} ${cormorant.variable}`}>
+      <body className="min-h-screen bg-paper text-ink font-sans antialiased">
         <Navigation />
-        <main className="flex-1">{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

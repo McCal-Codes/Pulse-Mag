@@ -1,26 +1,44 @@
 import Link from 'next/link'
+import { currentIssue } from '@/lib/issues'
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 mt-24 bg-paper">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex flex-col items-center md:items-start gap-1">
-          <Link href="/" className="font-serif text-xl font-bold tracking-tight text-ink">
+    <footer className="mt-24 border-t border-black/10 bg-[#f6f2ea]">
+      <div className="container mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:px-8">
+        <div className="space-y-4">
+          <Link href="/" className="font-serif text-3xl leading-none tracking-[-0.04em] text-ink">
             Pulse Magazine
           </Link>
-          <p className="text-xs text-gray-400">Independent journalism at the pulse of culture.</p>
+          <p className="max-w-md text-sm leading-7 text-gray-600">
+            A magazine for essays, criticism, and fiction that outlast the scroll.
+            Built around issues, edited with patience, and published for readers who stay with the page.
+          </p>
+          <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">
+            {currentIssue?.status ?? 'Issue desk'}: {currentIssue?.title ?? 'Pulse Magazine'}
+          </p>
         </div>
 
-        <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-500">
-          <Link href="/about" className="hover:text-accent transition-colors">About</Link>
-          <Link href="/contact" className="hover:text-accent transition-colors">Contact</Link>
-          <Link href="/category/culture" className="hover:text-accent transition-colors">Culture</Link>
-          <Link href="/category/politics" className="hover:text-accent transition-colors">Politics</Link>
+        <nav className="space-y-3 text-sm text-gray-600">
+          <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Navigate</p>
+          <Link href="/issues" className="block transition-colors hover:text-accent">Issues</Link>
+          <Link href="/blog" className="block transition-colors hover:text-accent">Blog</Link>
+          <Link href="/about" className="block transition-colors hover:text-accent">About</Link>
+          <Link href="/about/team" className="block transition-colors hover:text-accent">Team</Link>
+          <Link href="/submit" className="block transition-colors hover:text-accent">Submit</Link>
         </nav>
 
-        <p className="text-xs text-gray-400">
-          &copy; {new Date().getFullYear()} Pulse Magazine
-        </p>
+        <div className="space-y-3 text-sm text-gray-600">
+          <p className="text-[11px] uppercase tracking-[0.28em] text-gray-400">Editorial</p>
+          <a href="mailto:hello@pulsemagazine.com" className="block transition-colors hover:text-accent">
+            hello@pulsemagazine.com
+          </a>
+          <a href="mailto:submissions@pulsemagazine.com" className="block transition-colors hover:text-accent">
+            submissions@pulsemagazine.com
+          </a>
+          <p className="pt-6 text-xs text-gray-400">
+            © {new Date().getFullYear()} Pulse Magazine
+          </p>
+        </div>
       </div>
     </footer>
   )

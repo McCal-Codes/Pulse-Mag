@@ -112,7 +112,7 @@ export default defineType({
               _type: 'block',
               _key: 'wp-4',
               style: 'normal',
-              children: [{ _type: 'span', _key: 'wp-4-s', marks: ['strong'], text: 'Author, Category, Publish Date' }, { _type: 'span', _key: 'wp-4-s2', text: ' — Set all three before publishing. At least one category is required.' }],
+              children: [{ _type: 'span', _key: 'wp-4-s', marks: ['strong'], text: 'Author and Publish Date' }, { _type: 'span', _key: 'wp-4-s2', text: ' — Set both before publishing so the front page and bylines stay accurate.' }],
             },
             {
               _type: 'block',
@@ -173,26 +173,26 @@ export default defineType({
         },
         {
           _type: 'section',
-          _key: 'categories-and-issues',
-          heading: '4. Categories & Issues',
+          _key: 'issue-briefs',
+          heading: '4. Issue Briefs',
           body: [
             {
               _type: 'block',
               _key: 'ci-1',
               style: 'normal',
-              children: [{ _type: 'span', _key: 'ci-1-s', marks: ['strong'], text: 'Categories' }, { _type: 'span', _key: 'ci-1-s2', text: ' — Evergreen topic tags like Culture, Music, or Film. A post can have multiple categories. Tag every post with at least one.' }],
+              children: [{ _type: 'span', _key: 'ci-1-s', marks: ['strong'], text: 'Issue briefs' }, { _type: 'span', _key: 'ci-1-s2', text: ' — Pulse now organizes editorial planning through issue briefs on the public Issues page. Use that page for theme and timing context instead of internal category tags.' }],
             },
             {
               _type: 'block',
               _key: 'ci-2',
               style: 'normal',
-              children: [{ _type: 'span', _key: 'ci-2-s', marks: ['strong'], text: 'Issues' }, { _type: 'span', _key: 'ci-2-s2', text: ' — Dated collections of posts, like a print edition (e.g. "Spring 2025"). Assigning a post to an Issue is optional — only use it if the post is part of a themed release.' }],
+              children: [{ _type: 'span', _key: 'ci-2-s', marks: ['strong'], text: 'Post structure' }, { _type: 'span', _key: 'ci-2-s2', text: ' — Posts no longer carry category or issue fields in Studio. Keep the title, slug, author, publish date, excerpt, and body clean and editorially precise.' }],
             },
             {
               _type: 'block',
               _key: 'ci-3',
               style: 'normal',
-              children: [{ _type: 'span', _key: 'ci-3-s', text: 'If a category you need doesn\'t exist yet, ask an editor to create it. Do not create categories yourself.' }],
+              children: [{ _type: 'span', _key: 'ci-3-s', text: 'If a piece belongs to a seasonal package, coordinate with an editor so it can be surfaced on the homepage or Issues page when the brief goes live.' }],
             },
           ],
         },
@@ -248,7 +248,7 @@ export default defineType({
               _type: 'block',
               _key: 'pc-4',
               style: 'normal',
-              children: [{ _type: 'span', _key: 'pc-4-s', text: '☐  Author, at least one Category, and Publish Date are set' }],
+              children: [{ _type: 'span', _key: 'pc-4-s', text: '☐  Author and Publish Date are set' }],
             },
             {
               _type: 'block',

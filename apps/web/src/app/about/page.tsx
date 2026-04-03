@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
 import { groq } from 'next-sanity'
@@ -36,8 +37,18 @@ export default async function AboutPage() {
       </header>
 
       {page?.content ? (
-        <div className="prose prose-lg prose-gray max-w-none font-sans prose-headings:font-serif prose-headings:font-bold prose-a:text-accent prose-a:no-underline hover:prose-a:underline">
-          <PortableText value={page.content as any} />
+        <div>
+          <div className="prose prose-lg prose-gray max-w-none font-sans prose-headings:font-serif prose-headings:font-bold prose-a:text-accent prose-a:no-underline hover:prose-a:underline">
+            <PortableText value={page.content as any} />
+          </div>
+          <div className="mt-10">
+            <Link
+              href="/about/team"
+              className="inline-flex items-center px-8 py-3 bg-ink text-paper font-medium rounded-lg hover:bg-ink/90 transition-colors"
+            >
+              Meet Our Team →
+            </Link>
+          </div>
         </div>
       ) : (
         // Static fallback until an "about" page document is created in Sanity Studio
@@ -61,6 +72,15 @@ export default async function AboutPage() {
             For editorial pitches, partnership enquiries, or general correspondence, write to us at{' '}
             <a href="mailto:hello@pulsemagazine.com">hello@pulsemagazine.com</a>.
           </p>
+
+          <div className="mt-10 not-prose">
+            <Link
+              href="/about/team"
+              className="inline-flex items-center px-8 py-3 bg-ink text-paper font-medium rounded-lg hover:bg-ink/90 transition-colors"
+            >
+              Meet Our Team →
+            </Link>
+          </div>
 
           <aside className="mt-12 p-4 bg-gray-50 rounded-lg border border-gray-200 not-prose">
             <p className="text-xs text-gray-400 font-sans">

@@ -19,8 +19,6 @@ type PostData = {
   publishedAt?: string
   body?: PortableTextValue
   author?: { name: string; slug?: { current: string } }
-  issue?: { issueNumber: number }
-  categories?: Array<{ title: string; slug: { current: string } }>
 }
 
 export async function generateStaticParams() {
@@ -64,26 +62,10 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound()
 
-  const categories = post.categories ?? []
   const body = Array.isArray(post.body) ? post.body : []
 
   return (
     <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-14">
-      {/* Categories */}
-      {categories.length > 0 && (
-        <div className="flex gap-3 mb-4">
-          {categories.map((cat: { title: string; slug: { current: string } }) => (
-            <Link
-              key={cat.slug.current}
-              href={`/category/${cat.slug.current}`}
-              className="text-xs font-semibold uppercase tracking-widest text-accent hover:opacity-75 transition-opacity"
-            >
-              {cat.title}
-            </Link>
-          ))}
-        </div>
-      )}
-
       {/* Title */}
       <h1 className="font-serif text-4xl sm:text-5xl font-bold leading-tight text-ink mb-4">
         {post.title}
@@ -116,12 +98,6 @@ export default async function PostPage({ params }: Props) {
                 day: 'numeric',
               })}
             </time>
-          </>
-        )}
-        {post.issue && (
-          <>
-            <span aria-hidden>·</span>
-            <span>Issue #{post.issue.issueNumber}</span>
           </>
         )}
       </div>

@@ -44,20 +44,6 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      description: 'Tag this post with one or more topic categories. Create new categories in the Categories section.',
-      of: [{ type: 'reference', to: [{ type: 'category' }] }],
-    }),
-    defineField({
-      name: 'issue',
-      title: 'Issue',
-      type: 'reference',
-      description: 'Optional — assign this post to a magazine issue. Issues are managed in the Issues section.',
-      to: [{ type: 'issue' }],
-    }),
-    defineField({
       name: 'publishedAt',
       title: 'Publish Date',
       type: 'datetime',

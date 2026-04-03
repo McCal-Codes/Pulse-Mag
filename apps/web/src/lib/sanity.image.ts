@@ -1,6 +1,6 @@
 import createImageUrlBuilder from '@sanity/image-url'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
-import { config, hasValidSanityConfig } from './sanity.client'
+import { config, hasValidSanityConfig } from './sanity.config'
 
 /**
  * Build a Sanity image URL with the image-url builder.
@@ -17,5 +17,8 @@ export function urlFor(source: SanityImageSource) {
     dataset: config.dataset,
   }).image(source)
 }
+
+/** Alias for urlFor — used in client components */
+export const urlForImage = urlFor
 
 export type { SanityImageSource }

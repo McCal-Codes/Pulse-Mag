@@ -1,5 +1,6 @@
 import { createClient } from 'next-sanity'
 import { draftMode } from 'next/headers'
+import { config, hasValidSanityConfig } from './sanity.config'
 
 function sanitizeEnvValue(value: string | undefined) {
   return value?.trim() || undefined
@@ -9,28 +10,21 @@ function isValidSanityProjectId(value: string | undefined): value is string {
   return Boolean(value && /^[a-z0-9-]+$/.test(value))
 }
 
-const projectId = sanitizeEnvValue(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID)
-const dataset = sanitizeEnvValue(process.env.NEXT_PUBLIC_SANITY_DATASET) ?? 'production'
-const serverProjectId = sanitizeEnvValue(process.env.SANITY_PROJECT_ID) ?? projectId
-const serverDataset = sanitizeEnvValue(process.env.SANITY_DATASET) ?? dataset
-const apiVersion = sanitizeEnvValue(process.env.NEXT_PUBLIC_SANITY_API_VERSION) ?? '2024-01-01'
+const serverProjectId = sanitizeEnvValue(process.env.SANITY_PROJECT_ID) ?? config.projectId
+const serverDataset = sanitizeEnvValue(process.env.SANITY_DATASET) ?? config.dataset
 
-export const config = {
-  projectId,
-  dataset,
-  apiVersion,
-}
-
-export const hasValidSanityConfig = isValidSanityProjectId(projectId)
 const hasValidServerSanityConfig = isValidSanityProjectId(serverProjectId)
+
+// Re-export for convenience
+export { config, hasValidSanityConfig }
 
 // Public, fast, cache-friendly client for published content.
 // Safe to use in both Server and Client Components (no token).
 export const sanityClient = hasValidSanityConfig
   ? createClient({
-      projectId,
-      dataset,
-      apiVersion,
+      projectId: config.projectId!,
+      dataset: config.dataset,
+      apiVersion: config.apiVersion,
       useCdn: true,
       perspective: 'published',
     })
@@ -49,9 +43,9 @@ export async function getSanityServerClient() {
   const { isEnabled } = await draftMode()
 
   return createClient({
-    projectId: serverProjectId,
+    projectId: serverProjectId!,
     dataset: serverDataset,
-    apiVersion,
+    apiVersion: config.apiVersion,
     useCdn: !isEnabled,
     perspective: isEnabled ? 'drafts' : 'published',
     token: isEnabled ? process.env.SANITY_API_READ_TOKEN : undefined,

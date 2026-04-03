@@ -10,8 +10,7 @@ const postFields = groq`
   excerpt,
   mainImage,
   publishedAt,
-  "author": author->{ name, "slug": slug, image },
-  "categories": categories[]->{ title, slug }
+  "author": author->{ name, "slug": slug, image }
 `
 
 // ---------------------------------------------------------------------------
@@ -25,12 +24,11 @@ export const allPostsQuery = groq`
   }
 `
 
-/** Single post by slug — includes full body and issue reference */
+/** Single post by slug — includes full body */
 export const postBySlugQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
     ${postFields},
-    body,
-    "issue": issue->{ title, issueNumber, slug }
+    body
   }
 `
 
@@ -43,29 +41,9 @@ export const homepageSettingsQuery = groq`
   }
 `
 
-/** All posts in a given category (matched by slug) */
-export const postsByCategoryQuery = groq`
-  *[_type == "post" && $slug in categories[]->slug.current] | order(publishedAt desc) {
-    ${postFields}
-  }
-`
-
 /** Used by generateStaticParams for /post/[slug] */
 export const allPostSlugsQuery = groq`
   *[_type == "post" && defined(slug.current)]{ "slug": slug.current }
-`
-
-/** Used by generateStaticParams for /category/[slug] */
-export const allCategorySlugsQuery = groq`
-  *[_type == "category" && defined(slug.current)]{ "slug": slug.current }
-`
-
-/** Category metadata by slug — used by generateMetadata */
-export const categoryBySlugQuery = groq`
-  *[_type == "category" && slug.current == $slug][0] {
-    title,
-    description
-  }
 `
 
 /** Author profile by slug — includes bio and social links */
@@ -89,34 +67,57 @@ export const postsByAuthorQuery = groq`
   }
 `
 
-/** Latest published weekly blog */
-export const latestWeeklyBlogQuery = groq`
+/** Used by generateStaticParams for /author/[slug] */
+export const allAuthorSlugsQuery = groq`
+  *[_type == "author" && defined(slug.current)]{ "slug": slug.current }
+`
+
+// ---------------------------------------------------------------------------
+// Blog queries
+// ---------------------------------------------------------------------------
+
+/** Latest published blog post (for homepage) */
+export const latestBlogPostQuery = groq`
   *[_type == "weeklyBlog" && isPublished == true] | order(publishedAt desc)[0] {
     _id,
     title,
     slug,
     excerpt,
     publishedAt,
-    weekNumber,
-    year,
-    featuredImage
+    featuredImage,
+    "author": author->{ name, "slug": slug }
   }
 `
 
-/** All open issues accepting submissions */
-export const openIssuesQuery = groq`
-  *[_type == "issue" && defined(slug.current)] | order(issueNumber desc) {
+/** All published blog posts, newest first */
+export const allBlogPostsQuery = groq`
+  *[_type == "weeklyBlog" && isPublished == true] | order(publishedAt desc) {
     _id,
     title,
     slug,
-    issueNumber,
-    description,
+    excerpt,
     publishedAt,
-    coverImage
+    featuredImage,
+    tags,
+    "author": author->{ name, "slug": slug }
   }
 `
 
-/** Used by generateStaticParams for /author/[slug] */
-export const allAuthorSlugsQuery = groq`
-  *[_type == "author" && defined(slug.current)]{ "slug": slug.current }
+/** Single blog post by slug — includes full content */
+export const blogPostBySlugQuery = groq`
+  *[_type == "weeklyBlog" && slug.current == $slug && isPublished == true][0] {
+    _id,
+    title,
+    slug,
+    publishedAt,
+    featuredImage,
+    content,
+    tags,
+    "author": author->{ name, "slug": slug, image }
+  }
+`
+
+/** Used by generateStaticParams for /blog/[slug] */
+export const allBlogSlugsQuery = groq`
+  *[_type == "weeklyBlog" && isPublished == true && defined(slug.current)]{ "slug": slug.current }
 `
