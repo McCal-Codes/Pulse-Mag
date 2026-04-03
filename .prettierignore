@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+dist/
+.sanity/
+*.tsbuildinfo
+
+# Lock files (prettier should not format these)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Misc
+.DS_Store
+*.log
+coverage/
+
+# Generated files
+next-env.d.ts
+public/sw.js
+public/workbox-*.js
