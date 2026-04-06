@@ -3,33 +3,41 @@ import { allPostSlugsQuery, allBlogPostsQuery, siteSettingsQuery } from '@/lib/q
 
 async function getAllRoutes() {
   if (!sanityClient) {
+    console.warn('Sitemap: Sanity client not available')
     return { posts: [], blogPosts: [], staticRoutes: [] }
   }
 
-  const [posts, blogPosts] = await Promise.all([
-    sanityClient.fetch(allPostSlugsQuery, {}, { cache: 'no-store' }),
-    sanityClient.fetch(allBlogPostsQuery, {}, { cache: 'no-store' }),
-  ])
+  try {
+    const [posts, blogPosts] = await Promise.all([
+      sanityClient.fetch(allPostSlugsQuery, {}, { cache: 'no-store' }),
+      sanityClient.fetch(allBlogPostsQuery, {}, { cache: 'no-store' }),
+    ])
 
-  return {
-    posts: posts || [],
-    blogPosts: blogPosts || [],
-    staticRoutes: [
-      '',
-      '/about',
-      '/about/team',
-      '/issues',
-      '/news',
-      '/blog',
-      '/events',
-      '/submit',
-      '/join',
-    ],
+    return {
+      posts: posts || [],
+      blogPosts: blogPosts || [],
+      staticRoutes: [
+        '',
+        '/about',
+        '/about/team',
+        '/issues',
+        '/news',
+        '/blog',
+        '/events',
+        '/submit',
+        '/join',
+      ],
+    }
+  } catch (error) {
+    console.error('Sitemap: Error fetching routes:', error)
+    return { posts: [], blogPosts: [], staticRoutes: [
+      '', '/about', '/submit', '/join', '/issues', '/blog', '/events'
+    ]}
   }
 }
 
 export default async function Sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pulsemag.org'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pulseliterary.com'
   const { posts, blogPosts, staticRoutes } = await getAllRoutes()
 
   const routes = [

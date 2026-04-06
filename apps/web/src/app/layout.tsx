@@ -20,16 +20,37 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Pulse Magazine',
+    default: 'Pulse Magazine | Pittsburgh Literary & Arts Journal',
     template: '%s | Pulse Magazine',
   },
-  description: 'Independent journalism at the pulse of culture.',
+  description: 'Submit poetry, fiction, and creative work to Pulse Magazine, Point Park University\'s literary journal. Open to emerging writers and artists in Pittsburgh.',
+  keywords: ['pittsburgh literary magazine', 'poetry submissions', 'fiction submissions', 'point park university', 'emerging writers', 'student submissions'],
   openGraph: {
     siteName: 'Pulse Magazine',
     type: 'website',
+    locale: 'en_US',
+    url: 'https://pulseliterary.com',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@pulsemagazine',
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://pulseliterary.com',
   },
 }
 

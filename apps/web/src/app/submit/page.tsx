@@ -3,8 +3,12 @@ import { siteSettingsQuery } from '@/lib/queries'
 import { DiamondDivider } from '@/components/DiamondDivider'
 
 export const metadata = {
-  title: 'Submit',
-  description: 'Submit your creative work to Pulse Literary & Arts Magazine.',
+  title: 'Submit Your Writing | Pittsburgh Literary Submissions',
+  description: 'Submit poetry, fiction, art, and multimedia to Pulse Magazine, Pittsburgh\'s literary journal for emerging writers and Point Park University students. Open submission windows annually.',
+  keywords: ['pittsburgh submissions', 'poetry submissions pittsburgh', 'fiction submissions', 'student submissions', 'literary magazine submit', 'point park university submissions'],
+  alternates: {
+    canonical: 'https://pulseliterary.com/submit',
+  },
 }
 
 type SiteSettings = {
@@ -26,32 +30,42 @@ export default async function SubmitPage() {
     <div className="mx-auto max-w-3xl px-6 py-14">
       {/* Heading */}
       <div className="mb-10 text-center">
-        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">Submit</h1>
+        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">
+          Submit Your Work
+        </h1>
+        <p className="mt-3 text-sm text-gray-500">
+          Pittsburgh Literary Magazine | Poetry & Fiction Submissions
+        </p>
         <DiamondDivider className="mt-3" />
       </div>
 
-      {/* Intro text */}
+      {/* Intro text - SEO Optimized */}
       <div className="space-y-4 text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
         <p>
-          We&rsquo;re actively seeking works from creators enrolled at Point Park University. You must have a
-          valid email address in the submission form.
+          <strong>Pulse Magazine is Pittsburgh&apos;s premier literary journal</strong> dedicated to 
+          publishing poetry, fiction, visual art, and multimedia from emerging writers and artists. 
+          We are actively seeking submissions from creators enrolled at Point Park University, 
+          as well as emerging writers throughout the Pittsburgh area.
         </p>
         <p>
-          In the future, there may be opportunities for students and creators outside of the
-          university to submit. Follow us for potential updates to our submission process!
+          Whether you&apos;re a student writer looking to publish your first poem, a photographer 
+          capturing Pittsburgh&apos;s urban landscape, or a filmmaker exploring creative narratives, 
+          we welcome your submissions. Our yearly submission window opens {windowOpen} and closes {windowClose}.
         </p>
         <p>
-          Pulse Literary &amp; Arts Magazine is proud to accept multimedia submissions through Google
-          Forms from current Point Park University students.
+          <strong>Why submit to Pulse Magazine?</strong> As a Point Park University literary publication 
+          based in downtown Pittsburgh, we offer emerging writers a platform to share their voice 
+          with a growing audience of readers, fellow writers, and industry professionals. All 
+          accepted work receives author bylines and featured placement on our website.
         </p>
         <p>
-          We publish visual art &amp; photography, dance videos, music (video or audio), poetry (text,
-          video, or audio), and short stories &amp; scripts. In our selection process, we value
-          submissions that draw meaning from our world and the intricacies of our human experience.
-          We love to see creators use the boundaries of their art form to bring their passions,
-          interpretations, experiences, and messages to life. We seek to uplift voices that have been
-          systematically ignored in our society, and we do not discriminate against race, sex, gender
-          identification, sexual orientation, national origin, native language, religion, age,
+          We publish visual art &amp; photography, dance videos, music (video or audio), poetry (text, 
+          video, or audio), and short stories &amp; scripts. In our selection process, we value 
+          submissions that draw meaning from our world and the intricacies of our human experience. 
+          We love to see creators use the boundaries of their art form to bring their passions, 
+          interpretations, experiences, and messages to life. We seek to uplift voices that have been 
+          systematically ignored in our society, and we do not discriminate against race, sex, gender 
+          identification, sexual orientation, national origin, native language, religion, age, 
           disability, marital status, pregnancy, citizenship, etc.
         </p>
       </div>
