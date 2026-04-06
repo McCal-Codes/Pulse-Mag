@@ -48,5 +48,8 @@
     "node": "24.x",
     "pnpm": ">=9.0.0"
   },
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.32.1",
+  "dependencies": {
+    "react-pageflip": "^2.0.3"
+  }
 }

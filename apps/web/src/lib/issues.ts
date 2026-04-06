@@ -6,6 +6,7 @@ export type IssueEntry = {
   summary: string
   window: string
   note: string
+  pdfUrl?: string
 }
 
 export const issues: IssueEntry[] = [
@@ -18,6 +19,7 @@ export const issues: IssueEntry[] = [
       'Essays, dispatches, and criticism about what survives the algorithm: local scenes, durable ideas, and the people who keep culture legible.',
     window: 'Open for pitches through June 20',
     note: 'Brief and reading package publishing soon.',
+    pdfUrl: '/issues/signal-noise.pdf', // Add PDF path here
   },
   {
     id: 'after-the-interface',

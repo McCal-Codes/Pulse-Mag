@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { currentIssue, upcomingIssues, issues } from '@/lib/issues'
+import { currentIssue, upcomingIssues } from '@/lib/issues'
 import { DiamondDivider } from '@/components/DiamondDivider'
+import { Flipbook } from '@/components/Flipbook'
 
 export const metadata: Metadata = {
   title: 'Issues',
@@ -72,6 +73,9 @@ export default function IssuesPage() {
                 >
                   Ask an Editor
                 </a>
+                {currentIssue.pdfUrl && (
+                  <Flipbook pdfUrl={currentIssue.pdfUrl} issueTitle={currentIssue.title} />
+                )}
               </div>
             </div>
           </div>
