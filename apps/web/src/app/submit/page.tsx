@@ -1,6 +1,10 @@
-import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
-import { siteSettingsQuery } from '@/lib/queries'
 import { DiamondDivider } from '@/components/DiamondDivider'
+
+// Hardcoded data - avoids Sanity client issues
+// TODO: Re-enable Sanity fetching once client is debugged
+
+const windowOpen = 'October 1st'
+const windowClose = 'January 31st'
 
 export const metadata = {
   title: 'Submit Your Writing | Pittsburgh Literary Submissions',
@@ -11,21 +15,7 @@ export const metadata = {
   },
 }
 
-type SiteSettings = {
-  submissionWindowOpen?: string
-  submissionWindowClose?: string
-}
-
-// Replace with your actual Google Form URL when ready
-const GOOGLE_FORM_URL = '#'
-
-export default async function SubmitPage() {
-  const client = await getSanityServerClient()
-  const settings = await safeSanityFetch<SiteSettings | null>(client, siteSettingsQuery, {}, null)
-
-  const windowOpen = settings?.submissionWindowOpen ?? 'October 1st'
-  const windowClose = settings?.submissionWindowClose ?? 'January 31st'
-
+export default function SubmitPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-14">
       {/* Heading */}

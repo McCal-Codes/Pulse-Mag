@@ -1,17 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import Image from 'next/image'
-import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
-import { allEventsQuery } from '@/lib/queries'
-import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
 import { DiamondDivider } from '@/components/DiamondDivider'
 
-export const metadata: Metadata = {
-  title: 'Events',
-  description: 'Upcoming events from Pulse Literary & Arts Magazine.',
-}
-
-export const revalidate = 60
+// Hardcoded data - avoids Sanity client issues
+// TODO: Re-enable Sanity fetching once client is debugged
 
 type Event = {
   _id: string
@@ -21,8 +12,9 @@ type Event = {
   location?: string
   description?: string
   link?: string
-  image?: SanityImageSource
 }
+
+const events: Event[] = []
 
 function formatEventDate(dateString: string) {
   return new Date(dateString).toLocaleDateString('en-US', {
@@ -33,17 +25,14 @@ function formatEventDate(dateString: string) {
   })
 }
 
-function formatEventTime(dateString: string) {
-  return new Date(dateString).toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-  })
+export const metadata: Metadata = {
+  title: 'Events',
+  description: 'Upcoming events from Pulse Literary & Arts Magazine.',
 }
 
-export default async function EventsPage() {
-  const client = await getSanityServerClient()
-  const events = await safeSanityFetch<Event[]>(client, allEventsQuery, {}, [])
+export const revalidate = 60
 
+export default async function EventsPage() {
   const now = new Date()
   const upcoming = events.filter((e) => new Date(e.date) >= now)
   const past = events.filter((e) => new Date(e.date) < now)
@@ -78,21 +67,10 @@ export default async function EventsPage() {
                     key={event._id}
                     className="flex flex-col gap-5 rounded border border-black/10 bg-white/70 p-6 shadow-sm sm:flex-row"
                   >
-                    {event.image && (
-                      <div className="relative h-32 w-full overflow-hidden rounded sm:h-auto sm:w-40 sm:shrink-0">
-                        <Image
-                          src={urlFor(event.image).width(320).height(240).fit('crop').url()}
-                          alt={event.title}
-                          fill
-                          className="object-cover"
-                          sizes="160px"
-                        />
-                      </div>
-                    )}
                     <div className="flex flex-1 flex-col justify-between">
                       <div>
                         <p className="text-[0.65rem] uppercase tracking-widest text-gray-400">
-                          {formatEventDate(event.date)} &bull; {formatEventTime(event.date)}
+                          {event.date} &bull; 
                           {event.location && ` &bull; ${event.location}`}
                         </p>
                         <h3 className="mt-1.5 font-display text-xl text-ink">{event.title}</h3>

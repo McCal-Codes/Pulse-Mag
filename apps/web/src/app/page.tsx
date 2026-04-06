@@ -1,12 +1,24 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
-import { allBlogPostsQuery, siteSettingsQuery } from '@/lib/queries'
-import { urlFor } from '@/lib/sanity.image'
 import { currentIssue } from '@/lib/issues'
 import { DiamondDivider } from '@/components/DiamondDivider'
 import { AnimatedSection, AnimatedCard } from '@/components/ScrollAnimation'
-import type { BlogPost, SiteSettings } from '@/lib/types'
+
+// Hardcoded data - avoids Sanity client issues
+// TODO: Re-enable Sanity fetching once client is debugged
+
+const welcomeText = 'Pulse Literary & Arts Magazine is an annual multimedia literary and arts magazine led by students at Point Park University. As a multimedia magazine, we publish all art forms, including literature, poetry, scripts, art, photography, dance, and music.'
+
+const blogPosts = [
+  {
+    _id: '1',
+    title: 'Welcome to Pulse Magazine',
+    slug: { current: 'welcome-to-pulse' },
+    excerpt: 'We are excited to launch our new website and welcome submissions from emerging writers and artists in Pittsburgh and beyond.',
+    publishedAt: '2024-01-15T12:00:00Z',
+    featuredImage: null,
+    author: { name: 'Pulse Editorial Team' }
+  }
+]
 
 export const revalidate = 60
 
@@ -19,23 +31,8 @@ function formatDate(dateString: string) {
 }
 
 export default async function HomePage() {
-  const client = await getSanityServerClient()
-
-  const [blogPosts, settings] = await Promise.all([
-    client
-      ? safeSanityFetch<BlogPost[]>(client, allBlogPostsQuery, {}, [])
-      : Promise.resolve([]),
-    client
-      ? safeSanityFetch<SiteSettings | null>(client, siteSettingsQuery, {}, null)
-      : Promise.resolve(null),
-  ])
-
   const featuredPost = blogPosts[0] ?? null
   const morePosts = blogPosts.slice(1, 4)
-
-  const welcomeText =
-    settings?.welcomeText ??
-    'Pulse Literary & Arts Magazine is an annual multimedia literary and arts magazine led by students at Point Park University. As a multimedia magazine, we publish all art forms, including literature, poetry, scripts, art, photography, dance, and music.'
 
   return (
     <div className="pb-16">
@@ -126,20 +123,9 @@ export default async function HomePage() {
 
                 {/* Image side */}
                 <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)] sm:aspect-auto sm:min-h-[14rem]">
-                  {featuredPost.featuredImage ? (
-                    <Image
-                      src={urlFor(featuredPost.featuredImage).width(600).height(400).fit('crop').url()}
-                      alt={featuredPost.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                      priority
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-[0.65rem] uppercase tracking-widest text-gray-400">
-                      Featured Image
-                    </div>
-                  )}
+                  <div className="flex h-full items-center justify-center text-[0.65rem] uppercase tracking-widest text-gray-400">
+                    Featured Image
+                  </div>
                 </div>
               </AnimatedCard>
             )}
@@ -152,19 +138,9 @@ export default async function HomePage() {
                   {morePosts.map((post, index) => (
                     <AnimatedCard key={post._id} delay={index * 100} className="flex flex-col">
                       <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)]">
-                        {post.featuredImage ? (
-                          <Image
-                            src={urlFor(post.featuredImage).width(400).height(300).fit('crop').url()}
-                            alt={post.title}
-                            fill
-                            className="object-cover transition-transform duration-300 hover:scale-105"
-                            sizes="(max-width: 640px) 100vw, 33vw"
-                          />
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-[0.65rem] uppercase tracking-widest text-gray-400">
-                            Featured Image
-                          </div>
-                        )}
+                        <div className="flex h-full items-center justify-center text-[0.65rem] uppercase tracking-widest text-gray-400">
+                          Featured Image
+                        </div>
                       </div>
                       <h3 className="mt-3 font-display text-lg leading-snug text-ink">{post.title}</h3>
                       <p className="mt-0.5 text-[0.65rem] tracking-wider text-gray-400">

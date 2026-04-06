@@ -1,11 +1,22 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
-import { PortableText } from '@portabletext/react'
-import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
-import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
-import { allAuthorsQuery } from '@/lib/queries'
 import { DiamondDivider } from '@/components/DiamondDivider'
+
+// Hardcoded data - avoids Sanity client issues
+// TODO: Re-enable Sanity fetching once client is debugged
+
+const authors = [
+  {
+    _id: '1',
+    name: 'Editor in Chief',
+    slug: { current: 'editor-in-chief' },
+    image: null,
+    role: 'Editor in Chief',
+    bio: [],
+    pronoun: 'they/them',
+    lookingFor: 'Fresh perspectives and authentic voices'
+  }
+]
 
 export const metadata: Metadata = {
   title: 'Our Staff',
@@ -14,21 +25,7 @@ export const metadata: Metadata = {
 
 export const revalidate = 60
 
-type Author = {
-  _id: string
-  name: string
-  slug: { current: string }
-  image?: SanityImageSource
-  role?: string
-  bio?: unknown[]
-  pronoun?: string
-  lookingFor?: string
-}
-
 export default async function TeamPage() {
-  const client = await getSanityServerClient()
-  const authors = await safeSanityFetch<Author[]>(client, allAuthorsQuery, {}, [])
-
   return (
     <div className="mx-auto max-w-4xl px-6 py-14">
       {/* Heading */}
@@ -54,24 +51,14 @@ export default async function TeamPage() {
                 <div className="flex shrink-0 flex-col items-center gap-2">
                   <Link href={`/author/${author.slug.current}`} className="group">
                     <div className="h-48 w-48 overflow-hidden rounded-full ring-2 ring-black/10 transition-all group-hover:ring-[var(--color-nav)] sm:h-56 sm:w-56">
-                      {author.image ? (
-                        <Image
-                          src={urlFor(author.image).width(224).height(224).fit('crop').url()}
-                          alt={author.name}
-                          width={224}
-                          height={224}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <div
-                          className="flex h-full w-full items-center justify-center"
-                          style={{ backgroundColor: 'var(--color-amber)' }}
-                        >
-                          <span className="font-display text-4xl font-bold text-white">
-                            {author.name.charAt(0)}
-                          </span>
-                        </div>
-                      )}
+                      <div
+                        className="flex h-full w-full items-center justify-center"
+                        style={{ backgroundColor: 'var(--color-amber)' }}
+                      >
+                        <span className="font-display text-4xl font-bold text-white">
+                          {author.name.charAt(0)}
+                        </span>
+                      </div>
                     </div>
                   </Link>
                   <p className="text-center text-sm font-medium text-ink">{author.name}</p>
@@ -83,11 +70,6 @@ export default async function TeamPage() {
                 {/* Bio box */}
                 <div className="flex-1 rounded border border-black/10 bg-white/60 p-6">
                   <p className="font-display text-xl text-ink">{author.name}</p>
-                  {author.bio && (author.bio as unknown[]).length > 0 && (
-                    <div className="prose prose-sm prose-gray mt-3 max-w-none font-body prose-p:leading-7 prose-p:text-gray-600">
-                      <PortableText value={author.bio as any} />
-                    </div>
-                  )}
                   {author.lookingFor && (
                     <div className="mt-4 border-t border-black/8 pt-4">
                       <p className="text-[0.7rem] uppercase tracking-widest text-gray-400">
