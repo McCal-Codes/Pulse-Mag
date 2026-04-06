@@ -1,18 +1,5 @@
 import { PortableText as PortableTextComponent } from '@portabletext/react'
 import type { PortableTextComponents, PortableTextBlock } from '@portabletext/react'
-import Image from 'next/image'
-import { urlFor } from '@/lib/sanity.image'
-import type { SanityImageSource } from '@/lib/sanity.image'
-
-interface PortableTextImageValue {
-  _type: 'image'
-  asset: {
-    _ref: string
-    _type: 'reference'
-  }
-  alt?: string
-  caption?: string
-}
 
 interface PortableTextCodeValue {
   _type: 'code'
@@ -23,30 +10,6 @@ interface PortableTextCodeValue {
 
 const components: PortableTextComponents = {
   types: {
-    image: ({ value }: { value: PortableTextImageValue }) => {
-      if (!value?.asset?._ref) {
-        return null
-      }
-
-      return (
-        <figure className="my-8">
-          <div className="relative aspect-video overflow-hidden rounded-lg">
-            <Image
-              src={urlFor(value as SanityImageSource).width(1200).height(675).url()}
-              alt={value.alt || ''}
-              fill
-              className="object-cover"
-              sizes="(min-width: 768px) 700px, 100vw"
-            />
-          </div>
-          {value.caption && (
-            <figcaption className="mt-2 text-center text-sm text-gray-500">
-              {value.caption}
-            </figcaption>
-          )}
-        </figure>
-      )
-    },
     code: ({ value }: { value: PortableTextCodeValue }) => {
       return (
         <figure className="my-6">

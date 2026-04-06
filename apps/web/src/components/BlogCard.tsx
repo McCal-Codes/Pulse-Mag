@@ -1,6 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
 
 interface BlogPost {
   _id: string
@@ -8,7 +6,6 @@ interface BlogPost {
   slug: { current: string }
   excerpt?: string
   publishedAt: string
-  featuredImage?: SanityImageSource
   author?: { name: string; slug?: { current: string } }
 }
 
@@ -28,20 +25,7 @@ export function BlogCard({ post }: BlogCardProps) {
       href={`/blog/${post.slug.current}`}
       className="group block overflow-hidden rounded-[1.75rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.88)_0%,rgba(248,241,229,0.95)_100%)] shadow-[0_20px_52px_-30px_rgba(20,17,15,0.24)] transition-all duration-300 hover:-translate-y-1"
     >
-      <div className="grid gap-0 sm:grid-cols-[0.92fr_1.08fr]">
-        {post.featuredImage && (
-          <div className="relative min-h-[14rem] overflow-hidden">
-            <Image
-              src={urlFor(post.featuredImage).width(900).height(720).url()}
-              alt={post.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              sizes="(min-width: 640px) 40vw, 100vw"
-            />
-          </div>
-        )}
-
-        <div className="flex flex-col justify-between p-6">
+      <div className="flex flex-col justify-between p-6">
           <div>
             <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-gray-400">
               <span>Notebook</span>
@@ -64,7 +48,6 @@ export function BlogCard({ post }: BlogCardProps) {
             </span>
           </div>
         </div>
-      </div>
     </Link>
   )
 }

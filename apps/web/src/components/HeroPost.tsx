@@ -1,13 +1,10 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
 
 type HeroPostProps = {
   post: {
     title: string
     slug: { current: string }
     excerpt?: string
-    mainImage?: SanityImageSource
     publishedAt?: string
     author?: { name: string }
   }
@@ -16,18 +13,7 @@ type HeroPostProps = {
 export function HeroPost({ post }: HeroPostProps) {
   return (
     <section className="relative min-h-[30rem] overflow-hidden rounded-xl bg-ink text-paper shadow-[0_34px_86px_-34px_rgba(20,17,15,0.52)] sm:min-h-[35rem]">
-      {post.mainImage ? (
-        <Image
-          src={urlFor(post.mainImage).width(1800).height(1200).url()}
-          alt={post.title}
-          fill
-          className="object-cover"
-          priority
-          sizes="(min-width: 1024px) 60vw, 100vw"
-        />
-      ) : (
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,#14110f_0%,#2f241d_100%)]" />
-      )}
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,#14110f_0%,#2f241d_100%)]" />
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(141,82,53,0.28),transparent_34%),linear-gradient(180deg,rgba(20,17,15,0.08)_0%,rgba(20,17,15,0.64)_52%,rgba(20,17,15,0.96)_100%)]" />
 
