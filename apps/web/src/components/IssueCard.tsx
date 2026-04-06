@@ -16,12 +16,12 @@ export function IssueCard({ issue, compact = false }: IssueCardProps) {
         <span className="text-[0.55rem] uppercase tracking-[0.28em] text-white/80">
           {issue.status}
         </span>
-        <span className="font-serif text-lg font-bold text-white/25">{issue.season}</span>
+        <span className="font-display text-lg font-bold text-white/25">{issue.season}</span>
       </div>
 
       <div className={compact ? 'px-5 py-5' : 'px-6 py-7'}>
         <h2
-          className={`font-serif leading-tight text-ink ${compact ? 'text-2xl' : 'text-3xl sm:text-4xl'}`}
+          className={`font-display leading-tight text-ink ${compact ? 'text-2xl' : 'text-3xl sm:text-4xl'}`}
         >
           {issue.title}
         </h2>

@@ -6,6 +6,7 @@ import { useState } from 'react'
 const navLinks = [
   { label: 'About', href: '/about' },
   { label: 'Issues', href: '/issues' },
+  { label: 'News', href: '/news' },
   { label: 'Submit', href: '/submit' },
   { label: 'Events', href: '/events' },
 ]
@@ -26,11 +27,11 @@ export function Navigation() {
             >
               ✦
             </span>
-            <span className="font-serif text-[2.2rem] leading-none tracking-[0.12em] text-ink transition-colors group-hover:text-accent sm:text-[2.6rem]">
+            <span className="font-display text-[2.2rem] leading-none tracking-[0.12em] text-ink transition-colors group-hover:text-accent sm:text-[2.6rem]">
               PULSE
             </span>
           </div>
-          <span className="font-sans text-[0.65rem] italic tracking-[0.18em] text-gray-500 sm:text-[0.7rem]">
+          <span className="font-body text-[0.65rem] italic tracking-[0.18em] text-gray-500 sm:text-[0.7rem]">
             Literary &amp; Arts Magazine
           </span>
         </Link>

@@ -52,13 +52,13 @@ export default async function EventsPage() {
     <div className="mx-auto max-w-4xl px-6 py-14">
       {/* Heading */}
       <div className="mb-12 text-center">
-        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Events</h1>
+        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">Events</h1>
         <DiamondDivider className="mt-3" />
       </div>
 
       {events.length === 0 ? (
         <div className="rounded border border-black/10 bg-white/60 px-8 py-14 text-center">
-          <p className="font-serif text-2xl text-ink">No upcoming events</p>
+          <p className="font-display text-2xl text-ink">No upcoming events</p>
           <p className="mt-3 text-sm text-gray-500">
             Check back soon — events will appear here once they&rsquo;re added in the Studio.
           </p>
@@ -71,7 +71,7 @@ export default async function EventsPage() {
           {/* Upcoming */}
           {upcoming.length > 0 && (
             <section className="mb-14">
-              <h2 className="mb-6 font-serif text-2xl text-ink">Upcoming</h2>
+              <h2 className="mb-6 font-display text-2xl text-ink">Upcoming</h2>
               <div className="space-y-6">
                 {upcoming.map((event) => (
                   <article
@@ -95,7 +95,7 @@ export default async function EventsPage() {
                           {formatEventDate(event.date)} &bull; {formatEventTime(event.date)}
                           {event.location && ` &bull; ${event.location}`}
                         </p>
-                        <h3 className="mt-1.5 font-serif text-xl text-ink">{event.title}</h3>
+                        <h3 className="mt-1.5 font-display text-xl text-ink">{event.title}</h3>
                         {event.description && (
                           <p className="mt-2 text-sm leading-7 text-gray-600">{event.description}</p>
                         )}
@@ -121,7 +121,7 @@ export default async function EventsPage() {
           {/* Past */}
           {past.length > 0 && (
             <section>
-              <h2 className="mb-6 font-serif text-2xl text-gray-400">Past Events</h2>
+              <h2 className="mb-6 font-display text-2xl text-gray-400">Past Events</h2>
               <div className="space-y-4">
                 {past.map((event) => (
                   <article
@@ -133,7 +133,7 @@ export default async function EventsPage() {
                         {formatEventDate(event.date)}
                         {event.location && ` · ${event.location}`}
                       </p>
-                      <h3 className="mt-0.5 font-serif text-base text-ink">{event.title}</h3>
+                      <h3 className="mt-0.5 font-display text-base text-ink">{event.title}</h3>
                     </div>
                   </article>
                 ))}

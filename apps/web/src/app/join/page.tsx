@@ -25,7 +25,7 @@ export default function JoinPage() {
     <div className="mx-auto max-w-4xl px-6 py-14">
       {/* Heading */}
       <div className="mb-10 text-center">
-        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Join Our Team</h1>
+        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">Join Our Team</h1>
         <DiamondDivider className="mt-3" />
       </div>
 
@@ -43,7 +43,7 @@ export default function JoinPage() {
 
       {/* Open Positions */}
       <section>
-        <h2 className="mb-8 text-center font-serif text-2xl tracking-tight text-ink sm:text-3xl">
+        <h2 className="mb-8 text-center font-display text-2xl tracking-tight text-ink sm:text-3xl">
           Open Positions
         </h2>
         <div className="grid gap-6 sm:grid-cols-3">
@@ -54,12 +54,12 @@ export default function JoinPage() {
                 className="flex aspect-square items-center justify-center rounded-lg"
                 style={{ backgroundColor: 'var(--color-amber)' }}
               >
-                <span className="font-serif text-4xl font-bold text-white/90">
+                <span className="font-display text-4xl font-bold text-white/90">
                   {position.title.charAt(0)}
                 </span>
               </div>
               {/* Title */}
-              <h3 className="mt-3 font-serif text-lg text-ink">{position.title}</h3>
+              <h3 className="mt-3 font-display text-lg text-ink">{position.title}</h3>
               {/* Description box */}
               <div className="mt-2 flex-1 rounded border border-black/10 p-4">
                 <p className="text-xs leading-6 text-gray-600">{position.description}</p>
@@ -73,13 +73,13 @@ export default function JoinPage() {
 
       {/* Staff Application Form */}
       <section>
-        <h2 className="mb-8 text-center font-serif text-2xl tracking-tight text-ink sm:text-3xl">
+        <h2 className="mb-8 text-center font-display text-2xl tracking-tight text-ink sm:text-3xl">
           Staff Application
         </h2>
 
         {submitted ? (
           <div className="rounded border border-black/10 bg-white/60 p-8 text-center">
-            <p className="font-serif text-xl text-ink">Thank you for applying!</p>
+            <p className="font-display text-xl text-ink">Thank you for applying!</p>
             <p className="mt-2 text-sm text-gray-500">
               Your application has been sent. We&rsquo;ll be in touch soon.
             </p>

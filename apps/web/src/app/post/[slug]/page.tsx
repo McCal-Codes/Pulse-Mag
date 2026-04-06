@@ -2,27 +2,17 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PortableText } from '@portabletext/react'
+import { PortableText } from '@/components/PortableText'
 import { sanityClient, getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
 import { postBySlugQuery, allPostSlugsQuery } from '@/lib/queries'
-import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
+import { urlFor } from '@/lib/sanity.image'
+import type { Post } from '@/lib/types'
 
 type Props = { params: Promise<{ slug: string }> }
 
-type PortableTextValue = Array<Record<string, unknown>>
-
-type PostData = {
-  title: string
-  excerpt?: string
-  mainImage?: SanityImageSource
-  publishedAt?: string
-  body?: PortableTextValue
-  author?: { name: string; slug?: { current: string } }
-}
-
 export async function generateStaticParams() {
   if (!sanityClient) return []
-  const slugs = await safeSanityFetch<Array<{ slug: string }>>(sanityClient, allPostSlugsQuery, {}, [])
+  const slugs = await safeSanityFetch<{ slug: string }[]>(sanityClient, allPostSlugsQuery, {}, [])
   return slugs.map(({ slug }) => ({ slug }))
 }
 
@@ -30,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const sanityServerClient = await getSanityServerClient()
   if (!sanityServerClient) return {}
   const { slug } = await params
-  const post = await safeSanityFetch<PostData | null>(sanityServerClient, postBySlugQuery, { slug }, null)
+  const post = await safeSanityFetch<Post | null>(sanityServerClient, postBySlugQuery, { slug }, null)
   if (!post) return {}
   return {
     title: post.title,
@@ -50,10 +40,11 @@ export default async function PostPage({ params }: Props) {
   if (!sanityServerClient) notFound()
 
   const { slug } = await params
-  const post = await safeSanityFetch<PostData | null>(sanityServerClient, postBySlugQuery, { slug }, null)
+  const post = await safeSanityFetch<Post | null>(sanityServerClient, postBySlugQuery, { slug }, null)
   if (!post) notFound()
 
   const body = Array.isArray(post.body) ? post.body : []
+  const portableTextBody = body as import('@portabletext/react').PortableTextBlock[]
 
   return (
     <article className="mx-auto max-w-2xl px-6 py-14">
@@ -71,13 +62,13 @@ export default async function PostPage({ params }: Props) {
       </p>
 
       {/* Title */}
-      <h1 className="mt-2 font-serif text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
+      <h1 className="mt-2 font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
         {post.title}
       </h1>
 
       {/* Excerpt */}
       {post.excerpt && (
-        <p className="mt-4 font-serif text-lg italic leading-relaxed text-gray-500">
+        <p className="mt-4 font-display text-lg italic leading-relaxed text-gray-500">
           {post.excerpt}
         </p>
       )}
@@ -129,12 +120,8 @@ export default async function PostPage({ params }: Props) {
 
       {/* Body */}
       {body.length > 0 && (
-        <div className="prose prose-gray mt-10 max-w-none font-sans leading-8
-          prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight
-          prose-a:text-[var(--color-nav)] prose-a:no-underline hover:prose-a:underline
-          prose-blockquote:border-l-[var(--color-nav)] prose-blockquote:font-serif prose-blockquote:not-italic
-          prose-p:text-gray-700">
-          <PortableText value={body as any} />
+        <div className="mt-10 max-w-none">
+          <PortableText value={portableTextBody} />
         </div>
       )}
 

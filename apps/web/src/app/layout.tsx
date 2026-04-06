@@ -1,18 +1,19 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Outfit } from 'next/font/google'
+import { Playfair_Display, Libre_Baskerville } from 'next/font/google'
 import '../styles/globals.css'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 
-const outfit = Outfit({
+const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-body',
+  weight: ['400', '700'],
   display: 'swap',
 })
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  variable: '--font-cormorant',
+  variable: '--font-display',
   weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
@@ -31,8 +32,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${cormorant.variable}`}>
-      <body className="min-h-screen bg-paper text-ink font-sans antialiased">
+    <html lang="en" className={`${libreBaskerville.variable} ${playfair.variable}`}>
+      <body className="min-h-screen bg-paper text-ink font-body antialiased">
         <Navigation />
         <main>{children}</main>
         <Footer />

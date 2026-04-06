@@ -48,7 +48,7 @@ export function BlogCard({ post }: BlogCardProps) {
               <span>{formattedDate}</span>
             </div>
 
-            <h3 className="mt-4 font-serif text-3xl leading-none tracking-[-0.035em] text-ink transition-colors group-hover:text-accent">
+            <h3 className="mt-4 font-display text-3xl leading-none tracking-[-0.035em] text-ink transition-colors group-hover:text-accent">
               {post.title}
             </h3>
 

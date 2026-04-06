@@ -33,7 +33,7 @@ export default async function TeamPage() {
     <div className="mx-auto max-w-4xl px-6 py-14">
       {/* Heading */}
       <div className="mb-12 text-center">
-        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Our Staff</h1>
+        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">Our Staff</h1>
         <DiamondDivider className="mt-3" />
       </div>
 
@@ -67,7 +67,7 @@ export default async function TeamPage() {
                           className="flex h-full w-full items-center justify-center"
                           style={{ backgroundColor: 'var(--color-amber)' }}
                         >
-                          <span className="font-serif text-4xl font-bold text-white">
+                          <span className="font-display text-4xl font-bold text-white">
                             {author.name.charAt(0)}
                           </span>
                         </div>
@@ -82,9 +82,9 @@ export default async function TeamPage() {
 
                 {/* Bio box */}
                 <div className="flex-1 rounded border border-black/10 bg-white/60 p-6">
-                  <p className="font-serif text-xl text-ink">{author.name}</p>
+                  <p className="font-display text-xl text-ink">{author.name}</p>
                   {author.bio && (author.bio as unknown[]).length > 0 && (
-                    <div className="prose prose-sm prose-gray mt-3 max-w-none font-sans prose-p:leading-7 prose-p:text-gray-600">
+                    <div className="prose prose-sm prose-gray mt-3 max-w-none font-body prose-p:leading-7 prose-p:text-gray-600">
                       <PortableText value={author.bio as any} />
                     </div>
                   )}

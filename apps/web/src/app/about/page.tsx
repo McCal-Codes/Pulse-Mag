@@ -44,14 +44,14 @@ export default async function AboutPage() {
     <div className="mx-auto max-w-4xl px-6 py-14">
       {/* Heading */}
       <div className="mb-10 text-center">
-        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">About Us</h1>
+        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">About Us</h1>
         <DiamondDivider className="mt-3" />
       </div>
 
       {/* Content sections - editorial style */}
       <div className="space-y-12">
         {page?.content ? (
-          <div className="prose prose-lg prose-gray max-w-none font-sans prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-a:text-[var(--color-nav)] prose-a:no-underline hover:prose-a:underline">
+          <div className="prose prose-lg prose-gray max-w-none font-body prose-headings:font-display prose-headings:font-normal prose-headings:tracking-tight prose-a:text-[var(--color-nav)] prose-a:no-underline hover:prose-a:underline">
             <PortableText value={page.content as any} />
           </div>
         ) : (
@@ -91,7 +91,7 @@ export default async function AboutPage() {
               <span className="h-px w-12 bg-[var(--color-nav)]/30" />
             </div>
             <blockquote className="mx-auto max-w-2xl">
-              <p className="font-serif text-xl italic leading-relaxed text-ink sm:text-2xl">
+              <p className="font-display text-xl italic leading-relaxed text-ink sm:text-2xl">
                 &ldquo;{editorQuote ?? 'Insert Quote From Current Editor-in-Chief here.'}&rdquo;
               </p>
             </blockquote>

@@ -63,28 +63,48 @@ export async function Footer() {
   const links = socialLinks(settings ?? {})
 
   return (
-    <footer className="relative mt-24 overflow-hidden" style={{ background: 'linear-gradient(160deg, #d6a87a 0%, #e8ceb0 45%, #cda07a 100%)' }}>
+    <footer
+      className="relative mt-24 overflow-hidden"
+      style={{
+        background: 'linear-gradient(160deg, #F4F1EC 0%, #E8E5E0 45%, #DDD9D3 100%)',
+      }}
+    >
+      {/* Decorative gradient overlay */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          background: 'radial-gradient(ellipse at 20% 80%, rgba(61, 20, 25, 0.15) 0%, transparent 50%)',
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 opacity-15"
+        style={{
+          background: 'radial-gradient(ellipse at 80% 20%, rgba(18, 27, 19, 0.2) 0%, transparent 50%)',
+        }}
+        aria-hidden="true"
+      />
       {/* Blob shapes */}
       <svg
-        className="absolute -left-16 bottom-0 h-64 w-64 opacity-40"
+        className="absolute -left-16 bottom-0 h-64 w-64 opacity-30"
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
         <path
-          fill="#b07055"
+          fill="#3D1419"
           d="M47.7,-51.2C60.3,-37.3,68,-18.6,68.2,0.2C68.4,19,61,38.1,48.4,51.9C35.8,65.7,17.9,74.2,-1.4,75.7C-20.7,77.2,-41.4,71.7,-55.2,57.9C-69,44.2,-75.8,22.1,-74.4,1.4C-73,-19.3,-63.3,-38.6,-49.1,-52.5C-34.9,-66.4,-17.4,-74.9,0.9,-75.9C19.2,-76.9,35.1,-65.1,47.7,-51.2Z"
           transform="translate(100 100)"
         />
       </svg>
       <svg
-        className="absolute -right-12 -top-8 h-72 w-72 opacity-30"
+        className="absolute -right-12 -top-8 h-72 w-72 opacity-20"
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
         <path
-          fill="#9e6855"
+          fill="#121B13"
           d="M38.9,-42.5C50.5,-31.5,60.3,-15.8,62.2,1.9C64.1,19.6,58.2,39.2,46.6,52.3C35,65.4,17.5,72,-1.5,73.5C-20.5,75,-41,71.5,-54.5,58.5C-68,45.4,-74.5,22.7,-71.7,2.8C-68.9,-17.1,-56.8,-34.2,-43.3,-45.2C-29.8,-56.2,-14.9,-61.1,0.8,-62C16.5,-62.9,27.3,-53.5,38.9,-42.5Z"
           transform="translate(100 100)"
         />
@@ -92,7 +112,7 @@ export async function Footer() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center px-6 py-12 text-center">
-        <h2 className="font-serif text-3xl tracking-tight text-ink sm:text-4xl">Stay In Tune</h2>
+        <h2 className="font-display text-3xl tracking-tight text-ink sm:text-4xl">Stay In Tune</h2>
 
         {/* Social icons */}
         <div className="mt-6 flex items-center gap-3">
@@ -114,7 +134,7 @@ export async function Footer() {
         <div className="mt-8 flex flex-col items-center gap-1">
           <div className="flex items-center gap-1.5">
             <span className="text-base leading-none text-ink/60" aria-hidden="true">✦</span>
-            <span className="font-serif text-2xl tracking-[0.12em] text-ink/70">PULSE</span>
+            <span className="font-display text-2xl tracking-[0.12em] text-ink/70">PULSE</span>
           </div>
           <span className="text-[0.65rem] italic tracking-widest text-ink/50">
             Literary &amp; Arts Magazine

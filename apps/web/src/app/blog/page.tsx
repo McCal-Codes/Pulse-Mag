@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
-import { allBlogPostsQuery } from '@/lib/queries'
-import { type SanityImageSource, urlFor } from '@/lib/sanity.image'
+import { fetchWixRSSPosts } from '@/lib/wix-rss'
 import { DiamondDivider } from '@/components/DiamondDivider'
 
 export const metadata: Metadata = {
@@ -13,17 +11,6 @@ export const metadata: Metadata = {
 
 export const revalidate = 60
 
-type BlogPost = {
-  _id: string
-  title: string
-  slug: { current: string }
-  excerpt?: string
-  publishedAt: string
-  featuredImage?: SanityImageSource
-  tags?: string[]
-  author?: { name: string; slug?: { current: string } }
-}
-
 function formatDate(dateString: string) {
   return new Date(dateString).toLocaleDateString('en-US', {
     month: 'long',
@@ -32,9 +19,13 @@ function formatDate(dateString: string) {
   })
 }
 
+function stripHtml(html: string): string {
+  return html?.replace(/<[^>]*>/g, '').slice(0, 200) + '...' || ''
+}
+
 export default async function BlogPage() {
-  const client = await getSanityServerClient()
-  const posts = await safeSanityFetch<BlogPost[]>(client, allBlogPostsQuery, {}, [])
+  // Fetch from Wix RSS feed
+  const posts = await fetchWixRSSPosts()
 
   const featured = posts[0] ?? null
   const rest = posts.slice(1)
@@ -43,7 +34,7 @@ export default async function BlogPage() {
     <div className="mx-auto max-w-5xl px-6 py-14">
       {/* Heading */}
       <div className="mb-12 text-center">
-        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Pulse News</h1>
+        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">Pulse News</h1>
         <DiamondDivider className="mt-3 mb-5" />
         <p className="mx-auto max-w-md text-sm leading-7 text-gray-500">
           News, updates, and behind-the-scenes from the Pulse team.
@@ -52,7 +43,7 @@ export default async function BlogPage() {
 
       {posts.length === 0 ? (
         <div className="rounded-xl border border-black/10 bg-white/60 px-8 py-14 text-center">
-          <p className="font-serif text-2xl text-ink">No posts yet</p>
+          <p className="font-display text-2xl text-ink">No posts yet</p>
           <p className="mt-2 text-sm text-gray-400">Check back soon.</p>
         </div>
       ) : (
@@ -62,36 +53,38 @@ export default async function BlogPage() {
             <article className="mb-10 grid gap-6 sm:grid-cols-2 sm:gap-8">
               <div className="flex flex-col justify-between">
                 <div>
-                  <h2 className="font-serif text-2xl leading-snug text-ink sm:text-3xl">
+                  <h2 className="font-display text-2xl leading-snug text-ink sm:text-3xl">
                     {featured.title}
                   </h2>
                   <p className="mt-1 text-[0.7rem] tracking-wider text-gray-400">
-                    {formatDate(featured.publishedAt)}
+                    {formatDate(featured.date)}
                     {featured.author && (
-                      <span className="ml-2 text-gray-400">· {featured.author.name}</span>
+                      <span className="ml-2 text-gray-400">· {featured.author}</span>
                     )}
                   </p>
                   {featured.excerpt && (
                     <div className="mt-4 rounded border border-black/10 p-4">
-                      <p className="text-sm leading-7 text-gray-600">{featured.excerpt}</p>
+                      <p className="text-sm leading-7 text-gray-600">
+                        {stripHtml(featured.excerpt)}
+                      </p>
                     </div>
                   )}
                 </div>
                 <div className="mt-5 flex items-center gap-4">
                   <Link
-                    href={`/blog/${featured.slug.current}`}
+                    href={`/blog/${featured.slug}`}
                     className="inline-block rounded border border-black/20 px-5 py-2 text-sm font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
                   >
                     Read More
                   </Link>
-                  {featured.tags && featured.tags.length > 0 && (
+                  {featured.categories && featured.categories.length > 0 && (
                     <div className="flex flex-wrap gap-1.5">
-                      {featured.tags.map((tag) => (
+                      {featured.categories.map((cat) => (
                         <span
-                          key={tag}
+                          key={cat}
                           className="rounded-full border border-black/10 px-2.5 py-0.5 text-[0.6rem] uppercase tracking-wider text-gray-400"
                         >
-                          {tag}
+                          {cat}
                         </span>
                       ))}
                     </div>
@@ -102,7 +95,7 @@ export default async function BlogPage() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)] sm:aspect-auto sm:min-h-[14rem]">
                 {featured.featuredImage ? (
                   <Image
-                    src={urlFor(featured.featuredImage).width(600).height(400).fit('crop').url()}
+                    src={featured.featuredImage}
                     alt={featured.title}
                     fill
                     className="object-cover"
@@ -123,11 +116,11 @@ export default async function BlogPage() {
               <hr className="mb-10 border-black/10" />
               <div className="grid gap-6 sm:grid-cols-3">
                 {rest.map((post) => (
-                  <article key={post._id} className="flex flex-col">
+                  <article key={post.id} className="flex flex-col">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)]">
                       {post.featuredImage ? (
                         <Image
-                          src={urlFor(post.featuredImage).width(400).height(300).fit('crop').url()}
+                          src={post.featuredImage}
                           alt={post.title}
                           fill
                           className="object-cover transition-transform duration-300 hover:scale-105"
@@ -140,28 +133,28 @@ export default async function BlogPage() {
                       )}
                     </div>
 
-                    <h3 className="mt-3 font-serif text-lg leading-snug text-ink">{post.title}</h3>
+                    <h3 className="mt-3 font-display text-lg leading-snug text-ink">{post.title}</h3>
                     <p className="mt-0.5 text-[0.65rem] tracking-wider text-gray-400">
-                      {formatDate(post.publishedAt)}
-                      {post.author && <span className="ml-1">· {post.author.name}</span>}
+                      {formatDate(post.date)}
+                      {post.author && <span className="ml-1">· {post.author}</span>}
                     </p>
 
                     {post.excerpt && (
                       <div className="mt-2 rounded border border-black/10 p-3">
                         <p className="line-clamp-3 text-xs leading-6 text-gray-600">
-                          {post.excerpt}
+                          {stripHtml(post.excerpt)}
                         </p>
                       </div>
                     )}
 
-                    {post.tags && post.tags.length > 0 && (
+                    {post.categories && post.categories.length > 0 && (
                       <div className="mt-2 flex flex-wrap gap-1.5">
-                        {post.tags.map((tag) => (
+                        {post.categories.map((cat) => (
                           <span
-                            key={tag}
+                            key={cat}
                             className="rounded-full border border-black/10 px-2 py-0.5 text-[0.55rem] uppercase tracking-wider text-gray-400"
                           >
-                            {tag}
+                            {cat}
                           </span>
                         ))}
                       </div>
@@ -169,7 +162,7 @@ export default async function BlogPage() {
 
                     <div className="mt-3">
                       <Link
-                        href={`/blog/${post.slug.current}`}
+                        href={`/blog/${post.slug}`}
                         className="inline-block rounded border border-black/15 px-3 py-1.5 text-xs font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
                       >
                         Read More

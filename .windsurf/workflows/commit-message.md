@@ -16,6 +16,36 @@ git diff --cached --stat   # See what changed
 git diff --cached          # See full diff
 ```
 
+## Committing in Parts
+
+To commit changes in logical groups (recommended for 5+ files):
+
+```bash
+# Stage specific directories
+
+# 1. Sanity schemas first
+git add apps/studio/
+git commit -m "feat(studio): add event and siteSettings schemas"
+
+# 2. Web app pages
+git add apps/web/src/app/
+git commit -m "feat(web): add events and join pages with styling"
+
+# 3. Components
+git add apps/web/src/components/
+git commit -m "feat(ui): add DiamondDivider and update ArticleCard"
+
+# 4. Lib and utilities
+git add apps/web/src/lib/
+git commit -m "refactor(lib): update queries for new schemas"
+
+# 5. Styles and config
+git add apps/web/src/styles/ .vscode/ .windsurf/
+git commit -m "style(globals): update CSS and add dev configs"
+```
+
+**Key point**: `git commit` commits ALL staged files. Stage selectively to split commits.
+
 ## Commit Types by Change Pattern
 
 | What Changed | Type | Example Message |

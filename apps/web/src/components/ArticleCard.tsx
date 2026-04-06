@@ -42,7 +42,7 @@ export function ArticleCard({ post }: { post: Post }) {
         </div>
 
         <Link href={`/post/${post.slug.current}`}>
-          <h2 className="font-serif text-xl leading-snug text-ink transition-colors group-hover:text-[var(--color-nav)] sm:text-2xl">
+          <h2 className="font-display text-xl leading-snug text-ink transition-colors group-hover:text-[var(--color-nav)] sm:text-2xl">
             {post.title}
           </h2>
         </Link>

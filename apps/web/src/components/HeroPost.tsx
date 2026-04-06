@@ -49,7 +49,7 @@ export function HeroPost({ post }: HeroPostProps) {
 
         <div className="max-w-3xl">
           <Link href={`/post/${post.slug.current}`}>
-            <h2 className="font-serif text-[2.8rem] leading-none tracking-[-0.045em] text-paper transition-colors hover:text-paper/84 sm:text-6xl lg:text-7xl">
+            <h2 className="font-display text-[2.8rem] leading-none tracking-[-0.045em] text-paper transition-colors hover:text-paper/84 sm:text-6xl lg:text-7xl">
               {post.title}
             </h2>
           </Link>

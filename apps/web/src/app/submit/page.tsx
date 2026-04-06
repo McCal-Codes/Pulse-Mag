@@ -26,7 +26,7 @@ export default async function SubmitPage() {
     <div className="mx-auto max-w-3xl px-6 py-14">
       {/* Heading */}
       <div className="mb-10 text-center">
-        <h1 className="font-serif text-4xl tracking-tight text-ink sm:text-5xl">Submit</h1>
+        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">Submit</h1>
         <DiamondDivider className="mt-3" />
       </div>
 
@@ -68,7 +68,7 @@ export default async function SubmitPage() {
           <span className="absolute bottom-3 right-3 text-[0.5rem] text-[var(--color-nav)] opacity-40">◆</span>
 
           <p className="text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-nav)]">Open Annually</p>
-          <p className="mt-2 font-serif text-2xl leading-snug text-ink sm:text-3xl">
+          <p className="mt-2 font-display text-2xl leading-snug text-ink sm:text-3xl">
             Yearly Open<br />Submission Windows
           </p>
           <div className="mx-auto my-4 flex items-center justify-center gap-2 text-[var(--color-nav)] opacity-50">
@@ -76,7 +76,7 @@ export default async function SubmitPage() {
             <span className="text-[0.5rem]">◆</span>
             <span className="text-[0.4rem]">◆</span>
           </div>
-          <p className="font-serif text-lg text-gray-600 sm:text-xl">
+          <p className="font-display text-lg text-gray-600 sm:text-xl">
             {windowOpen} &ndash; {windowClose}
           </p>
         </div>

@@ -84,7 +84,7 @@ export default async function AuthorPage({ params }: Props) {
               className="flex h-32 w-32 items-center justify-center rounded-full sm:h-40 sm:w-40"
               style={{ backgroundColor: 'var(--color-amber)' }}
             >
-              <span className="font-serif text-4xl font-bold text-white">
+              <span className="font-display text-4xl font-bold text-white">
                 {author.name.charAt(0)}
               </span>
             </div>
@@ -96,13 +96,13 @@ export default async function AuthorPage({ params }: Props) {
           <p className="text-[0.6rem] uppercase tracking-[0.28em]" style={{ color: 'var(--color-nav)' }}>
             Staff
           </p>
-          <h1 className="mt-1 font-serif text-3xl text-ink sm:text-4xl">{author.name}</h1>
+          <h1 className="mt-1 font-display text-3xl text-ink sm:text-4xl">{author.name}</h1>
           {author.role && (
             <p className="mt-1 text-sm text-gray-500">{author.role}</p>
           )}
 
           {author.bio && (author.bio as unknown[]).length > 0 && (
-            <div className="prose prose-sm prose-gray mt-4 max-w-none font-sans prose-p:leading-7 prose-p:text-gray-600">
+            <div className="prose prose-sm prose-gray mt-4 max-w-none font-body prose-p:leading-7 prose-p:text-gray-600">
               <PortableText value={author.bio as any} />
             </div>
           )}
@@ -146,7 +146,7 @@ export default async function AuthorPage({ params }: Props) {
 
       {/* Posts */}
       <section className="mt-12">
-        <h2 className="mb-7 font-serif text-2xl text-ink">
+        <h2 className="mb-7 font-display text-2xl text-ink">
           {posts.length > 0
             ? `${posts.length} article${posts.length === 1 ? '' : 's'} by ${author.name}`
             : `No published articles yet`}
