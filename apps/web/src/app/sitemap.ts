@@ -1,39 +1,21 @@
-import { sanityClient } from '@/lib/sanity.client'
-import { allPostSlugsQuery, allBlogPostsQuery, siteSettingsQuery } from '@/lib/queries'
+import { getSanityServerClient, safeSanityFetch } from '@/lib/sanity.client'
+import { allPostSlugsQuery, allBlogPostsQuery } from '@/lib/queries'
 
 async function getAllRoutes() {
-  if (!sanityClient) {
-    console.warn('Sitemap: Sanity client not available')
-    return { posts: [], blogPosts: [], staticRoutes: [] }
-  }
+  const client = await getSanityServerClient()
 
-  try {
-    const [posts, blogPosts] = await Promise.all([
-      sanityClient.fetch(allPostSlugsQuery, {}, { cache: 'no-store' }),
-      sanityClient.fetch(allBlogPostsQuery, {}, { cache: 'no-store' }),
-    ])
+  const [posts, blogPosts] = await Promise.all([
+    safeSanityFetch(client, allPostSlugsQuery, {}, []),
+    safeSanityFetch(client, allBlogPostsQuery, {}, []),
+  ])
 
     return {
       posts: posts || [],
       blogPosts: blogPosts || [],
       staticRoutes: [
-        '',
-        '/about',
-        '/about/team',
-        '/issues',
-        '/news',
-        '/blog',
-        '/events',
-        '/submit',
-        '/join',
+        '', '/about', '/about/team', '/issues', '/news', '/blog', '/events', '/submit', '/join',
       ],
     }
-  } catch (error) {
-    console.error('Sitemap: Error fetching routes:', error)
-    return { posts: [], blogPosts: [], staticRoutes: [
-      '', '/about', '/submit', '/join', '/issues', '/blog', '/events'
-    ]}
-  }
 }
 
 export default async function Sitemap() {
