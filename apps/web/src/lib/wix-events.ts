@@ -2,8 +2,8 @@
 // Wix Events SDK integration - supports event listings, RSVPs, and ticket sales
 // Site: https://pulse24.wixsite.com/pulse
 
-import { createClient, OAuthStrategy, ApiKeyStrategy } from '@wix/sdk';
-import { events } from '@wix/events';
+import { createClient, ApiKeyStrategy } from '@wix/sdk';
+import { wixEventsV2 } from '@wix/events';
 
 // Environment variables
 const WIX_SITE_ID = process.env.WIX_SITE_ID || '';
@@ -21,13 +21,13 @@ function initializeClient() {
 
   // Check if credentials are set
   if (!WIX_API_KEY || !WIX_SITE_ID) {
-    console.error('[wix-events] Wix API credentials missing. Check WIX_API_KEY and WIX_SITE_ID in .env.local');
+    console.error('[wixevents] Wix API credentials missing. Check WIX_API_KEY and WIX_SITE_ID in .env.local - wix-events.ts:24');
     return null;
   }
 
   try {
     client = createClient({
-      modules: { events },
+      modules: { wixEventsV2 },
       auth: ApiKeyStrategy({
         apiKey: WIX_API_KEY,
         siteId: WIX_SITE_ID,
@@ -36,7 +36,7 @@ function initializeClient() {
 
     return client;
   } catch (error) {
-    console.error('[wix-events] Failed to initialize Wix client:', error);
+    console.error('[wixevents] Failed to initialize Wix client: - wix-events.ts:39', error);
     return null;
   }
 }
@@ -97,7 +97,7 @@ export interface RSVPForm {
 export async function getWixEvents(): Promise<WixEvent[]> {
   const wix = initializeClient();
   if (!wix) {
-    console.warn('[wix-events] Client not initialized, returning empty events list');
+    console.warn('[wixevents] Client not initialized, returning empty events list - wix-events.ts:100');
     return [];
   }
 
@@ -112,7 +112,7 @@ export async function getWixEvents(): Promise<WixEvent[]> {
     
     return wixEvents.map(mapWixEventToInterface);
   } catch (error) {
-    console.error('[wix-events] Failed to fetch events:', error);
+    console.error('[wixevents] Failed to fetch events: - wix-events.ts:115', error);
     return [];
   }
 }
@@ -128,7 +128,7 @@ export async function getWixEventById(eventId: string): Promise<WixEvent | null>
     const response = await wix.events.getEvent(eventId);
     return response?.event ? mapWixEventToInterface(response.event) : null;
   } catch (error) {
-    console.error(`[wix-events] Failed to fetch event ${eventId}:`, error);
+    console.error(`[wixevents] Failed to fetch event ${eventId}: - wix-events.ts:131`, error);
     return null;
   }
 }
@@ -185,7 +185,7 @@ export async function submitRSVP(form: RSVPForm): Promise<{ success: boolean; er
 
     return { success: true };
   } catch (error) {
-    console.error('[wix-events] RSVP submission failed:', error);
+    console.error('[wixevents] RSVP submission failed: - wix-events.ts:188', error);
     return { 
       success: false, 
       error: error instanceof Error ? error.message : 'RSVP submission failed' 
@@ -204,7 +204,7 @@ export async function isRSVPEnabled(eventId: string): Promise<boolean> {
     const response = await wix.events.getEvent(eventId);
     return response?.event?.rsvpStatus === 'ENABLED' || false;
   } catch (error) {
-    console.error(`[wix-events] Failed to check RSVP status for ${eventId}:`, error);
+    console.error(`[wixevents] Failed to check RSVP status for ${eventId}: - wix-events.ts:207`, error);
     return false;
   }
 }
@@ -224,7 +224,7 @@ export async function isTicketSalesEnabled(eventId: string): Promise<boolean> {
     const response = await wix.events.getEvent(eventId);
     return response?.event?.ticketSalesStatus === 'SALE_ACTIVE' || false;
   } catch (error) {
-    console.error(`[wix-events] Failed to check ticket status for ${eventId}:`, error);
+    console.error(`[wixevents] Failed to check ticket status for ${eventId}: - wix-events.ts:227`, error);
     return false;
   }
 }
@@ -240,7 +240,7 @@ export async function getEventTickets(eventId: string) {
     const response = await wix.events.listTickets({ eventId });
     return response.tickets || [];
   } catch (error) {
-    console.error(`[wix-events] Failed to fetch tickets for ${eventId}:`, error);
+    console.error(`[wixevents] Failed to fetch tickets for ${eventId}: - wix-events.ts:243`, error);
     return null;
   }
 }
@@ -251,11 +251,14 @@ export async function getEventTickets(eventId: string) {
 
 /**
  * Map Wix SDK event format to our interface
+ * Using eslint-disable for type safety on external API data
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapWixEventToInterface(event: any): WixEvent {
   // Extract date from Wix format (could be scheduled or immediate)
-  const date = event.scheduling?.config?.startDate || event.date;
-  const endDate = event.scheduling?.config?.endDate;
+  const scheduling = event.scheduling?.config;
+  const date = scheduling?.startDate || event.date;
+  const endDate = scheduling?.endDate;
 
   // Build location string from venue details
   const location = event.location?.name || event.venue?.name;
@@ -277,36 +280,49 @@ function mapWixEventToInterface(event: any): WixEvent {
   // Determine pricing info
   const isFree = !event.registration?.tickets || event.registration?.tickets?.length === 0;
   const tickets = event.registration?.tickets || [];
-  const prices = tickets.map((t: any) => t.price?.value).filter((p: number | undefined) => p !== undefined);
+  const prices = (tickets as Array<{ price?: { value?: number; currency?: string } }>)
+    .map((t) => t.price?.value)
+    .filter((p): p is number => p !== undefined);
 
   return {
-    id: event.id,
-    title: event.title,
-    slug: event.slug || event.id,
-    description: event.description,
+    id: event.id as string,
+    title: event.title as string,
+    slug: (event.slug || event.id) as string,
+    description: event.description as string | undefined,
     date,
     endDate,
-    location: location ? {
-      name: location,
-      address: address?.formatted,
-      city: address?.city,
-      country: address?.country,
-    } : undefined,
-    venue: location,
+    location: location
+      ? {
+          name: location as string,
+          address: address?.formatted as string | undefined,
+          city: address?.city as string | undefined,
+          country: address?.country as string | undefined,
+        }
+      : undefined,
+    venue: location as string | undefined,
     status,
-    image: image ? { url: image, alt: event.title } : undefined,
-    rsvpLink: event.registration?.rsvp?.url,
-    ticketLink: event.registration?.tickets?.[0]?.url,
-    capacity: event.registration?.capacity,
-    attendees: event.registration?.registeredCount,
+    image: image
+      ? {
+          url: image as string,
+          alt: (event.title as string | undefined) || 'Event image',
+        }
+      : undefined,
+    rsvpLink: event.registration?.rsvp?.url as string | undefined,
+    ticketLink: event.registration?.tickets?.[0]?.url as string | undefined,
+    capacity: event.registration?.capacity as number | undefined,
+    attendees: event.registration?.registeredCount as number | undefined,
     isFree,
     price: prices.length > 0 ? {
       min: Math.min(...prices),
       max: Math.max(...prices),
       currency: tickets[0]?.price?.currency,
     } : undefined,
-    categories: event.categories?.map((c: any) => c.name) || [],
-    tags: event.tags || [],
+    categories:
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (event.categories as any[])
+        ?.map((c) => c?.name)
+        .filter((n): n is string => typeof n === 'string') || [],
+    tags: (event.tags as string[]) || [],
   };
 }
 
