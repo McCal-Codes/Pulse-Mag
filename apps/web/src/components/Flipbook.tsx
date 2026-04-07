@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import { useState } from 'react'
-import { X, ChevronLeft, ChevronRight, Maximize, Minimize, BookOpen, ZoomIn, ZoomOut } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize, Minimize, BookOpen, ZoomIn, ZoomOut, Search } from 'lucide-react'
 
 interface FlipbookProps {
   pdfUrl: string
@@ -78,10 +78,17 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [isLargeSize, setIsLargeSize] = useState(true) // Toggle for page size
+  const [isLargeSize, setIsLargeSize] = useState(true)
+  const [zoomLevel, setZoomLevel] = useState(1)
+  const [isZoomMode, setIsZoomMode] = useState(false)
+  const [_zoomedPage, _setZoomedPage] = useState<number | null>(null)
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const [totalPages] = useState(16)
   const flipBookRef = useRef<any>(null)
   const touchStartX = useRef<number | null>(null)
+  const zoomContainerRef = useRef<HTMLDivElement>(null)
 
   // Check for mobile viewport
   useEffect(() => {
@@ -129,6 +136,56 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
       document.exitFullscreen()
       setIsFullscreen(false)
     }
+  }
+
+  const handleZoomIn = () => {
+    if (zoomLevel < 3) {
+      setZoomLevel(prev => Math.min(prev + 0.5, 3))
+    }
+  }
+
+  const handleZoomOut = () => {
+    if (zoomLevel > 1) {
+      setZoomLevel(prev => Math.max(prev - 0.5, 1))
+      if (zoomLevel <= 1.5) {
+        setPanPosition({ x: 0, y: 0 })
+      }
+    }
+  }
+
+  const handleZoomReset = () => {
+    setZoomLevel(1)
+    setPanPosition({ x: 0, y: 0 })
+    setIsZoomMode(false)
+    _setZoomedPage(null)
+  }
+
+  const _handlePageClick = (pageNum: number) => {
+    if (!isZoomMode) {
+      setIsZoomMode(true)
+      _setZoomedPage(pageNum)
+      setZoomLevel(1.5)
+    }
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (zoomLevel > 1) {
+      setIsDragging(true)
+      setDragStart({ x: e.clientX - panPosition.x, y: e.clientY - panPosition.y })
+    }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && zoomLevel > 1) {
+      setPanPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      })
+    }
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
   }
 
   const dims = isMobile 
@@ -191,6 +248,15 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             )}
             {!isMobile && (
               <button
+                onClick={() => setIsZoomMode(!isZoomMode)}
+                className={`rounded-full p-2 transition-all hover:bg-[var(--color-nav)]/10 ${isZoomMode ? 'text-[var(--color-nav)] bg-[var(--color-nav)]/10' : 'text-[var(--color-nav)]/60 hover:text-[var(--color-nav)]'}`}
+                title={isZoomMode ? 'Exit zoom mode' : 'Zoom mode - click pages to magnify'}
+              >
+                <Search size={18} />
+              </button>
+            )}
+            {!isMobile && (
+              <button
                 onClick={toggleFullscreen}
                 className="rounded-full p-2 text-[var(--color-nav)]/60 transition-all hover:bg-[var(--color-nav)]/10 hover:text-[var(--color-nav)]"
               >
@@ -208,7 +274,122 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
 
         {/* Book container with shadow */}
         <div className="relative flex flex-1 items-center justify-center">
-            {/* Decorative shelf shadow - soft warm tone */}
+            {/* Zoom Overlay - for magnifying pages */}
+          {isZoomMode && (
+            <div 
+              ref={zoomContainerRef}
+              className="absolute inset-0 z-30 flex items-center justify-center bg-[var(--color-nav)]/20 backdrop-blur-sm"
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+            >
+              <div 
+                className="relative cursor-move shadow-2xl"
+                style={{
+                  transform: `scale(${zoomLevel}) translate(${panPosition.x}px, ${panPosition.y}px)`,
+                  transition: isDragging ? 'none' : 'transform 0.3s ease-out'
+                }}
+              >
+                {/* Sample Magazine Page Content */}
+                <div className="w-[500px] h-[700px] bg-[#fefcfa] rounded shadow-xl overflow-hidden">
+                  {/* Magazine Header */}
+                  <div className="bg-gradient-to-r from-[var(--color-nav)]/20 to-[var(--color-nav)]/10 p-4 border-b border-[var(--color-nav)]/20">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium tracking-widest text-[var(--color-nav)]/60 uppercase">Sample Magazine</span>
+                      <span className="text-xs text-[var(--color-nav)]/40">Issue 01</span>
+                    </div>
+                  </div>
+                  
+                  {/* Magazine Content - simulating a real article */}
+                  <div className="p-6 space-y-4">
+                    {/* Article Title */}
+                    <h2 className="text-2xl font-display text-[var(--color-nav)] leading-tight">
+                      The Art of Digital Publishing
+                    </h2>
+                    <p className="text-xs text-[var(--color-nav)]/50">By Editorial Team</p>
+                    
+                    {/* Sample Image Area */}
+                    <div className="w-full h-40 bg-gradient-to-br from-[var(--color-nav)]/15 to-[var(--color-nav)]/5 rounded-lg flex items-center justify-center">
+                      <span className="text-4xl text-[var(--color-nav)]/20">✦</span>
+                    </div>
+                    
+                    {/* Article Text */}
+                    <div className="space-y-2">
+                      <p className="text-sm text-[var(--color-nav)]/70 leading-relaxed">
+                        In the evolving landscape of literary magazines, digital formats have opened new possibilities for readers and publishers alike. This sample demonstrates how content can be presented in an interactive flipbook format.
+                      </p>
+                      <p className="text-sm text-[var(--color-nav)]/70 leading-relaxed">
+                        Click and drag to pan around when zoomed in. Use the zoom controls to magnify different sections of the page.
+                      </p>
+                    </div>
+                    
+                    {/* Sample Pull Quote */}
+                    <div className="border-l-2 border-[var(--color-nav)]/20 pl-4 py-2 my-4">
+                      <p className="text-sm italic text-[var(--color-nav)]/60">
+                        &ldquo;The future of publishing lies in the seamless blend of traditional aesthetics with modern interactivity.&rdquo;
+                      </p>
+                    </div>
+                    
+                    {/* More Content */}
+                    <p className="text-sm text-[var(--color-nav)]/70 leading-relaxed">
+                      This example shows how a real magazine PDF could be integrated. The zoom feature allows readers to examine details closely, just as they would with a physical magnifying glass.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Zoom Level Indicator */}
+                <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-white/90 px-3 py-1 rounded-full shadow-lg">
+                  <span className="text-xs font-medium text-[var(--color-nav)]">{Math.round(zoomLevel * 100)}%</span>
+                </div>
+              </div>
+              
+              {/* Zoom Controls */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white/90 p-2 rounded-full shadow-lg">
+                <button
+                  onClick={handleZoomOut}
+                  disabled={zoomLevel <= 1}
+                  className="p-2 rounded-full text-[var(--color-nav)]/60 hover:bg-[var(--color-nav)]/10 disabled:opacity-30 transition-all"
+                >
+                  <ZoomOut size={18} />
+                </button>
+                <span className="text-xs font-medium text-[var(--color-nav)] w-12 text-center">
+                  {Math.round(zoomLevel * 100)}%
+                </span>
+                <button
+                  onClick={handleZoomIn}
+                  disabled={zoomLevel >= 3}
+                  className="p-2 rounded-full text-[var(--color-nav)]/60 hover:bg-[var(--color-nav)]/10 disabled:opacity-30 transition-all"
+                >
+                  <ZoomIn size={18} />
+                </button>
+                <div className="w-px h-6 bg-[var(--color-nav)]/20 mx-1" />
+                <button
+                  onClick={handleZoomReset}
+                  className="px-3 py-1.5 text-xs font-medium text-[var(--color-nav)]/60 hover:text-[var(--color-nav)] hover:bg-[var(--color-nav)]/10 rounded-full transition-all"
+                >
+                  Reset
+                </button>
+              </div>
+              
+              {/* Close Zoom Button */}
+              <button
+                onClick={() => { setIsZoomMode(false); handleZoomReset(); }}
+                className="absolute top-4 right-4 p-2 rounded-full bg-white/90 text-[var(--color-nav)]/60 hover:text-[var(--color-nav)] shadow-lg transition-all"
+              >
+                <X size={20} />
+              </button>
+              
+              {/* Instructions */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/90 px-4 py-2 rounded-full shadow-lg">
+                <p className="text-xs text-[var(--color-nav)]/60">
+                  Click and drag to pan • Use controls to zoom
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Decorative shelf shadow - soft warm tone */}
           <div 
             className="absolute -bottom-2 left-1/2 h-8 w-4/5 -translate-x-1/2 rounded-full blur-2xl"
             style={{ background: 'rgba(139, 90, 90, 0.2)' }}
