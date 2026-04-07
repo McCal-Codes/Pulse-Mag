@@ -20,15 +20,15 @@ const Page = React.forwardRef<HTMLDivElement, {
 }>((props, ref) => {
   const { isCover, isBackCover, isRight, children } = props
   
-  // Paper texture background
+  // Paper texture background - warm cream tones
   const paperTexture = {
     backgroundImage: `
-      linear-gradient(to right, rgba(0,0,0,0.02) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.02) 100%),
-      linear-gradient(to bottom, #faf9f7 0%, #f5f4f0 100%)
+      linear-gradient(to right, rgba(139, 90, 90, 0.03) 0%, transparent 5%, transparent 95%, rgba(139, 90, 90, 0.03) 100%),
+      linear-gradient(to bottom, #fefcfa 0%, #fdf9f4 100%)
     `,
     boxShadow: isRight 
-      ? 'inset -15px 0 30px -15px rgba(0,0,0,0.1)' 
-      : 'inset 15px 0 30px -15px rgba(0,0,0,0.1)'
+      ? 'inset -15px 0 30px -15px rgba(139, 90, 90, 0.06)' 
+      : 'inset 15px 0 30px -15px rgba(139, 90, 90, 0.06)'
   }
 
   if (isCover || isBackCover) {
@@ -37,8 +37,8 @@ const Page = React.forwardRef<HTMLDivElement, {
         ref={ref} 
         className="page overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #5a1a22 0%, #3d1218 50%, #2a0f12 100%)',
-          boxShadow: 'inset 0 0 60px rgba(0,0,0,0.3), 0 4px 20px rgba(0,0,0,0.4)'
+          background: 'linear-gradient(135deg, #d4a5a5 0%, #c99595 50%, #b88080 100%)',
+          boxShadow: 'inset 0 0 60px rgba(90, 26, 34, 0.2), 0 4px 20px rgba(0,0,0,0.2)'
         }}
       >
         <div className="h-full w-full">
@@ -54,15 +54,15 @@ const Page = React.forwardRef<HTMLDivElement, {
       className="page overflow-hidden"
       style={paperTexture}
     >
-      {/* Book spine shadow effect */}
+      {/* Book spine shadow effect - warm tone */}
       <div 
         className="absolute top-0 bottom-0 w-8 pointer-events-none"
         style={{
           left: isRight ? 0 : 'auto',
           right: isRight ? 'auto' : 0,
           background: isRight 
-            ? 'linear-gradient(to right, rgba(0,0,0,0.08) 0%, transparent 100%)'
-            : 'linear-gradient(to left, rgba(0,0,0,0.08) 0%, transparent 100%)'
+            ? 'linear-gradient(to right, rgba(139, 90, 90, 0.06) 0%, transparent 100%)'
+            : 'linear-gradient(to left, rgba(139, 90, 90, 0.06) 0%, transparent 100%)'
         }}
       />
       <div className="relative h-full w-full">
@@ -149,13 +149,13 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
-      style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #f5ebe0 0%, #f0e4d7 50%, #e8d9c9 100%)' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Ambient lighting effect */}
-      <div className="absolute inset-0 opacity-30" style={{
-        background: 'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.15) 0%, transparent 60%)'
+      {/* Soft ambient lighting */}
+      <div className="absolute inset-0 opacity-40" style={{
+        background: 'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.6) 0%, transparent 60%)'
       }} />
 
       <div className={`relative flex h-full ${isMobile ? 'max-h-[98vh]' : 'max-h-[95vh]'} w-full ${isMobile ? 'max-w-full' : 'max-w-[1200px]'} flex-col`}>
@@ -163,12 +163,12 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
         {/* Elegant header */}
         <div className={`flex items-center justify-between ${isMobile ? 'px-2 py-2' : 'px-6 py-4'} relative z-10`}>
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-              <BookOpen size={16} className="text-white/80" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-nav)]/10">
+              <BookOpen size={16} className="text-[var(--color-nav)]" />
             </div>
             <div>
-              <h3 className={`font-display text-white ${isMobile ? 'text-sm' : 'text-lg'}`}>{issueTitle}</h3>
-              <p className={`text-white/50 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>
+              <h3 className={`font-display text-[var(--color-nav)] ${isMobile ? 'text-sm' : 'text-lg'}`}>{issueTitle}</h3>
+              <p className={`text-[var(--color-nav)]/60 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>
                 Page {currentPage + 1} of {totalPages + 2}
               </p>
             </div>
@@ -178,14 +178,14 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             {!isMobile && (
               <button
                 onClick={toggleFullscreen}
-                className="rounded-full p-2 text-white/60 transition-all hover:bg-white/10 hover:text-white"
+                className="rounded-full p-2 text-[var(--color-nav)]/60 transition-all hover:bg-[var(--color-nav)]/10 hover:text-[var(--color-nav)]"
               >
                 {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
               </button>
             )}
             <button
               onClick={() => setIsOpen(false)}
-              className={`rounded-full text-white/60 transition-all hover:bg-white/10 hover:text-white ${isMobile ? 'p-1.5' : 'p-2'}`}
+              className={`rounded-full text-[var(--color-nav)]/60 transition-all hover:bg-[var(--color-nav)]/10 hover:text-[var(--color-nav)] ${isMobile ? 'p-1.5' : 'p-2'}`}
             >
               <X size={isMobile ? 18 : 20} />
             </button>
@@ -194,33 +194,33 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
 
         {/* Book container with shadow */}
         <div className="relative flex flex-1 items-center justify-center">
-          {/* Decorative shelf shadow */}
+          {/* Decorative shelf shadow - soft warm tone */}
           <div 
-            className="absolute bottom-0 left-1/2 h-4 w-3/4 -translate-x-1/2 rounded-full blur-xl"
-            style={{ background: 'rgba(0,0,0,0.4)' }}
+            className="absolute bottom-0 left-1/2 h-6 w-3/4 -translate-x-1/2 rounded-full blur-2xl"
+            style={{ background: 'rgba(139, 90, 90, 0.15)' }}
           />
 
-          {/* Navigation arrows */}
+          {/* Navigation arrows - warm tones */}
           {!isMobile && (
             <>
               <button
                 onClick={handlePrev}
                 disabled={currentPage === 0}
-                className="absolute left-2 z-20 rounded-full bg-white/10 p-3 text-white/80 backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-110 disabled:opacity-0 lg:left-8"
+                className="absolute left-2 z-20 rounded-full bg-white/80 p-3 text-[var(--color-nav)] shadow-lg backdrop-blur-sm transition-all hover:bg-white hover:scale-110 disabled:opacity-0 lg:left-8"
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={handleNext}
                 disabled={currentPage >= totalPages + 1}
-                className="absolute right-2 z-20 rounded-full bg-white/10 p-3 text-white/80 backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-110 disabled:opacity-0 lg:right-8"
+                className="absolute right-2 z-20 rounded-full bg-white/80 p-3 text-[var(--color-nav)] shadow-lg backdrop-blur-sm transition-all hover:bg-white hover:scale-110 disabled:opacity-0 lg:right-8"
               >
                 <ChevronRight size={24} />
               </button>
             </>
           )}
 
-          {/* The Flipbook */}
+          {/* The Flipbook - softer shadow */}
           <HTMLFlipBook
             ref={flipBookRef}
             width={dims.width}
@@ -230,12 +230,12 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             maxWidth={dims.maxWidth}
             minHeight={dims.minHeight}
             maxHeight={dims.maxHeight}
-            maxShadowOpacity={0.4}
+            maxShadowOpacity={0.3}
             showCover={true}
             mobileScrollSupport={true}
             onFlip={(e) => setCurrentPage(e.data)}
             className="drop-shadow-2xl"
-            style={{ filter: 'drop-shadow(0 25px 50px rgba(0,0,0,0.5))' }}
+            style={{ filter: 'drop-shadow(0 20px 40px rgba(90, 26, 34, 0.2))' }}
             startPage={0}
             drawShadow={true}
             flippingTime={700}
@@ -248,40 +248,40 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             showPageCorners={!isMobile}
             disableFlipByClick={false}
           >
-            {/* Front Cover */}
+            {/* Front Cover - pastel rose */}
             <Page number={0} isCover>
               <div className="flex h-full flex-col items-center justify-center p-6 sm:p-10 text-center">
                 {/* Decorative border */}
-                <div className="absolute inset-4 sm:inset-6 border border-white/20" />
-                <div className="absolute inset-5 sm:inset-8 border border-white/10" />
+                <div className="absolute inset-4 sm:inset-6 border-2 border-white/40 rounded-sm" />
+                <div className="absolute inset-5 sm:inset-8 border border-white/20 rounded-sm" />
                 
                 {/* Logo mark */}
                 <div className="mb-4 sm:mb-6">
-                  <div className="flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full border-2 border-white/30 bg-white/5">
-                    <span className="font-display text-xl sm:text-3xl text-white/60">✦</span>
+                  <div className="flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full border-2 border-white/50 bg-white/10">
+                    <span className="font-display text-2xl sm:text-3xl text-white/80">✦</span>
                   </div>
                 </div>
 
                 {/* Title */}
-                <h1 className="font-display text-2xl sm:text-5xl text-white leading-tight">
+                <h1 className="font-display text-2xl sm:text-4xl text-white leading-tight drop-shadow-sm">
                   {issueTitle}
                 </h1>
                 
                 {/* Decorative line */}
                 <div className="my-4 sm:my-6 flex items-center gap-3">
-                  <div className="h-px w-8 sm:w-16 bg-gradient-to-r from-transparent to-white/40" />
-                  <span className="text-xs sm:text-sm text-white/50 tracking-widest">ISSUE</span>
-                  <div className="h-px w-8 sm:w-16 bg-gradient-to-l from-transparent to-white/40" />
+                  <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-white/50" />
+                  <span className="text-xs sm:text-sm text-white/70 tracking-widest">ISSUE</span>
+                  <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-white/50" />
                 </div>
 
                 {/* Subtitle */}
-                <p className="text-xs sm:text-sm text-white/60 tracking-[0.2em] uppercase">
+                <p className="text-xs sm:text-sm text-white/80 tracking-[0.15em] uppercase">
                   Pulse Literary & Arts
                 </p>
 
                 {/* Tap hint */}
                 <div className="absolute bottom-8 sm:bottom-12">
-                  <p className="text-[10px] sm:text-xs text-white/40 animate-pulse">
+                  <p className="text-[10px] sm:text-xs text-white/60 animate-pulse">
                     {isMobile ? 'Tap to open' : 'Click to open'}
                   </p>
                 </div>
@@ -292,11 +292,11 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             <Page number={1} isRight={false}>
               <div className="flex h-full flex-col items-center justify-center p-6 sm:p-8">
                 <div className="text-center">
-                  <p className="font-display text-lg sm:text-xl text-gray-400">Pulse</p>
-                  <p className="mt-2 text-xs text-gray-300">pulseliterary.com</p>
+                  <p className="font-display text-xl sm:text-2xl text-[var(--color-nav)]/70">Pulse</p>
+                  <p className="mt-2 text-xs text-[var(--color-nav)]/50">pulseliterary.com</p>
                 </div>
                 <div className="mt-8 text-center">
-                  <p className="text-[10px] text-gray-300 leading-relaxed">
+                  <p className="text-[10px] sm:text-xs text-[var(--color-nav)]/40 leading-relaxed">
                     Essays, dispatches, and criticism<br/>about what survives the algorithm
                   </p>
                 </div>
@@ -310,11 +310,11 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                 <Page key={i} number={i + 2} isRight={isRightPage}>
                   <div className={`flex h-full flex-col ${isMobile ? 'p-5' : 'p-8'}`}>
                     {/* Page header with elegant styling */}
-                    <div className={`flex items-center justify-between border-b border-gray-200 ${isMobile ? 'mb-4 pb-2' : 'mb-6 pb-3'}`}>
-                      <span className={`font-medium tracking-[0.2em] text-gray-400 uppercase ${isMobile ? 'text-[9px]' : 'text-[10px]'}`}>
+                    <div className={`flex items-center justify-between border-b border-[var(--color-nav)]/10 ${isMobile ? 'mb-4 pb-2' : 'mb-6 pb-3'}`}>
+                      <span className={`font-medium tracking-[0.2em] text-[var(--color-nav)]/40 uppercase ${isMobile ? 'text-[9px]' : 'text-[10px]'}`}>
                         Pulse
                       </span>
-                      <span className={`font-display text-gray-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      <span className={`font-display text-[var(--color-nav)]/30 ${isMobile ? 'text-sm' : 'text-base'}`}>
                         {i + 1}
                       </span>
                     </div>
@@ -322,39 +322,39 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                     {/* Content placeholder with realistic text blocks */}
                     <div className="flex-1 space-y-3 sm:space-y-4">
                       {/* Title block */}
-                      <div className={`rounded bg-gradient-to-r from-gray-200 to-gray-100 ${isMobile ? 'h-5 w-4/5' : 'h-7 w-3/4'}`} />
+                      <div className={`rounded bg-gradient-to-r from-[var(--color-nav)]/10 to-[var(--color-nav)]/5 ${isMobile ? 'h-5 w-4/5' : 'h-7 w-3/4'}`} />
                       
                       {/* Paragraph blocks */}
                       <div className="space-y-2 sm:space-y-3 pt-2">
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-11/12' : 'h-3 w-11/12'}`} />
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-4/5' : 'h-3 w-4/5'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-11/12' : 'h-3 w-11/12'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-4/5' : 'h-3 w-4/5'}`} />
                       </div>
 
                       {/* Second paragraph */}
                       <div className="space-y-2 sm:space-y-3 pt-2">
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-5/6' : 'h-3 w-5/6'}`} />
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-5/6' : 'h-3 w-5/6'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
                       </div>
 
                       {/* Image placeholder */}
-                      <div className={`mt-4 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 ${isMobile ? 'h-20' : 'h-32'}`} />
+                      <div className={`mt-4 rounded-lg bg-gradient-to-br from-[var(--color-nav)]/10 to-[var(--color-nav)]/5 ${isMobile ? 'h-20' : 'h-32'}`} />
 
                       {/* Third paragraph */}
                       <div className="space-y-2 sm:space-y-3 pt-2">
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-gray-100 ${isMobile ? 'h-2 w-3/4' : 'h-3 w-3/4'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-3/4' : 'h-3 w-3/4'}`} />
                       </div>
                     </div>
 
                     {/* Page footer */}
-                    <div className={`flex items-center justify-between border-t border-gray-200 ${isMobile ? 'mt-auto pt-3' : 'mt-auto pt-4'}`}>
-                      <span className={`text-gray-300 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
+                    <div className={`flex items-center justify-between border-t border-[var(--color-nav)]/10 ${isMobile ? 'mt-auto pt-3' : 'mt-auto pt-4'}`}>
+                      <span className={`text-[var(--color-nav)]/30 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
                         {issueTitle}
                       </span>
-                      <span className={`text-gray-300 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
+                      <span className={`text-[var(--color-nav)]/30 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
                         {Math.floor((i + 1) / 2) + 1}
                       </span>
                     </div>
@@ -368,70 +368,70 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
               <div className="flex h-full flex-col items-center justify-center p-6 sm:p-8 text-center">
                 <div className="mb-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-nav)]/10">
-                    <span className="font-display text-xl text-[var(--color-nav)]">✦</span>
+                    <span className="font-display text-xl text-[var(--color-nav)]/70">✦</span>
                   </div>
                 </div>
-                <p className="font-display text-lg text-gray-600">Thank You for Reading</p>
-                <p className="mt-2 text-xs text-gray-400">
+                <p className="font-display text-lg text-[var(--color-nav)]/60">Thank You for Reading</p>
+                <p className="mt-2 text-xs text-[var(--color-nav)]/40">
                   Pulse Literary & Arts Magazine
                 </p>
                 <div className="mt-6">
-                  <p className="text-[10px] text-gray-300">
+                  <p className="text-[10px] text-[var(--color-nav)]/30">
                     Visit us at<br/>
-                    <span className="text-[var(--color-nav)]">pulseliterary.com</span>
+                    <span className="text-[var(--color-nav)]/50">pulseliterary.com</span>
                   </p>
                 </div>
               </div>
             </Page>
 
-            {/* Back Cover */}
+            {/* Back Cover - pastel rose */}
             <Page number={totalPages + 3} isBackCover>
               <div className="flex h-full flex-col items-center justify-center p-6 sm:p-10 text-center">
-                <div className="absolute inset-4 sm:inset-6 border border-white/20" />
+                <div className="absolute inset-4 sm:inset-6 border-2 border-white/40 rounded-sm" />
                 
                 <div className="mb-4">
-                  <span className="font-display text-4xl sm:text-5xl text-white/80">✦</span>
+                  <span className="font-display text-4xl sm:text-5xl text-white/90">✦</span>
                 </div>
                 
                 <p className="font-display text-xl sm:text-2xl text-white">PULSE</p>
                 
                 <div className="my-4 flex items-center gap-2">
-                  <div className="h-px w-8 bg-white/30" />
-                  <span className="text-[10px] text-white/50">EST. 2024</span>
-                  <div className="h-px w-8 bg-white/30" />
+                  <div className="h-px w-8 bg-white/40" />
+                  <span className="text-[10px] text-white/60">EST. 2024</span>
+                  <div className="h-px w-8 bg-white/40" />
                 </div>
 
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-white/70">
                   Pittsburgh Literary & Arts Magazine
                 </p>
 
                 {/* Barcode placeholder */}
                 <div className="mt-6 sm:mt-8">
-                  <div className="h-8 w-24 bg-white/10 rounded" />
+                  <div className="h-8 w-24 bg-white/20 rounded" />
                 </div>
               </div>
             </Page>
           </HTMLFlipBook>
         </div>
 
-        {/* Bottom controls */}
+        {/* Bottom controls - warm tones */}
         <div className={`relative z-10 ${isMobile ? 'px-3 py-2' : 'px-6 py-4'}`}>
           {/* Progress bar */}
           <div className="mx-auto max-w-md">
             <div className="flex items-center gap-2 sm:gap-3">
-              <span className={`text-white/40 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>
+              <span className={`text-[var(--color-nav)]/40 ${isMobile ? 'text-[10px]' : 'text-xs'}`}>
                 {Math.round(((currentPage + 1) / (totalPages + 2)) * 100)}%
               </span>
-              <div className="flex-1 overflow-hidden rounded-full bg-white/10 h-1">
+              <div className="flex-1 overflow-hidden rounded-full bg-[var(--color-nav)]/10 h-1">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-white/60 to-white/80 transition-all duration-500"
+                  className="h-full rounded-full bg-gradient-to-r from-[var(--color-nav)]/40 to-[var(--color-nav)]/60 transition-all duration-500"
                   style={{ width: `${((currentPage + 1) / (totalPages + 2)) * 100}%` }}
                 />
               </div>
             </div>
             
             {isMobile && (
-              <p className="mt-2 text-center text-[10px] text-white/40">
+              <p className="mt-2 text-center text-[10px] text-[var(--color-nav)]/40">
                 Swipe to turn pages
               </p>
             )}
