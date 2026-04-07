@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import { useState } from 'react'
-import { X, ChevronLeft, ChevronRight, Maximize, Minimize, BookOpen, ZoomIn, ZoomOut, Search } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize2, Minimize2, BookOpen, ZoomIn, ZoomOut, Scan, Shrink, Expand } from 'lucide-react'
 
 interface FlipbookProps {
   pdfUrl: string
@@ -243,7 +243,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                 className="rounded-full p-2 text-[var(--color-nav)]/60 transition-all hover:bg-[var(--color-nav)]/10 hover:text-[var(--color-nav)]"
                 title={isLargeSize ? 'Smaller pages' : 'Larger pages'}
               >
-                {isLargeSize ? <ZoomOut size={18} /> : <ZoomIn size={18} />}
+                {isLargeSize ? <Shrink size={18} /> : <Expand size={18} />}
               </button>
             )}
             {!isMobile && (
@@ -252,7 +252,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                 className={`rounded-full p-2 transition-all hover:bg-[var(--color-nav)]/10 ${isZoomMode ? 'text-[var(--color-nav)] bg-[var(--color-nav)]/10' : 'text-[var(--color-nav)]/60 hover:text-[var(--color-nav)]'}`}
                 title={isZoomMode ? 'Exit zoom mode' : 'Zoom mode - click pages to magnify'}
               >
-                <Search size={18} />
+                <Scan size={18} />
               </button>
             )}
             {!isMobile && (
@@ -260,7 +260,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                 onClick={toggleFullscreen}
                 className="rounded-full p-2 text-[var(--color-nav)]/60 transition-all hover:bg-[var(--color-nav)]/10 hover:text-[var(--color-nav)]"
               >
-                {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+                {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
               </button>
             )}
             <button

@@ -62,6 +62,84 @@ export default defineType({
       initialValue: [
         {
           _type: 'section',
+          _key: 'content-sources',
+          heading: 'Content Sources: Where to Write What',
+          body: [
+            {
+              _type: 'block',
+              _key: 'cs-intro',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-intro-s', text: 'Pulse Magazine uses two content systems. This guide explains where to create and edit each type of content.' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-wix-title',
+              style: 'h3',
+              children: [{ _type: 'span', _key: 'cs-wix-title-s', marks: ['strong'], text: 'Write Blog Posts in Wix' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-wix-1',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-wix-1-s', text: 'All blog posts (news, updates, announcements) are written in the Wix dashboard, not in this Studio. Go to:' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-wix-2',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-wix-2-s', marks: ['strong'], text: 'pulse24.wixsite.com/pulse → Dashboard → Blog → Manage Posts' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-wix-3',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-wix-3-s', text: 'Posts published in Wix automatically appear on pulseliterary.com/blog within 5 minutes.' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-sanity-title',
+              style: 'h3',
+              children: [{ _type: 'span', _key: 'cs-sanity-title-s', marks: ['strong'], text: 'Write Magazine Content in This Studio' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-sanity-1',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-sanity-1-s', text: 'Use this Sanity Studio for all magazine-related content:' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-sanity-2',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-sanity-2-s', marks: ['strong'], text: 'Authors' }, { _type: 'span', _key: 'cs-sanity-2-s2', text: ' — Create writer/artist profiles for magazine contributors' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-sanity-3',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-sanity-3-s', marks: ['strong'], text: 'Posts' }, { _type: 'span', _key: 'cs-sanity-3-s2', text: ' — Magazine articles, fiction, poetry, essays' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-sanity-4',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-sanity-4-s', marks: ['strong'], text: 'Events' }, { _type: 'span', _key: 'cs-sanity-4-s2', text: ' — Reading series, workshops, launch parties' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-sanity-5',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-sanity-5-s', marks: ['strong'], text: 'Pages' }, { _type: 'span', _key: 'cs-sanity-5-s2', text: ' — Static content pages (About, Submit, etc.)' }],
+            },
+            {
+              _type: 'block',
+              _key: 'cs-summary',
+              style: 'normal',
+              children: [{ _type: 'span', _key: 'cs-summary-s', marks: ['strong'], text: 'Quick Rule: ' }, { _type: 'span', _key: 'cs-summary-s2', text: 'News/updates → Wix. Literary content → Sanity Studio.' }],
+            },
+          ],
+        {
+          _type: 'section',
           _key: 'getting-started',
           heading: '1. Getting Started',
           body: [
