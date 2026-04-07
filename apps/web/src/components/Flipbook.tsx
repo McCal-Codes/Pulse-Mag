@@ -131,8 +131,8 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
   }
 
   const dims = isMobile 
-    ? { width: 280, height: 400, minWidth: 240, maxWidth: 300, minHeight: 340, maxHeight: 440 }
-    : { width: 450, height: 620, minWidth: 350, maxWidth: 450, minHeight: 480, maxHeight: 620 }
+    ? { width: 340, height: 480, minWidth: 300, maxWidth: 380, minHeight: 420, maxHeight: 520 }
+    : { width: 580, height: 800, minWidth: 480, maxWidth: 600, minHeight: 650, maxHeight: 820 }
 
   if (!isOpen) {
     return (
