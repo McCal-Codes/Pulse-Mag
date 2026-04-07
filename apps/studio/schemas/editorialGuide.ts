@@ -138,6 +138,7 @@ export default defineType({
               children: [{ _type: 'span', _key: 'cs-summary-s', marks: ['strong'], text: 'Quick Rule: ' }, { _type: 'span', _key: 'cs-summary-s2', text: 'News/updates → Wix. Literary content → Sanity Studio.' }],
             },
           ],
+        },
         {
           _type: 'section',
           _key: 'getting-started',

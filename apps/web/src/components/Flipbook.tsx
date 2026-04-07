@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import { useState } from 'react'
-import { X, ChevronLeft, ChevronRight, Maximize2, Minimize2, BookOpen, ZoomIn, ZoomOut, Scan, Shrink, Expand } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize2, Minimize2, BookOpen, ZoomIn, ZoomOut, Scan, Shrink, Expand, Sparkles } from 'lucide-react'
 
 interface FlipbookProps {
   pdfUrl: string
@@ -311,7 +311,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                     
                     {/* Sample Image Area */}
                     <div className="w-full h-40 bg-gradient-to-br from-[var(--color-nav)]/15 to-[var(--color-nav)]/5 rounded-lg flex items-center justify-center">
-                      <span className="text-4xl text-[var(--color-nav)]/20">✦</span>
+                      <Sparkles size={48} className="text-[var(--color-nav)]/20" />
                     </div>
                     
                     {/* Article Text */}
@@ -453,7 +453,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                 {/* Logo mark */}
                 <div className="mb-4 sm:mb-6">
                   <div className="flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full border-2 border-white/50 bg-white/10">
-                    <span className="font-display text-2xl sm:text-3xl text-white/80">✦</span>
+                    <Sparkles size={isMobile ? 24 : 32} className="text-white/80" />
                   </div>
                 </div>
 
@@ -487,6 +487,9 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             <Page number={1} isRight={false}>
               <div className="flex h-full flex-col items-center justify-center p-6 sm:p-8">
                 <div className="text-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <Sparkles size={20} className="text-[var(--color-nav)]/70" />
+                  </div>
                   <p className="font-display text-xl sm:text-2xl text-[var(--color-nav)]/70">Pulse</p>
                   <p className="mt-2 text-xs text-[var(--color-nav)]/50">pulseliterary.com</p>
                 </div>
@@ -568,7 +571,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
               <div className="flex h-full flex-col items-center justify-center p-6 sm:p-8 text-center">
                 <div className="mb-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-nav)]/10">
-                    <span className="font-display text-xl text-[var(--color-nav)]/70">✦</span>
+                    <Sparkles size={24} className="text-[var(--color-nav)]/70" />
                   </div>
                 </div>
                 <p className="font-display text-lg text-[var(--color-nav)]/60">Thank You for Reading</p>
@@ -590,7 +593,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
                 <div className="absolute inset-4 sm:inset-6 border-2 border-white/40 rounded-sm" />
                 
                 <div className="mb-4">
-                  <span className="font-display text-4xl sm:text-5xl text-white/90">✦</span>
+                  <Sparkles size={isMobile ? 32 : 40} className="text-white/90" />
                 </div>
                 
                 <p className="font-display text-xl sm:text-2xl text-white">PULSE</p>

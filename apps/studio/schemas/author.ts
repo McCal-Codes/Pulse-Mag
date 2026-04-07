@@ -4,6 +4,7 @@ export default defineType({
   name: 'author',
   title: 'Author',
   type: 'document',
+  description: 'Writer and contributor profiles. Create an author before assigning them to posts.',
   fields: [
     defineField({
       name: 'name',

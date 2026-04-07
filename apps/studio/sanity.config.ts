@@ -4,7 +4,6 @@ import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemas'
 
 const singletonTypes = new Set(['homepageSettings', 'editorialGuide', 'siteSettings'])
-const manualListTypes = new Set(['weeklyBlog'])
 
 export default defineConfig({
   name: 'pulse-magazine',
@@ -19,41 +18,81 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
+            // Editorial Guide - pinned at top
             S.listItem()
               .title('Editorial Guide')
               .id('editorialGuide')
+              .icon(() => '📖')
               .child(S.document().schemaType('editorialGuide').documentId('editorialGuide')),
+            
+            S.divider(),
+            
+            // Site Settings Group
             S.listItem()
               .title('Site Settings')
               .id('siteSettings')
+              .icon(() => '⚙️')
               .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
-            S.divider(),
             S.listItem()
               .title('Homepage Settings')
               .id('homepageSettings')
+              .icon(() => '🏠')
               .child(S.document().schemaType('homepageSettings').documentId('homepageSettings')),
+            
             S.divider(),
+            
+            // Literary Content (Sanity)
             S.listItem()
-              .title('Blog')
+              .title('Magazine Content')
+              .id('magazineContent')
+              .icon(() => '📚')
+              .child(
+                S.list()
+                  .title('Magazine Content')
+                  .items([
+                    S.listItem()
+                      .title('Authors')
+                      .id('authors')
+                      .icon(() => '✍️')
+                      .child(S.documentTypeList('author').title('Authors')),
+                    S.listItem()
+                      .title('Posts')
+                      .id('posts')
+                      .icon(() => '📝')
+                      .child(
+                        S.documentTypeList('post')
+                          .title('Posts')
+                          .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
+                      ),
+                    S.listItem()
+                      .title('Events')
+                      .id('events')
+                      .icon(() => '📅')
+                      .child(
+                        S.documentTypeList('event')
+                          .title('Events')
+                          .defaultOrdering([{ field: 'date', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('Pages')
+                      .id('pages')
+                      .icon(() => '📄')
+                      .child(S.documentTypeList('page').title('Pages')),
+                  ])
+              ),
+            
+            // Blog Content (Wix-synced)
+            S.listItem()
+              .title('Blog (Wix)')
               .id('weeklyBlogList')
+              .icon(() => '🌐')
               .child(
                 S.documentTypeList('weeklyBlog')
                   .title('Blog Posts')
                   .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
               ),
-            S.listItem()
-              .title('Events')
-              .id('eventList')
-              .child(
-                S.documentTypeList('event')
-                  .title('Events')
-                  .defaultOrdering([{ field: 'date', direction: 'asc' }])
-              ),
+            
             S.divider(),
-            ...S.documentTypeListItems().filter((listItem) => {
-              const id = listItem.getId() ?? ''
-              return !singletonTypes.has(id) && !manualListTypes.has(id) && id !== 'event'
-            }),
           ]),
     }),
     visionTool(),

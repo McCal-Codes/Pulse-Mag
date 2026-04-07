@@ -4,6 +4,7 @@ export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  description: 'Magazine articles, fiction, poetry, and essays. For blog posts (news/updates), use Wix instead.',
   fields: [
     defineField({
       name: 'title',
