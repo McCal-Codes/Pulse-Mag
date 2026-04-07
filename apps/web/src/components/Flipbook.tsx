@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import { useState } from 'react'
-import { X, ChevronLeft, ChevronRight, Maximize, Minimize, BookOpen } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Maximize, Minimize, BookOpen, ZoomIn, ZoomOut } from 'lucide-react'
 
 interface FlipbookProps {
   pdfUrl: string
@@ -78,6 +78,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isLargeSize, setIsLargeSize] = useState(true) // Toggle for page size
   const [totalPages] = useState(16)
   const flipBookRef = useRef<any>(null)
   const touchStartX = useRef<number | null>(null)
@@ -131,8 +132,12 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
   }
 
   const dims = isMobile 
-    ? { width: 340, height: 480, minWidth: 300, maxWidth: 380, minHeight: 420, maxHeight: 520 }
-    : { width: 580, height: 800, minWidth: 480, maxWidth: 600, minHeight: 650, maxHeight: 820 }
+    ? isLargeSize 
+      ? { width: 340, height: 480, minWidth: 300, maxWidth: 380, minHeight: 420, maxHeight: 520 }
+      : { width: 260, height: 360, minWidth: 220, maxWidth: 280, minHeight: 300, maxHeight: 400 }
+    : isLargeSize 
+      ? { width: 580, height: 800, minWidth: 480, maxWidth: 600, minHeight: 650, maxHeight: 820 }
+      : { width: 420, height: 580, minWidth: 350, maxWidth: 440, minHeight: 480, maxHeight: 600 }
 
   if (!isOpen) {
     return (
@@ -175,6 +180,15 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
           </div>
           
           <div className="flex items-center gap-1 sm:gap-2">
+            {!isMobile && (
+              <button
+                onClick={() => setIsLargeSize(!isLargeSize)}
+                className="rounded-full p-2 text-[var(--color-nav)]/60 transition-all hover:bg-[var(--color-nav)]/10 hover:text-[var(--color-nav)]"
+                title={isLargeSize ? 'Smaller pages' : 'Larger pages'}
+              >
+                {isLargeSize ? <ZoomOut size={18} /> : <ZoomIn size={18} />}
+              </button>
+            )}
             {!isMobile && (
               <button
                 onClick={toggleFullscreen}
