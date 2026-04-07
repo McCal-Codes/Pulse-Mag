@@ -131,8 +131,8 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
   }
 
   const dims = isMobile 
-    ? { width: 340, height: 480, minWidth: 300, maxWidth: 360, minHeight: 420, maxHeight: 520 }
-    : { width: 520, height: 720, minWidth: 400, maxWidth: 520, minHeight: 550, maxHeight: 720 }
+    ? { width: 280, height: 400, minWidth: 240, maxWidth: 300, minHeight: 340, maxHeight: 440 }
+    : { width: 450, height: 620, minWidth: 350, maxWidth: 450, minHeight: 480, maxHeight: 620 }
 
   if (!isOpen) {
     return (
@@ -194,10 +194,10 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
 
         {/* Book container with shadow */}
         <div className="relative flex flex-1 items-center justify-center">
-          {/* Decorative shelf shadow - soft warm tone */}
+            {/* Decorative shelf shadow - soft warm tone */}
           <div 
-            className="absolute bottom-0 left-1/2 h-6 w-3/4 -translate-x-1/2 rounded-full blur-2xl"
-            style={{ background: 'rgba(139, 90, 90, 0.15)' }}
+            className="absolute -bottom-2 left-1/2 h-8 w-4/5 -translate-x-1/2 rounded-full blur-2xl"
+            style={{ background: 'rgba(139, 90, 90, 0.2)' }}
           />
 
           {/* Navigation arrows - warm tones */}
@@ -220,7 +220,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             </>
           )}
 
-          {/* The Flipbook - softer shadow */}
+          {/* The Flipbook - two page spread mode */}
           <HTMLFlipBook
             ref={flipBookRef}
             width={dims.width}
@@ -230,7 +230,7 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             maxWidth={dims.maxWidth}
             minHeight={dims.minHeight}
             maxHeight={dims.maxHeight}
-            maxShadowOpacity={0.3}
+            maxShadowOpacity={0.25}
             showCover={true}
             mobileScrollSupport={true}
             onFlip={(e) => setCurrentPage(e.data)}
@@ -238,8 +238,8 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
             style={{ filter: 'drop-shadow(0 20px 40px rgba(90, 26, 34, 0.2))' }}
             startPage={0}
             drawShadow={true}
-            flippingTime={700}
-            usePortrait={true}
+            flippingTime={800}
+            usePortrait={false}
             startZIndex={0}
             autoSize={true}
             clickEventForward={true}
@@ -303,59 +303,64 @@ export function Flipbook({ pdfUrl: _pdfUrl, issueTitle }: FlipbookProps) {
               </div>
             </Page>
 
-            {/* Content pages */}
+            {/* Content pages - in spread mode, HTMLFlipBook pairs them automatically */}
             {Array.from({ length: totalPages }, (_, i) => {
-              const isRightPage = i % 2 === 1
+              // In spread mode, we don't need to track left/right - the library handles it
+              const isEven = i % 2 === 0
               return (
-                <Page key={i} number={i + 2} isRight={isRightPage}>
-                  <div className={`flex h-full flex-col ${isMobile ? 'p-5' : 'p-8'}`}>
-                    {/* Page header with elegant styling */}
-                    <div className={`flex items-center justify-between border-b border-[var(--color-nav)]/10 ${isMobile ? 'mb-4 pb-2' : 'mb-6 pb-3'}`}>
-                      <span className={`font-medium tracking-[0.2em] text-[var(--color-nav)]/40 uppercase ${isMobile ? 'text-[9px]' : 'text-[10px]'}`}>
+                <Page key={i} number={i + 2}>
+                  <div className={`flex h-full flex-col ${isMobile ? 'p-4' : 'p-6'}`}>
+                    {/* Page header */}
+                    <div className={`flex items-center justify-between border-b border-[var(--color-nav)]/10 ${isMobile ? 'mb-3 pb-1.5' : 'mb-4 pb-2'}`}>
+                      <span className={`font-medium tracking-[0.2em] text-[var(--color-nav)]/40 uppercase ${isMobile ? 'text-[8px]' : 'text-[9px]'}`}>
                         Pulse
                       </span>
-                      <span className={`font-display text-[var(--color-nav)]/30 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      <span className={`font-display text-[var(--color-nav)]/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {i + 1}
                       </span>
                     </div>
 
-                    {/* Content placeholder with realistic text blocks */}
-                    <div className="flex-1 space-y-3 sm:space-y-4">
-                      {/* Title block */}
-                      <div className={`rounded bg-gradient-to-r from-[var(--color-nav)]/10 to-[var(--color-nav)]/5 ${isMobile ? 'h-5 w-4/5' : 'h-7 w-3/4'}`} />
+                    {/* Content placeholder */}
+                    <div className="flex-1 space-y-2 sm:space-y-3">
+                      {/* Title - only on right pages (odd indices in 0-based) */}
+                      {!isEven && (
+                        <div className={`rounded bg-gradient-to-r from-[var(--color-nav)]/10 to-[var(--color-nav)]/5 ${isMobile ? 'h-4 w-4/5' : 'h-5 w-3/4'}`} />
+                      )}
                       
                       {/* Paragraph blocks */}
-                      <div className="space-y-2 sm:space-y-3 pt-2">
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-11/12' : 'h-3 w-11/12'}`} />
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-4/5' : 'h-3 w-4/5'}`} />
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-full' : 'h-2 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-11/12' : 'h-2 w-11/12'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-full' : 'h-2 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-4/5' : 'h-2 w-4/5'}`} />
                       </div>
 
                       {/* Second paragraph */}
-                      <div className="space-y-2 sm:space-y-3 pt-2">
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-5/6' : 'h-3 w-5/6'}`} />
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
+                      <div className="space-y-1.5 sm:space-y-2 pt-1">
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-full' : 'h-2 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-5/6' : 'h-2 w-5/6'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-full' : 'h-2 w-full'}`} />
                       </div>
 
-                      {/* Image placeholder */}
-                      <div className={`mt-4 rounded-lg bg-gradient-to-br from-[var(--color-nav)]/10 to-[var(--color-nav)]/5 ${isMobile ? 'h-20' : 'h-32'}`} />
+                      {/* Image placeholder - only on some pages */}
+                      {i % 4 === 1 && (
+                        <div className={`mt-3 rounded bg-gradient-to-br from-[var(--color-nav)]/10 to-[var(--color-nav)]/5 ${isMobile ? 'h-16' : 'h-24'}`} />
+                      )}
 
                       {/* Third paragraph */}
-                      <div className="space-y-2 sm:space-y-3 pt-2">
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-full' : 'h-3 w-full'}`} />
-                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-2 w-3/4' : 'h-3 w-3/4'}`} />
+                      <div className="space-y-1.5 sm:space-y-2 pt-1">
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-full' : 'h-2 w-full'}`} />
+                        <div className={`rounded bg-[var(--color-nav)]/5 ${isMobile ? 'h-1.5 w-3/4' : 'h-2 w-3/4'}`} />
                       </div>
                     </div>
 
                     {/* Page footer */}
-                    <div className={`flex items-center justify-between border-t border-[var(--color-nav)]/10 ${isMobile ? 'mt-auto pt-3' : 'mt-auto pt-4'}`}>
-                      <span className={`text-[var(--color-nav)]/30 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
+                    <div className={`flex items-center justify-between border-t border-[var(--color-nav)]/10 ${isMobile ? 'mt-auto pt-2' : 'mt-auto pt-3'}`}>
+                      <span className={`text-[var(--color-nav)]/30 ${isMobile ? 'text-[7px]' : 'text-[8px]'}`}>
                         {issueTitle}
                       </span>
-                      <span className={`text-[var(--color-nav)]/30 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
-                        {Math.floor((i + 1) / 2) + 1}
+                      <span className={`text-[var(--color-nav)]/30 ${isMobile ? 'text-[7px]' : 'text-[8px]'}`}>
+                        {Math.floor(i / 2) + 1}
                       </span>
                     </div>
                   </div>
