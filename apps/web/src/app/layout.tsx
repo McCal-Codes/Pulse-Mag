@@ -3,6 +3,7 @@ import { Playfair_Display, Libre_Baskerville } from 'next/font/google'
 import '../styles/globals.css'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
+import { PreviewBanner } from '@/components/PreviewBanner'
 
 const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${libreBaskerville.variable} ${playfair.variable}`}>
       <body className="min-h-screen bg-paper text-ink font-body antialiased">
+        <PreviewBanner />
         <Navigation />
         <main>{children}</main>
         <Footer />
