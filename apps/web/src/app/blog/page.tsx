@@ -1,8 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { fetchWixRSSPosts } from '@/lib/wix-rss'
 import { DiamondDivider } from '@/components/DiamondDivider'
+import { sanityClient } from '@/lib/sanity.client'
+import { allBlogPostsQuery } from '@/lib/queries'
+import { urlFor } from '@/lib/sanity.image'
+import type { BlogPost } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Pulse News',
@@ -19,13 +22,13 @@ function formatDate(dateString: string) {
   })
 }
 
-function stripHtml(html: string): string {
-  return html?.replace(/<[^>]*>/g, '').slice(0, 200) + '...' || ''
+function getImageUrl(image: BlogPost['featuredImage']) {
+  if (!image) return null
+  return urlFor(image).width(800).height(600).url()
 }
 
 export default async function BlogPage() {
-  // Fetch from Wix RSS feed
-  const posts = await fetchWixRSSPosts()
+  const posts = await sanityClient?.fetch<BlogPost[]>(allBlogPostsQuery) ?? []
 
   const featured = posts[0] ?? null
   const rest = posts.slice(1)
@@ -57,34 +60,34 @@ export default async function BlogPage() {
                     {featured.title}
                   </h2>
                   <p className="mt-1 text-[0.7rem] tracking-wider text-gray-400">
-                    {formatDate(featured.date)}
+                    {formatDate(featured.publishedAt)}
                     {featured.author && (
-                      <span className="ml-2 text-gray-400">· {featured.author}</span>
+                      <span className="ml-2 text-gray-400">· {featured.author.name}</span>
                     )}
                   </p>
                   {featured.excerpt && (
                     <div className="mt-4 rounded border border-black/10 p-4">
                       <p className="text-sm leading-7 text-gray-600">
-                        {stripHtml(featured.excerpt)}
+                        {featured.excerpt}
                       </p>
                     </div>
                   )}
                 </div>
                 <div className="mt-5 flex items-center gap-4">
                   <Link
-                    href={`/blog/${featured.slug}`}
+                    href={`/blog/${featured.slug.current}`}
                     className="inline-block rounded border border-black/20 px-5 py-2 text-sm font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
                   >
                     Read More
                   </Link>
-                  {featured.categories && featured.categories.length > 0 && (
+                  {featured.tags && featured.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1.5">
-                      {featured.categories.map((cat) => (
+                      {featured.tags.map((tag) => (
                         <span
-                          key={cat}
+                          key={tag}
                           className="rounded-full border border-black/10 px-2.5 py-0.5 text-[0.6rem] uppercase tracking-wider text-gray-400"
                         >
-                          {cat}
+                          {tag}
                         </span>
                       ))}
                     </div>
@@ -95,7 +98,7 @@ export default async function BlogPage() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)] sm:aspect-auto sm:min-h-[14rem]">
                 {featured.featuredImage ? (
                   <Image
-                    src={featured.featuredImage}
+                    src={getImageUrl(featured.featuredImage)!}
                     alt={featured.title}
                     fill
                     className="object-cover"
@@ -116,11 +119,11 @@ export default async function BlogPage() {
               <hr className="mb-10 border-black/10" />
               <div className="grid gap-6 sm:grid-cols-3">
                 {rest.map((post) => (
-                  <article key={post.id} className="flex flex-col">
+                  <article key={post._id} className="flex flex-col">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--color-paper-deep)]">
                       {post.featuredImage ? (
                         <Image
-                          src={post.featuredImage}
+                          src={getImageUrl(post.featuredImage)!}
                           alt={post.title}
                           fill
                           className="object-cover transition-transform duration-300 hover:scale-105"
@@ -135,26 +138,26 @@ export default async function BlogPage() {
 
                     <h3 className="mt-3 font-display text-lg leading-snug text-ink">{post.title}</h3>
                     <p className="mt-0.5 text-[0.65rem] tracking-wider text-gray-400">
-                      {formatDate(post.date)}
-                      {post.author && <span className="ml-1">· {post.author}</span>}
+                      {formatDate(post.publishedAt)}
+                      {post.author && <span className="ml-1">· {post.author.name}</span>}
                     </p>
 
                     {post.excerpt && (
                       <div className="mt-2 rounded border border-black/10 p-3">
                         <p className="line-clamp-3 text-xs leading-6 text-gray-600">
-                          {stripHtml(post.excerpt)}
+                          {post.excerpt}
                         </p>
                       </div>
                     )}
 
-                    {post.categories && post.categories.length > 0 && (
+                    {post.tags && post.tags.length > 0 && (
                       <div className="mt-2 flex flex-wrap gap-1.5">
-                        {post.categories.map((cat) => (
+                        {post.tags.map((tag) => (
                           <span
-                            key={cat}
+                            key={tag}
                             className="rounded-full border border-black/10 px-2 py-0.5 text-[0.55rem] uppercase tracking-wider text-gray-400"
                           >
-                            {cat}
+                            {tag}
                           </span>
                         ))}
                       </div>
@@ -162,7 +165,7 @@ export default async function BlogPage() {
 
                     <div className="mt-3">
                       <Link
-                        href={`/blog/${post.slug}`}
+                        href={`/blog/${post.slug.current}`}
                         className="inline-block rounded border border-black/15 px-3 py-1.5 text-xs font-medium text-ink transition-all hover:border-[var(--color-nav)] hover:text-[var(--color-nav)]"
                       >
                         Read More

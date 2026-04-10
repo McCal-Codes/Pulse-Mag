@@ -6,6 +6,7 @@ import editorialGuide from './editorialGuide'
 import weeklyBlog from './weeklyBlog'
 import event from './event'
 import siteSettings from './siteSettings'
+import issue from './issue'
 
 export const schemaTypes = [
   author,
@@ -16,4 +17,5 @@ export const schemaTypes = [
   weeklyBlog,
   event,
   siteSettings,
+  issue,
 ]

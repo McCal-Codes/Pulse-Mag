@@ -4,6 +4,7 @@ export default defineType({
   name: 'page',
   title: 'Page',
   type: 'document',
+  description: 'Static content pages like About, Submit, Join, etc.',
   fields: [
     defineField({
       name: 'title',

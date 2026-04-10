@@ -1,183 +1,172 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { sanityClient } from '@/lib/sanity.client'
+import { allEventsQuery } from '@/lib/queries'
+import { urlFor } from '@/lib/sanity.image'
+import type { Event } from '@/lib/types'
 import { DiamondDivider } from '@/components/DiamondDivider'
-import { getUpcomingEvents, getPastEvents, type WixEvent } from '@/lib/wix-events'
 
 export const metadata: Metadata = {
   title: 'Events',
-  description: 'Upcoming events from Pulse Literary & Arts Magazine.',
+  description: 'Upcoming events from Pulse Literary & Arts Magazine. Join us for readings, workshops, and community gatherings.',
 }
 
-export const revalidate = 300 // Revalidate every 5 minutes
-
-function formatEventDate(dateString: string): string {
+function formatDate(dateString: string) {
   return new Date(dateString).toLocaleDateString('en-US', {
-    weekday: 'long',
     month: 'long',
     day: 'numeric',
     year: 'numeric',
   })
 }
 
-function EventCard({ event, isPast = false }: { event: WixEvent; isPast?: boolean }) {
-  return (
-    <article
-      className={`flex flex-col gap-5 rounded border p-6 shadow-sm sm:flex-row ${
-        isPast
-          ? 'border-black/8 bg-white/40 opacity-70'
-          : 'border-black/10 bg-white/70'
-      }`}
-    >
-      {/* Event Image */}
-      {event.image && !isPast && (
-        <div className="relative h-48 w-full shrink-0 overflow-hidden rounded sm:h-32 sm:w-32">
-          <Image
-            src={event.image.url}
-            alt={event.image.alt || event.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 640px) 100vw, 128px"
-          />
-        </div>
-      )}
-
-      <div className="flex flex-1 flex-col justify-between">
-        <div>
-          {/* Date & Location */}
-          <p className={`uppercase tracking-widest text-gray-400 ${isPast ? 'text-[0.6rem]' : 'text-[0.65rem]'}`}>
-            {formatEventDate(event.date)}
-            {event.endDate && ` - ${formatEventDate(event.endDate)}`}
-            {event.venue && ` · ${event.venue}`}
-          </p>
-
-          {/* Title */}
-          <h3 className={`font-display text-ink ${isPast ? 'mt-0.5 text-base' : 'mt-1.5 text-xl'}`}>
-            {event.title}
-          </h3>
-
-          {/* Description */}
-          {event.description && !isPast && (
-            <p className="mt-2 text-sm leading-7 text-gray-600">{event.description}</p>
-          )}
-
-          {/* Event Tags */}
-          {event.categories && event.categories.length > 0 && !isPast && (
-            <div className="mt-2 flex flex-wrap gap-2">
-              {event.categories.map((category) => (
-                <span
-                  key={category}
-                  className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-600"
-                >
-                  {category}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Price Info */}
-          {!isPast && !event.isFree && event.price && (
-            <p className="mt-2 text-sm font-medium text-gray-700">
-              {event.price.min === event.price.max
-                ? `$${event.price.min}${event.price.currency ? ` ${event.price.currency}` : ''}`
-                : `$${event.price.min} - $${event.price.max}${event.price.currency ? ` ${event.price.currency}` : ''}`}
-            </p>
-          )}
-          {!isPast && event.isFree && (
-            <p className="mt-2 text-sm font-medium text-green-600">Free</p>
-          )}
-        </div>
-
-        {/* Action Buttons */}
-        {!isPast && (
-          <div className="mt-4 flex flex-wrap gap-3">
-            {event.rsvpLink && (
-              <a
-                href={event.rsvpLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-fit rounded-full px-5 py-2 text-sm font-medium text-white transition-all hover:opacity-90"
-                style={{ backgroundColor: 'var(--color-nav)' }}
-              >
-                RSVP
-              </a>
-            )}
-            {event.ticketLink && (
-              <a
-                href={event.ticketLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-fit rounded-full border border-current px-5 py-2 text-sm font-medium transition-all hover:bg-black/5"
-                style={{ color: 'var(--color-nav)' }}
-              >
-                Get Tickets
-              </a>
-            )}
-            {!event.rsvpLink && !event.ticketLink && event.status === 'UPCOMING' && (
-              <span className="inline-block w-fit rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500">
-                Coming Soon
-              </span>
-            )}
-          </div>
-        )}
-      </div>
-    </article>
-  )
+function formatTime(dateString: string) {
+  return new Date(dateString).toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+  })
 }
 
-export default async function EventsPage() {
-  // Fetch events from Wix Events SDK
-  const [upcoming, past] = await Promise.all([
-    getUpcomingEvents(),
-    getPastEvents(),
-  ])
+function isUpcoming(dateString: string) {
+  return new Date(dateString) >= new Date()
+}
 
-  const hasEvents = upcoming.length > 0 || past.length > 0
+export const revalidate = 60
+
+export default async function EventsPage() {
+  const events = await sanityClient?.fetch<Event[]>(allEventsQuery) ?? []
+  
+  const upcomingEvents = events.filter(e => isUpcoming(e.date))
+  const pastEvents = events.filter(e => !isUpcoming(e.date)).reverse()
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-14">
+    <div className="mx-auto max-w-5xl px-6 py-14">
       {/* Heading */}
       <div className="mb-12 text-center">
-        <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">Events</h1>
+        <h1 className="font-display text-4xl tracking-tight text-[var(--color-nav)] sm:text-5xl">
+          Events
+        </h1>
         <DiamondDivider className="mt-3" />
+        <p className="mt-4 text-gray-600">
+          Join us for readings, workshops, and community gatherings.
+        </p>
       </div>
 
-      {!hasEvents ? (
-        <div className="rounded border border-black/10 bg-white/60 px-8 py-14 text-center">
-          <p className="font-display text-2xl text-ink">No upcoming events</p>
-          <p className="mt-3 text-sm text-gray-500">
-            Check back soon — events will appear here once they&apos;re added in the Wix dashboard.
-          </p>
-          <p className="mt-6 text-[0.7rem] uppercase tracking-widest text-gray-400">
-            Stay In Tune &darr; Follow us on social media for the latest updates
+      {events.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-gray-500">No events scheduled at this time.</p>
+          <p className="text-sm text-gray-400 mt-2">
+            Check back soon for upcoming readings and workshops.
           </p>
         </div>
       ) : (
         <>
           {/* Upcoming Events */}
-          {upcoming.length > 0 && (
-            <section className="mb-14">
-              <h2 className="mb-6 font-display text-2xl text-ink">Upcoming Events</h2>
-              <div className="space-y-6">
-                {upcoming.map((event) => (
-                  <EventCard key={event.id} event={event} />
+          {upcomingEvents.length > 0 && (
+            <section className="mb-16">
+              <h2 className="mb-8 font-display text-2xl text-ink">Upcoming Events</h2>
+              <div className="grid gap-6 md:grid-cols-2">
+                {upcomingEvents.map((event) => (
+                  <article
+                    key={event._id}
+                    className="group flex flex-col overflow-hidden rounded-xl border border-black/10 bg-white transition-shadow hover:shadow-lg"
+                  >
+                    {event.image && (
+                      <div className="relative aspect-[2/1] overflow-hidden">
+                        <Image
+                          src={urlFor(event.image).width(800).height(400).url()}
+                          alt={event.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="mb-2 text-sm text-gray-400">
+                        <time dateTime={event.date}>
+                          {formatDate(event.date)} at {formatTime(event.date)}
+                        </time>
+                      </div>
+                      <h3 className="font-display text-xl text-ink group-hover:text-[var(--color-nav)]">
+                        {event.title}
+                      </h3>
+                      {event.location && (
+                        <p className="mt-1 text-sm text-gray-500">{event.location}</p>
+                      )}
+                      {event.description && (
+                        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-gray-600">
+                          {event.description}
+                        </p>
+                      )}
+                      {event.link && (
+                        <a
+                          href={event.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-4 inline-flex items-center text-sm font-medium text-[var(--color-nav)] hover:underline"
+                        >
+                          RSVP / More Info →
+                        </a>
+                      )}
+                    </div>
+                  </article>
                 ))}
               </div>
             </section>
           )}
 
           {/* Past Events */}
-          {past.length > 0 && (
+          {pastEvents.length > 0 && (
             <section>
-              <h2 className="mb-6 font-display text-2xl text-gray-400">Past Events</h2>
-              <div className="space-y-4">
-                {past.map((event) => (
-                  <EventCard key={event.id} event={event} isPast />
+              <h2 className="mb-8 font-display text-2xl text-ink">Past Events</h2>
+              <div className="grid gap-4 md:grid-cols-2">
+                {pastEvents.map((event) => (
+                  <article
+                    key={event._id}
+                    className="flex gap-4 rounded-lg border border-black/10 bg-white/50 p-4 opacity-80"
+                  >
+                    {event.image && (
+                      <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
+                        <Image
+                          src={urlFor(event.image).width(160).height(160).url()}
+                          alt={event.title}
+                          fill
+                          className="object-cover grayscale"
+                          sizes="80px"
+                        />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <div className="text-xs text-gray-400">
+                        <time dateTime={event.date}>{formatDate(event.date)}</time>
+                      </div>
+                      <h3 className="mt-1 font-display text-base text-ink">
+                        {event.title}
+                      </h3>
+                      {event.location && (
+                        <p className="mt-1 text-xs text-gray-500">{event.location}</p>
+                      )}
+                    </div>
+                  </article>
                 ))}
               </div>
             </section>
           )}
         </>
       )}
+
+      {/* Contact */}
+      <div className="mt-16 text-center">
+        <p className="text-sm text-gray-500">
+          Want to propose an event? Contact us at{' '}
+          <a
+            href="mailto:editor@pulseliterary.com"
+            className="underline hover:text-[var(--color-nav)]"
+          >
+            editor@pulseliterary.com
+          </a>
+        </p>
+      </div>
     </div>
   )
 }

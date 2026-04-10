@@ -179,3 +179,61 @@ export const siteSettingsQuery = groq`
     emailAddress
   }
 `
+
+// ---------------------------------------------------------------------------
+// Issues queries
+// ---------------------------------------------------------------------------
+
+/** All issues sorted by publish date descending */
+export const allIssuesQuery = groq`
+  *[_type == "issue" && defined(slug.current)] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    season,
+    status,
+    issueNumber,
+    summary,
+    windowText,
+    statusNote,
+    "pdfUrl": pdfFile.asset->url,
+    coverImage,
+    publishedAt
+  }
+`
+
+/** Current issue (first by publishedAt with status == 'current') */
+export const currentIssueQuery = groq`
+  *[_type == "issue" && status == "current" && defined(slug.current)] | order(publishedAt desc)[0] {
+    _id,
+    title,
+    "slug": slug.current,
+    season,
+    status,
+    issueNumber,
+    summary,
+    windowText,
+    statusNote,
+    "pdfUrl": pdfFile.asset->url,
+    coverImage,
+    publishedAt
+  }
+`
+
+/** Upcoming issues */
+export const upcomingIssuesQuery = groq`
+  *[_type == "issue" && status == "upcoming" && defined(slug.current)] | order(publishedAt asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    season,
+    status,
+    issueNumber,
+    summary,
+    windowText,
+    statusNote,
+    "pdfUrl": pdfFile.asset->url,
+    coverImage,
+    publishedAt
+  }
+`

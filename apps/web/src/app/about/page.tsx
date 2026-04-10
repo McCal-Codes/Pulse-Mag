@@ -5,8 +5,8 @@ import { DiamondDivider } from '@/components/DiamondDivider'
 // Hardcoded data - avoids Sanity client issues
 // TODO: Re-enable Sanity fetching once client is debugged
 
-const editorQuote = 'Insert Quote From Current Editor-in-Chief here.'
-const editorQuoteAttribution = '[First Name] [Last Name], editor-in-chief'
+const editorQuote = 'At Pulse, we believe every voice has a story worth telling. Our mission is to amplify the creative spirit of Point Park University and beyond, creating a space where art and literature converge to inspire, challenge, and connect us all.'
+const editorQuoteAttribution = 'Pulse Editorial Team'
 
 export const metadata: Metadata = {
   title: 'About',

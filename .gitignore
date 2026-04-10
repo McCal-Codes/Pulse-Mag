@@ -5,7 +5,10 @@ node_modules/
 .env.*
 !.env.example
 !.env.local.example
-apps/studio/.env
+/apps/studio/.env
+/apps/studio/dist
+/apps/studio/.sanity
+/apps/studio/pdfs/*.pdf
 .claude/settings.local.json
 
 .next/

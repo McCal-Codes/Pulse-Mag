@@ -22,6 +22,9 @@ const config = [
       'package-lock.json',
       'pnpm-lock.yaml',
       '*.d.ts',
+      'scripts/**/*.js',
+      'apps/studio/dist/**',
+      'apps/studio/**/*.js',
     ],
   },
 

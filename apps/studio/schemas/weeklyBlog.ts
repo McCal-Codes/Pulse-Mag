@@ -4,7 +4,7 @@ export default defineType({
   name: 'weeklyBlog',
   title: 'Blog Post',
   type: 'document',
-  description: 'Blog posts from Wix. For new posts, write in Wix dashboard instead. This schema is for edge cases when you need to create a Sanity-only blog post.',
+  description: 'News, updates, and behind-the-scenes content. Posts appear on /blog and in news listings.',
   fields: [
     defineField({
       name: 'title',

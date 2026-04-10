@@ -1,15 +1,31 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { currentIssue, upcomingIssues } from '@/lib/issues'
-import { DiamondDivider } from '@/components/DiamondDivider'
 import { Flipbook } from '@/components/Flipbook'
+import { DiamondDivider } from '@/components/DiamondDivider'
+import { sanityClient, safeSanityFetch } from '@/lib/sanity.client'
+import { currentIssueQuery, upcomingIssuesQuery } from '@/lib/queries'
+import type { Issue } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Issues',
   description: 'Current and upcoming issue themes from Pulse Literary & Arts Magazine.',
 }
 
-export default function IssuesPage() {
+export default async function IssuesPage() {
+  // Fetch from Sanity with fallback to empty data
+  const currentIssue = await safeSanityFetch<Issue | null>(
+    sanityClient,
+    currentIssueQuery,
+    {},
+    null
+  )
+
+  const upcomingIssues = await safeSanityFetch<Issue[]>(
+    sanityClient,
+    upcomingIssuesQuery,
+    {},
+    []
+  )
   return (
     <div className="mx-auto max-w-3xl px-6 py-14">
       {/* Heading */}
@@ -32,10 +48,10 @@ export default function IssuesPage() {
               style={{ backgroundColor: 'var(--color-nav)' }}
             >
               <span className="text-[0.6rem] uppercase tracking-[0.28em] text-white/80">
-                {currentIssue.status}
+                Current issue
               </span>
               <span className="font-display text-2xl font-bold text-white/30">
-                {String(1).padStart(2, '0')}
+                {String(currentIssue.issueNumber ?? 1).padStart(2, '0')}
               </span>
             </div>
 
@@ -51,11 +67,11 @@ export default function IssuesPage() {
               <div className="mt-6 grid gap-4 border-t border-black/8 pt-5 text-sm sm:grid-cols-2">
                 <div>
                   <p className="text-[0.6rem] uppercase tracking-widest text-gray-400">Window</p>
-                  <p className="mt-1 text-gray-700">{currentIssue.window}</p>
+                  <p className="mt-1 text-gray-700">{currentIssue.windowText}</p>
                 </div>
                 <div>
                   <p className="text-[0.6rem] uppercase tracking-widest text-gray-400">Status</p>
-                  <p className="mt-1 text-gray-700">{currentIssue.note}</p>
+                  <p className="mt-1 text-gray-700">{currentIssue.statusNote}</p>
                 </div>
               </div>
 
@@ -74,7 +90,11 @@ export default function IssuesPage() {
                   Ask an Editor
                 </a>
                 {currentIssue.pdfUrl && (
-                  <Flipbook pdfUrl={currentIssue.pdfUrl} issueTitle={currentIssue.title} />
+                  <Flipbook 
+                    pdfUrl={currentIssue.pdfUrl} 
+                    issueTitle={currentIssue.title}
+                    issueId={currentIssue._id}
+                  />
                 )}
               </div>
             </div>
@@ -89,7 +109,7 @@ export default function IssuesPage() {
           <div className="space-y-4">
             {upcomingIssues.map((issue, i) => (
               <div
-                key={issue.id}
+                key={issue._id}
                 className="rounded-xl border border-black/10 bg-white/50 px-7 py-6"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -101,13 +121,22 @@ export default function IssuesPage() {
                     <p className="mt-2 text-sm leading-7 text-gray-600">{issue.summary}</p>
                   </div>
                   <span className="shrink-0 font-display text-3xl font-bold text-black/10">
-                    {String(i + 2).padStart(2, '0')}
+                    {String((issue.issueNumber ?? i + 2)).padStart(2, '0')}
                   </span>
                 </div>
-                <p className="mt-4 text-xs text-gray-400">{issue.window}</p>
+                <p className="mt-4 text-xs text-gray-400">{issue.windowText}</p>
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Empty state - no issues configured */}
+      {!currentIssue && upcomingIssues.length === 0 && (
+        <section className="text-center py-12">
+          <p className="text-gray-500">
+            No issues configured yet. Create issues in the Sanity Studio to display them here.
+          </p>
         </section>
       )}
     </div>

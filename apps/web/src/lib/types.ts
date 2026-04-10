@@ -73,6 +73,25 @@ export interface Event {
 }
 
 // ---------------------------------------------------------------------------
+// Issue Types
+// ---------------------------------------------------------------------------
+
+export interface Issue {
+  _id: string
+  title: string
+  slug: string
+  season: string
+  status: 'current' | 'upcoming' | 'archived'
+  issueNumber?: number
+  summary: string
+  windowText?: string
+  statusNote?: string
+  pdfUrl?: string
+  coverImage?: SanityImageSource
+  publishedAt?: string
+}
+
+// ---------------------------------------------------------------------------
 // Settings Types
 // ---------------------------------------------------------------------------
 

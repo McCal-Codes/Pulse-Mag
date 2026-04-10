@@ -2,6 +2,26 @@
 
 This Studio is prepared to deploy as its own Vercel project from the monorepo.
 
+## Content Organization
+
+The Studio is organized to work alongside Wix:
+
+- **Editorial Guide** - First stop for new team members, explains Wix vs Sanity content split
+- **Site Settings** - Social links, contact info, submission windows
+- **Homepage Settings** - Hero post and featured posts grid
+- **Magazine Content** - Authors, Posts, Events, Pages (literary content in Sanity)
+- **Blog (Wix)** - Blog posts from Wix (reference only; write in Wix dashboard)
+
+## Content Sources Quick Guide
+
+| Content Type | Write In | Notes |
+|--------------|----------|-------|
+| Blog posts | Wix Dashboard | News, updates, announcements |
+| Magazine articles | Sanity Studio | Fiction, poetry, essays |
+| Authors | Sanity Studio | Contributor profiles |
+| Events | Sanity Studio | Readings, workshops |
+| Static pages | Sanity Studio | About, Submit, Join |
+
 ## Vercel project settings
 
 Create a second Vercel project for this repo and set:
@@ -29,6 +49,17 @@ From the repo root:
 pnpm dev:studio
 pnpm build:studio
 ```
+
+## Dashboard Widget (Optional)
+
+To enable a dashboard with recent content widgets:
+
+```powershell
+cd apps/studio
+pnpm add @sanity/dashboard sanity-plugin-dashboard-widget-document-list
+```
+
+Then uncomment the dashboard configuration in `sanity.config.ts`.
 
 ## Deployment workflow
 

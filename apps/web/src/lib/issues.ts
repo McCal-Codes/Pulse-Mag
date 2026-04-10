@@ -19,7 +19,7 @@ export const issues: IssueEntry[] = [
       'Essays, dispatches, and criticism about what survives the algorithm: local scenes, durable ideas, and the people who keep culture legible.',
     window: 'Open for pitches through June 20',
     note: 'Brief and reading package publishing soon.',
-    pdfUrl: '/issues/signal-noise.pdf', // Add PDF path here
+    pdfUrl: '/sample-magazine.pdf', // Sample PDF for testing
   },
   {
     id: 'after-the-interface',

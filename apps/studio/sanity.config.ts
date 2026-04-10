@@ -1,6 +1,8 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { dashboardTool } from '@sanity/dashboard'
+import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list'
 import { schemaTypes } from './schemas'
 
 const singletonTypes = new Set(['homepageSettings', 'editorialGuide', 'siteSettings'])
@@ -51,6 +53,15 @@ export default defineConfig({
                   .title('Magazine Content')
                   .items([
                     S.listItem()
+                      .title('Issues')
+                      .id('issues')
+                      .icon(() => '📖')
+                      .child(
+                        S.documentTypeList('issue')
+                          .title('Magazine Issues')
+                          .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
+                      ),
+                    S.listItem()
                       .title('Authors')
                       .id('authors')
                       .icon(() => '✍️')
@@ -81,11 +92,11 @@ export default defineConfig({
                   ])
               ),
             
-            // Blog Content (Wix-synced)
+            // Blog Content
             S.listItem()
-              .title('Blog (Wix)')
+              .title('Blog')
               .id('weeklyBlogList')
-              .icon(() => '🌐')
+              .icon(() => '📝')
               .child(
                 S.documentTypeList('weeklyBlog')
                   .title('Blog Posts')
@@ -96,6 +107,34 @@ export default defineConfig({
           ]),
     }),
     visionTool(),
+    dashboardTool({
+      widgets: [
+        documentListWidget({
+          title: 'Recent Posts',
+          types: ['post'],
+          order: '_updatedAt desc',
+          limit: 5,
+        }),
+        documentListWidget({
+          title: 'Recent Issues',
+          types: ['issue'],
+          order: 'publishedAt desc',
+          limit: 5,
+        }),
+        documentListWidget({
+          title: 'Upcoming Events',
+          types: ['event'],
+          order: 'date asc',
+          limit: 5,
+        }),
+        documentListWidget({
+          title: 'Recent Authors',
+          types: ['author'],
+          order: '_updatedAt desc',
+          limit: 5,
+        }),
+      ],
+    }),
   ],
 
   document: {
