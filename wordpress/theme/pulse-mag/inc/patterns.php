@@ -290,6 +290,26 @@ function pulse_mag_register_patterns(): void
     );
 
     register_block_pattern(
+        'pulse-mag/submit-guidelines-accordion',
+        [
+            'title'       => __('Submit Guidelines Accordion', 'pulse-mag'),
+            'description' => __('Vercel-style expandable guidelines by submission type.', 'pulse-mag'),
+            'categories'  => ['pulse-mag-editorial'],
+            'content'     =>
+                '<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->' .
+                '<div class="wp-block-group alignwide pulse-panel pulse-flow">' .
+                '<!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Submission Categories</p><!-- /wp:paragraph -->' .
+                '<!-- wp:heading {"level":2} --><h2>Detailed Guidelines</h2><!-- /wp:heading -->' .
+                '<!-- wp:group {"className":"pulse-guidelines-accordion","layout":{"type":"constrained"}} --><div class="wp-block-group pulse-guidelines-accordion">' .
+                '<!-- wp:details {"className":"pulse-guidelines-item"} --><details class="wp-block-details pulse-guidelines-item"><summary>Art &amp; Photography</summary><p>Submit JPG or PNG files at 300 ppi. Name files with your work title. You may submit up to five pieces per cycle. We only consider work submitted through the official form.</p></details><!-- /wp:details -->' .
+                '<!-- wp:details {"className":"pulse-guidelines-item"} --><details class="wp-block-details pulse-guidelines-item"><summary>Short Stories &amp; Scripts</summary><p>Submit up to three pieces per cycle, each under 5,000 words. Upload PDF files only. Editors may request a Google Doc for collaborative developmental editing.</p></details><!-- /wp:details -->' .
+                '<!-- wp:details {"className":"pulse-guidelines-item"} --><details class="wp-block-details pulse-guidelines-item"><summary>Hybrid Submissions (Music, Dance, Multimedia)</summary><p>Audio/video submissions should be under five minutes with clear audio and 1080p video when applicable. We accept multiple genres and both staged and filmed performance formats.</p></details><!-- /wp:details -->' .
+                '</div><!-- /wp:group -->' .
+                '</div><!-- /wp:group -->',
+        ]
+    );
+
+    register_block_pattern(
         'pulse-mag/join-role-cards',
         [
             'title'       => __('Join Role Cards', 'pulse-mag'),

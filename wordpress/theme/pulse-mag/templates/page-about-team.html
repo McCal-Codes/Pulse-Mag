@@ -28,7 +28,44 @@
 
 	<!-- wp:group {"className":"pulse-section","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group pulse-section">
-	<!-- wp:pattern {"slug":"pulse-mag/team-profile-card-row"} /-->
+	<!-- wp:query {"query":{"perPage":24,"pages":0,"offset":0,"postType":"author_profile","order":"asc","orderBy":"title","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
+	<div class="wp-block-query">
+		<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+		<!-- wp:group {"className":"pulse-panel pulse-team-card","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group pulse-panel pulse-team-card">
+			<!-- wp:group {"className":"pulse-team-avatar-wrap","layout":{"type":"flex","justifyContent":"center"}} -->
+			<div class="wp-block-group pulse-team-avatar-wrap">
+				<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"1","width":"160px","height":"160px","className":"pulse-team-avatar"} /-->
+			</div>
+			<!-- /wp:group -->
+			<!-- wp:post-title {"textAlign":"center","level":3,"isLink":true} /-->
+			<!-- wp:shortcode -->
+			[pulse_author_meta field="role" label="Role"]
+			<!-- /wp:shortcode -->
+			<!-- wp:shortcode -->
+			[pulse_author_meta field="pronouns" label="Pronouns"]
+			<!-- /wp:shortcode -->
+			<!-- wp:post-excerpt {"excerptLength":22,"moreText":"Read profile"} /-->
+			<!-- wp:shortcode -->
+			[pulse_author_meta field="looking_for" label="Looking For"]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:group -->
+		<!-- /wp:post-template -->
+		<!-- wp:query-no-results -->
+		<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group alignwide pulse-panel pulse-flow">
+			<!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+			<p class="has-text-align-center pulse-kicker">No Team Members Yet</p>
+			<!-- /wp:paragraph -->
+			<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+			<p class="has-text-align-center pulse-body-copy">Create Author Profile posts in the dashboard to populate this page automatically.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
+		<!-- /wp:query-no-results -->
+	</div>
+	<!-- /wp:query -->
 	<!-- wp:post-content /-->
 	<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 	<div class="wp-block-buttons">

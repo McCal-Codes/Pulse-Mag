@@ -1038,6 +1038,122 @@ body::before {
   padding-bottom: 1rem;
 }
 
+.pulse-guidelines-accordion {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.pulse-guidelines-item {
+  border: 1px solid rgba(11, 20, 14, 0.12);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--pulse-paper-light) 75%, #fff);
+  overflow: hidden;
+}
+
+.pulse-guidelines-item summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.9rem 1rem;
+  color: var(--pulse-ink);
+  position: relative;
+}
+
+.pulse-guidelines-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.pulse-guidelines-item summary::after {
+  content: "+";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--pulse-nav);
+}
+
+.pulse-guidelines-item[open] summary::after {
+  content: "-";
+}
+
+.pulse-guidelines-item p {
+  margin: 0;
+  border-top: 1px solid rgba(11, 20, 14, 0.08);
+  padding: 0.85rem 1rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--pulse-gray-600);
+}
+
+.pulse-team-card {
+  height: 100%;
+}
+
+.pulse-team-avatar-wrap {
+  margin-bottom: 0.35rem;
+}
+
+.pulse-team-avatar {
+  margin: 0;
+}
+
+.pulse-team-avatar img {
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(11, 20, 14, 0.08);
+}
+
+.pulse-team-card .wp-block-post-title {
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.05rem, 0.95rem + 0.25vw, 1.2rem);
+}
+
+.pulse-team-card .wp-block-post-title a {
+  text-decoration: none;
+}
+
+.pulse-team-card .wp-block-post-title a:hover,
+.pulse-team-card .wp-block-post-title a:focus-visible {
+  color: var(--pulse-nav);
+}
+
+.pulse-team-card .pulse-author-meta {
+  margin: 0.1rem 0;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.pulse-team-card .pulse-author-meta strong {
+  color: var(--pulse-ink);
+}
+
+.pulse-team-card .wp-block-post-excerpt__excerpt {
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.pulse-team-card .wp-block-post-excerpt__more-link {
+  display: inline-block;
+  margin-top: 0.2rem;
+  color: var(--pulse-nav);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pulse-team-card .wp-block-post-excerpt__more-link:hover,
+.pulse-team-card .wp-block-post-excerpt__more-link:focus-visible {
+  text-decoration: underline;
+}
+
+.pulse-panel .pulse-author-meta {
+  margin: 0.1rem 0;
+  text-align: center;
+}
+
 .pulse-footer-ornaments {
   max-width: 38rem;
   margin: 0 auto;
