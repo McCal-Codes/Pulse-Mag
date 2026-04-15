@@ -585,6 +585,30 @@ body::before {
   margin-top: 2.25rem;
 }
 
+.pulse-feature-columns {
+  gap: 1.75rem;
+}
+
+.pulse-feature-col-main {
+  flex-basis: 52%;
+}
+
+.pulse-feature-col-side {
+  flex-basis: 48%;
+}
+
+.pulse-feature-col-issue-media {
+  flex-basis: 40%;
+}
+
+.pulse-feature-col-issue-copy {
+  flex-basis: 60%;
+}
+
+.pulse-feature-col-half {
+  flex-basis: 50%;
+}
+
 .pulse-blog-feature .wp-block-post-title {
   font-size: clamp(1.7rem, 3.5vw, 2.3rem);
   line-height: 1.2;
@@ -636,6 +660,14 @@ body::before {
   flex-direction: column;
 }
 
+.pulse-post-grid-template {
+  gap: 0.75rem;
+}
+
+.pulse-news-grid-template {
+  gap: 1.5rem;
+}
+
 .pulse-blog-grid .wp-block-post-title {
   font-size: 1.15rem;
   line-height: 1.3;
@@ -672,6 +704,18 @@ body::before {
 .pulse-issues-grid .wp-block-post-title {
   font-size: 1.1rem;
   line-height: 1.3;
+}
+
+.pulse-two-column-wide {
+  gap: 3rem;
+}
+
+.pulse-pattern-gap-sm {
+  gap: 1rem;
+}
+
+.pulse-pattern-gap-md {
+  gap: 1.25rem;
 }
 
 .pulse-events-grid .wp-block-post-title a,
@@ -718,6 +762,22 @@ body::before {
 .single-issue .wp-block-post-content h2,
 .single-issue .wp-block-post-content h3 {
   color: var(--pulse-ink);
+}
+
+.pulse-image-rounded-lg img {
+  border-radius: 14px;
+}
+
+.pulse-image-rounded-md img {
+  border-radius: 12px;
+}
+
+.pulse-image-rounded-sm img {
+  border-radius: 10px;
+}
+
+.pulse-image-rounded-xs img {
+  border-radius: 8px;
 }
 
 /* --- Footer (apps/web Footer.tsx parity) --- */
@@ -905,6 +965,11 @@ body::before {
 
 .pulse-footer-inner > h2 {
   letter-spacing: -0.02em;
+}
+
+.pulse-panel-tight {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .pulse-footer-ornaments {

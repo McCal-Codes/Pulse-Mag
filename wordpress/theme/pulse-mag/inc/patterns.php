@@ -31,8 +31,8 @@ function pulse_mag_register_patterns(): void
             'description' => __('Featured story block with a split editorial layout.', 'pulse-mag'),
             'categories'  => ['pulse-mag-sections'],
             'content'     =>
-                '<!-- wp:columns {"verticalAlignment":"center","lock":{"move":true,"remove":true},"style":{"spacing":{"blockGap":{"left":"1.25rem"}}}} -->' .
-                '<div class="wp-block-columns are-vertically-aligned-center">' .
+                '<!-- wp:columns {"verticalAlignment":"center","className":"pulse-pattern-gap-md","lock":{"move":true,"remove":true}} -->' .
+                '<div class="wp-block-columns are-vertically-aligned-center pulse-pattern-gap-md">' .
                 '<!-- wp:column {"verticalAlignment":"center","width":"65%"} --><div class="wp-block-column is-vertically-aligned-center" style="flex-basis:65%">' .
                 '<!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Featured Story</p><!-- /wp:paragraph -->' .
                 '<!-- wp:heading {"level":2} --><h2>Lead story headline with editorial focus</h2><!-- /wp:heading -->' .
@@ -57,8 +57,8 @@ function pulse_mag_register_patterns(): void
             'description' => __('Asymmetric issue preview grid for current and archived issues.', 'pulse-mag'),
             'categories'  => ['pulse-mag-sections'],
             'content'     =>
-                '<!-- wp:columns {"lock":{"move":true,"remove":true},"style":{"spacing":{"blockGap":{"top":"1rem","left":"1rem"}}}} -->' .
-                '<div class="wp-block-columns">' .
+                '<!-- wp:columns {"className":"pulse-pattern-gap-sm","lock":{"move":true,"remove":true}} -->' .
+                '<div class="wp-block-columns pulse-pattern-gap-sm">' .
                 '<!-- wp:column {"width":"66.66%"} --><div class="wp-block-column" style="flex-basis:66.66%"><!-- wp:group {"className":"pulse-panel","lock":{"move":true,"remove":true},"layout":{"type":"constrained"}} --><div class="wp-block-group pulse-panel"><!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Current</p><!-- /wp:paragraph --><!-- wp:heading {"level":3} --><h3>Issue title</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Season and summary snippet.</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:column -->' .
                 '<!-- wp:column {"width":"33.33%"} --><div class="wp-block-column" style="flex-basis:33.33%"><!-- wp:group {"className":"pulse-panel","lock":{"move":true,"remove":true},"layout":{"type":"constrained"}} --><div class="wp-block-group pulse-panel"><!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Up Next</p><!-- /wp:paragraph --><!-- wp:heading {"level":4} --><h4>Issue title</h4><!-- /wp:heading --><!-- wp:paragraph --><p>Season and summary snippet.</p><!-- /wp:paragraph --></div><!-- /wp:group --></div><!-- /wp:column -->' .
                 '</div><!-- /wp:columns -->',
@@ -149,8 +149,8 @@ function pulse_mag_register_patterns(): void
             'description' => __('Balanced two-column content section for About and Team pages.', 'pulse-mag'),
             'categories'  => ['pulse-mag-sections'],
             'content'     =>
-                '<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"3rem"}}}} -->' .
-                '<div class="wp-block-columns">' .
+                '<!-- wp:columns {"className":"pulse-two-column-wide"} -->' .
+                '<div class="wp-block-columns pulse-two-column-wide">' .
                 '<!-- wp:column --><div class="wp-block-column">' .
                 '<!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Column one</p><!-- /wp:paragraph -->' .
                 '<!-- wp:paragraph {"fontSize":"lg"} --><p class="has-lg-font-size">Add core narrative content here. Keep the first sentence strong and specific.</p><!-- /wp:paragraph -->' .
@@ -227,8 +227,8 @@ function pulse_mag_register_patterns(): void
             'description' => __('Three profile cards for editor/staff highlights.', 'pulse-mag'),
             'categories'  => ['pulse-mag-editorial'],
             'content'     =>
-                '<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"1rem"}}}} -->' .
-                '<div class="wp-block-columns">' .
+                '<!-- wp:columns {"className":"pulse-pattern-gap-sm"} -->' .
+                '<div class="wp-block-columns pulse-pattern-gap-sm">' .
                 '<!-- wp:column --><div class="wp-block-column"><!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} --><div class="wp-block-group pulse-panel">' .
                 '<!-- wp:heading {"level":4} --><h4>Editor Name</h4><!-- /wp:heading -->' .
                 '<!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Role Title</p><!-- /wp:paragraph -->' .
@@ -255,8 +255,8 @@ function pulse_mag_register_patterns(): void
             'description' => __('Featured news panel plus compact recent story list.', 'pulse-mag'),
             'categories'  => ['pulse-mag-editorial'],
             'content'     =>
-                '<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"1.25rem"}}}} -->' .
-                '<div class="wp-block-columns">' .
+                '<!-- wp:columns {"className":"pulse-pattern-gap-md"} -->' .
+                '<div class="wp-block-columns pulse-pattern-gap-md">' .
                 '<!-- wp:column {"width":"62%"} --><div class="wp-block-column" style="flex-basis:62%"><!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} --><div class="wp-block-group pulse-panel">' .
                 '<!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Featured Story</p><!-- /wp:paragraph -->' .
                 '<!-- wp:heading {"level":3} --><h3>Lead headline from the latest Pulse News post</h3><!-- /wp:heading -->' .
@@ -296,8 +296,8 @@ function pulse_mag_register_patterns(): void
             'description' => __('Card set describing open roles for recruiting pages.', 'pulse-mag'),
             'categories'  => ['pulse-mag-editorial'],
             'content'     =>
-                '<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"1rem"}}}} -->' .
-                '<div class="wp-block-columns">' .
+                '<!-- wp:columns {"className":"pulse-pattern-gap-sm"} -->' .
+                '<div class="wp-block-columns pulse-pattern-gap-sm">' .
                 '<!-- wp:column --><div class="wp-block-column"><!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} --><div class="wp-block-group pulse-panel">' .
                 '<!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Open Role</p><!-- /wp:paragraph -->' .
                 '<!-- wp:heading {"level":3} --><h3>Poetry Editor</h3><!-- /wp:heading -->' .

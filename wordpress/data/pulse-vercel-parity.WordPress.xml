@@ -41,8 +41,16 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?page_id=5001</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<p>Welcome — this page mirrors the Vercel home intent. Set it as your static front page under Settings → Reading, or merge blocks with your issue highlights and news.</p>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:heading {"textAlign":"center","level":1} -->
+<h1 class="wp-block-heading has-text-align-center">Welcome</h1>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+<p class="has-text-align-center pulse-body-copy">Pulse Literary &amp; Arts Magazine is a student-led, multimedia publication featuring literature, visual art, and cultural criticism.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Set this page as your static front page under Settings → Reading to mirror the Vercel homepage route structure.</p>
 <!-- /wp:paragraph -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5001</wp:post_id>
@@ -67,21 +75,30 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?page_id=5002</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">About Us</h1>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+<p class="has-text-align-center pulse-kicker">About Us</p>
+<!-- /wp:paragraph -->
+<!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+<h1 class="wp-block-heading has-text-align-center has-display-font-size">About Pulse</h1>
 <!-- /wp:heading -->
-<!-- wp:paragraph -->
-<p><strong>About</strong></p>
+<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+<p class="has-text-align-center pulse-body-copy">Pulse Literary &amp; Arts Magazine is an annual multimedia publication led by students at Point Park University, spotlighting contemporary literary and visual work.</p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph -->
-<p>Pulse Literary &amp; Arts Magazine is an annual multimedia literary and arts magazine led by students at Point Park University. As a multimedia magazine, we publish all art forms, including literature, poetry, scripts, art, photography, dance, and music.</p>
+<!-- wp:group {"className":"pulse-diamond-divider pulse-diamond-divider--after-title","layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group pulse-diamond-divider pulse-diamond-divider--after-title" aria-hidden="true"><!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+<hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+<!-- /wp:separator -->
+<!-- wp:paragraph {"className":"pulse-diamond-divider-glyph"} -->
+<p class="pulse-diamond-divider-glyph">◆</p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph -->
-<p>At Pulse, we believe every voice has a story worth telling. Our mission is to amplify the creative spirit of Point Park University and beyond, creating a space where art and literature converge to inspire, challenge, and connect us all.</p>
-<!-- /wp:paragraph -->
-<!-- wp:paragraph -->
-<p><em>— Pulse Editorial Team</em></p>
-<!-- /wp:paragraph -->]]></content:encoded>
+<!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+<hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+<!-- /wp:separator --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- wp:pattern {"slug":"pulse-mag/about-section-stack"} /-->
+<!-- wp:pattern {"slug":"pulse-mag/cta-buttons-centered"} /-->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5002</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
@@ -109,12 +126,18 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?page_id=5003</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Our Staff</h1>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+<p class="has-text-align-center pulse-kicker">Our Staff</p>
+<!-- /wp:paragraph -->
+<!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+<h1 class="wp-block-heading has-text-align-center has-display-font-size">Meet the Pulse Team</h1>
 <!-- /wp:heading -->
-<!-- wp:paragraph -->
-<p>Meet the student editors and contributors who produce each issue. Replace this placeholder with your team bios and photos.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+<p class="has-text-align-center pulse-body-copy">Editors, contributors, and collaborators shaping each annual issue and weekly updates.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- wp:pattern {"slug":"pulse-mag/team-profile-card-row"} /-->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5003</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
@@ -142,18 +165,29 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?page_id=5004</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Submit Your Work</h1>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+<p class="has-text-align-center pulse-kicker">Submit Your Work</p>
+<!-- /wp:paragraph -->
+<!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+<h1 class="wp-block-heading has-text-align-center has-display-font-size">Submission Guidelines</h1>
 <!-- /wp:heading -->
-<!-- wp:paragraph -->
-<p><strong>Pulse Magazine is Pittsburgh's premier literary journal</strong> dedicated to publishing poetry, fiction, visual art, and multimedia from emerging writers and artists. We welcome submissions from Point Park University students and emerging writers in the Pittsburgh area.</p>
+<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+<p class="has-text-align-center pulse-body-copy">Pulse accepts poetry, fiction, scripts, visual art, dance, and music submissions during the annual reading window.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- wp:group {"align":"wide","className":"pulse-panel pulse-panel-tight","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-panel-tight"><!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+<p class="has-text-align-center pulse-kicker">Open Annually</p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph -->
-<p>Our yearly submission window opens <strong>October 1</strong> and closes <strong>January 31</strong>. All accepted work receives author bylines and featured placement on our website.</p>
-<!-- /wp:paragraph -->
-<!-- wp:paragraph -->
-<p>Review our guidelines, prepare your best work, and use the contact paths your editorial team provides during the open window.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+<!-- wp:heading {"textAlign":"center","level":3} -->
+<h3 class="wp-block-heading has-text-align-center">Yearly Open Submission Window</h3>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">October 1 - January 31</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- wp:pattern {"slug":"pulse-mag/submit-guidelines-block"} /-->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5004</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
@@ -181,12 +215,18 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?page_id=5005</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Join Our Team</h1>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+<p class="has-text-align-center pulse-kicker">Join Our Team</p>
+<!-- /wp:paragraph -->
+<!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+<h1 class="wp-block-heading has-text-align-center has-display-font-size">Work With Pulse</h1>
 <!-- /wp:heading -->
-<!-- wp:paragraph -->
-<p>We're looking to grow our team of creatives. These volunteer roles offer a creative outlet, experience in literary magazine publishing, and connections with talented creators. Role descriptions and requirements live in your internal handbook — use this page to explain how candidates should apply.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+<p class="has-text-align-center pulse-body-copy">We are growing our editorial, design, and outreach team across literary and arts disciplines.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+<!-- wp:pattern {"slug":"pulse-mag/join-role-cards"} /-->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5005</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
@@ -240,9 +280,17 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?page_id=5007</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<p>On the Next.js site, <code>/news</code> redirects to <code>/blog</code>. Use Pulse SEO or redirects if you want the same behavior in WordPress, or edit this page for a dedicated news intro.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+<p class="has-text-align-center pulse-kicker">News</p>
+<!-- /wp:paragraph -->
+<!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+<h1 class="wp-block-heading has-text-align-center has-display-font-size">Pulse News</h1>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">On the Vercel site, <code>/news</code> redirects to <code>/blog</code>. Keep that redirect for parity, or use this as a curated news landing page.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5007</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
@@ -270,12 +318,17 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?page_id=5008</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Events</h1>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+<p class="has-text-align-center pulse-kicker">Events</p>
+<!-- /wp:paragraph -->
+<!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+<h1 class="wp-block-heading has-text-align-center has-display-font-size">Upcoming and Past Events</h1>
 <!-- /wp:heading -->
-<!-- wp:paragraph -->
-<p>Upcoming readings, workshops, and community gatherings. Replace this intro with your schedule; the theme archive at <code>/events/</code> lists <strong>event</strong> posts.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+<p class="has-text-align-center pulse-body-copy">Readings, showcases, workshops, and community gatherings from the Pulse team.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5008</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
@@ -299,9 +352,20 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?p=5010</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<p>We are excited to launch our site and welcome submissions from emerging writers and artists in Pittsburgh and beyond. Follow Pulse News for calls, deadlines, and issue announcements.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"className":"pulse-kicker"} -->
+<p class="pulse-kicker">Editorial Note</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"fontSize":"lg"} -->
+<p class="has-lg-font-size">Pulse launches this cycle with a focus on sharp, contemporary work across poetry, fiction, visual art, and cultural criticism from emerging voices.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph -->
+<p>Watch Pulse News for submission calls, issue windows, and behind-the-scenes updates from the editorial team.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph -->
+<p><a href="/blog/">Read the latest Pulse News →</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<category domain="category" nicename="news"><![CDATA[News]]></category>
 		<wp:post_id>5010</wp:post_id>
@@ -326,9 +390,20 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?p=5011</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<p>Short reads, craft notes, and community updates from the editorial desk — edit or replace with migrated Sanity or legacy blog content.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"className":"pulse-kicker"} -->
+<p class="pulse-kicker">From the Desk</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"fontSize":"lg"} -->
+<p class="has-lg-font-size">Every issue begins with an editorial conversation about what feels urgent, resonant, and lasting in the current creative moment.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph -->
+<p>Use this slot for short craft essays, process notes, and community context that frames upcoming publication themes.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph -->
+<p><a href="/about/">Meet the editorial team →</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<category domain="category" nicename="news"><![CDATA[News]]></category>
 		<wp:post_id>5011</wp:post_id>
@@ -353,11 +428,7 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?post_type=issue&amp;p=5020</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<!-- wp:pulse/issue-flipbook {"viewerHeight":760,"showDownload":true} /-->
-<!-- wp:paragraph -->
-<p>Sample issue entry — attach a PDF in the Issue PDF (Flipbook) box to power the native Issue Flipbook block render.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Current Issue</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"lg"} --><p class="has-lg-font-size">A curated collection of essays, dispatches, and criticism on culture after algorithmic acceleration.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Attach the issue PDF in the Issue Flipbook meta box and the native issue block below will render the reader automatically.</p><!-- /wp:paragraph --><!-- wp:pulse/issue-flipbook {"viewerHeight":760,"showDownload":true} /--><!-- wp:paragraph --><p><a href="/issues/">Browse all issues →</a></p><!-- /wp:paragraph --></div><!-- /wp:group -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[Essays, dispatches, and criticism about what survives the algorithm: local scenes, durable ideas, and the people who keep culture legible.]]></excerpt:encoded>
 		<wp:post_id>5020</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
@@ -413,9 +484,7 @@
 		<dc:creator><![CDATA[pulseeditor]]></dc:creator>
 		<guid isPermaLink="false">https://pulseliterary.com/?post_type=event&amp;p=5030</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<p>Sample event — edit date and location in Pulse Mag event fields.</p>
-<!-- /wp:paragraph -->]]></content:encoded>
+		<content:encoded><![CDATA[<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} --><div class="wp-block-group alignwide pulse-panel pulse-flow"><!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Live Event</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"lg"} --><p class="has-lg-font-size">Join Pulse for a reading and launch night featuring contributors from the current issue.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Update event date, location, and RSVP link in the event meta fields to keep archive cards and single pages in sync.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p><a href="/events/">See all upcoming events →</a></p><!-- /wp:paragraph --></div><!-- /wp:group -->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>5030</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>

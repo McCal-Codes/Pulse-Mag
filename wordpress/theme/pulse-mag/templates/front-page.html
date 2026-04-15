@@ -86,18 +86,18 @@
 		<!-- wp:query {"queryId":10,"query":{"postType":"post","perPage":1,"inherit":false},"layout":{"type":"default"}} -->
 		<div class="wp-block-query">
 			<!-- wp:post-template -->
-			<!-- wp:columns {"align":"wide","className":"pulse-news-feature"} -->
-			<div class="wp-block-columns alignwide pulse-news-feature">
-				<!-- wp:column {"width":"50%"} -->
-				<div class="wp-block-column" style="flex-basis:50%">
+			<!-- wp:columns {"align":"wide","className":"pulse-news-feature pulse-feature-columns"} -->
+			<div class="wp-block-columns alignwide pulse-news-feature pulse-feature-columns">
+				<!-- wp:column {"className":"pulse-feature-col-half"} -->
+				<div class="wp-block-column pulse-feature-col-half">
 					<!-- wp:post-title {"level":3,"isLink":true} /-->
 					<!-- wp:post-date {"format":"F j, Y"} /-->
 					<!-- wp:post-excerpt {"moreText":"Read More","excerptLength":35} /-->
 				</div>
 				<!-- /wp:column -->
-				<!-- wp:column {"width":"50%"} -->
-				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:post-featured-image {"aspectRatio":"4/3","scale":"cover","style":{"border":{"radius":"0.5rem"}}} /-->
+				<!-- wp:column {"className":"pulse-feature-col-half"} -->
+				<div class="wp-block-column pulse-feature-col-half">
+					<!-- wp:post-featured-image {"aspectRatio":"4/3","scale":"cover","className":"pulse-image-rounded-xs"} /-->
 				</div>
 				<!-- /wp:column -->
 			</div>
@@ -117,10 +117,10 @@
 
 		<!-- wp:query {"queryId":11,"query":{"postType":"post","perPage":3,"offset":1,"inherit":false},"layout":{"type":"grid","columnCount":3}} -->
 		<div class="wp-block-query pulse-news-grid">
-			<!-- wp:post-template {"style":{"spacing":{"blockGap":"1.5rem"}}} -->
+			<!-- wp:post-template {"className":"pulse-news-grid-template"} -->
 			<!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
 			<div class="wp-block-group pulse-panel">
-				<!-- wp:post-featured-image {"aspectRatio":"4/3","scale":"cover","style":{"border":{"radius":"0.5rem"}}} /-->
+				<!-- wp:post-featured-image {"aspectRatio":"4/3","scale":"cover","className":"pulse-image-rounded-xs"} /-->
 				<!-- wp:post-title {"level":3,"isLink":true} /-->
 				<!-- wp:post-date {"format":"F j, Y","fontSize":"x-small"} /-->
 				<!-- wp:post-excerpt {"moreText":"Read More","excerptLength":22} /-->
