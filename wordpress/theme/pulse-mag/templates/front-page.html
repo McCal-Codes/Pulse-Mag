@@ -1,0 +1,136 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"pulse-home","layout":{"type":"default"},"anchor":"pulse-primary-content"} -->
+<main class="wp-block-group pulse-home">
+	<!-- wp:group {"className":"pulse-home-welcome","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group pulse-home-welcome">
+		<!-- wp:heading {"textAlign":"center","level":1} -->
+		<h1 class="wp-block-heading has-text-align-center">Welcome</h1>
+		<!-- /wp:heading -->
+		<!-- wp:html -->
+		<div class="pulse-diamond-divider pulse-diamond-divider--after-title" aria-hidden="true"><span>◆</span><span>◆</span><span>◆</span></div>
+		<!-- /wp:html -->
+		<!-- wp:paragraph {"align":"center","className":"pulse-home-lead"} -->
+		<p class="has-text-align-center pulse-home-lead">Pulse Literary &amp; Arts Magazine is an annual multimedia literary and arts magazine led by students at Point Park University. As a multimedia magazine, we publish all art forms, including literature, poetry, scripts, art, photography, dance, and music.</p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"className":"pulse-issue-card-wrap","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group pulse-issue-card-wrap">
+		<!-- wp:query {"queryId":2,"query":{"postType":"issue","perPage":1,"inherit":false},"layout":{"type":"default"}} -->
+		<div class="wp-block-query">
+			<!-- wp:post-template -->
+			<!-- wp:group {"className":"pulse-issue-card","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group pulse-issue-card">
+				<!-- wp:group {"className":"pulse-issue-card-media","layout":{"type":"default"}} -->
+				<div class="wp-block-group pulse-issue-card-media">
+					<!-- wp:post-featured-image {"isLink":false,"aspectRatio":"3/4","scale":"cover"} /-->
+					<!-- wp:group {"className":"pulse-issue-card-overlay","layout":{"type":"default"}} -->
+					<div class="wp-block-group pulse-issue-card-overlay">
+						<!-- wp:post-title {"level":2,"isLink":true} /-->
+					</div>
+					<!-- /wp:group -->
+				</div>
+				<!-- /wp:group -->
+				<!-- wp:group {"className":"pulse-issue-card-caption","layout":{"type":"constrained"}} -->
+				<div class="wp-block-group pulse-issue-card-caption">
+					<!-- wp:paragraph {"className":"pulse-issue-caption-kicker"} -->
+					<p class="pulse-issue-caption-kicker">Current issue</p>
+					<!-- /wp:paragraph -->
+					<!-- wp:group {"className":"pulse-issue-caption-sub","layout":{"type":"constrained"}} -->
+					<div class="wp-block-group pulse-issue-caption-sub">
+						<!-- wp:post-excerpt {"excerptLength":28,"moreText":""} /-->
+					</div>
+					<!-- /wp:group -->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:group -->
+			<!-- /wp:post-template -->
+			<!-- wp:query-no-results -->
+			<!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
+			<!-- /wp:query-no-results -->
+		</div>
+		<!-- /wp:query -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:separator {"align":"center","className":"pulse-home-rule is-style-wide"} -->
+	<hr class="wp-block-separator alignwide has-alpha-channel-opacity pulse-home-rule is-style-wide" />
+	<!-- /wp:separator -->
+
+	<!-- wp:group {"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group">
+		<!-- wp:group {"className":"pulse-news-head","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group pulse-news-head">
+			<!-- wp:heading {"textAlign":"center","level":2} -->
+			<h2 class="wp-block-heading has-text-align-center">Pulse News</h2>
+			<!-- /wp:heading -->
+		</div>
+		<!-- /wp:group -->
+		<!-- wp:html -->
+		<hr class="pulse-news-rule" aria-hidden="true" />
+		<!-- /wp:html -->
+
+		<!-- wp:query {"queryId":10,"query":{"postType":"post","perPage":1,"inherit":false},"layout":{"type":"default"}} -->
+		<div class="wp-block-query">
+			<!-- wp:post-template -->
+			<!-- wp:columns {"align":"wide","className":"pulse-news-feature"} -->
+			<div class="wp-block-columns alignwide pulse-news-feature">
+				<!-- wp:column {"width":"50%"} -->
+				<div class="wp-block-column" style="flex-basis:50%">
+					<!-- wp:post-title {"level":3,"isLink":true} /-->
+					<!-- wp:post-date {"format":"F j, Y"} /-->
+					<!-- wp:post-excerpt {"moreText":"Read More","excerptLength":35} /-->
+				</div>
+				<!-- /wp:column -->
+				<!-- wp:column {"width":"50%"} -->
+				<div class="wp-block-column" style="flex-basis:50%">
+					<!-- wp:post-featured-image {"aspectRatio":"4/3","scale":"cover","style":{"border":{"radius":"0.5rem"}}} /-->
+				</div>
+				<!-- /wp:column -->
+			</div>
+			<!-- /wp:columns -->
+			<!-- /wp:post-template -->
+			<!-- wp:query-no-results -->
+			<!-- wp:paragraph {"align":"center"} -->
+			<p class="has-text-align-center">No posts yet — publish posts to populate Pulse News.</p>
+			<!-- /wp:paragraph -->
+			<!-- /wp:query-no-results -->
+		</div>
+		<!-- /wp:query -->
+
+		<!-- wp:separator {"align":"center","className":"pulse-home-rule is-style-wide"} -->
+		<hr class="wp-block-separator alignwide has-alpha-channel-opacity pulse-home-rule is-style-wide" />
+		<!-- /wp:separator -->
+
+		<!-- wp:query {"queryId":11,"query":{"postType":"post","perPage":3,"offset":1,"inherit":false},"layout":{"type":"grid","columnCount":3}} -->
+		<div class="wp-block-query pulse-news-grid">
+			<!-- wp:post-template {"style":{"spacing":{"blockGap":"1.5rem"}}} -->
+			<!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group pulse-panel">
+				<!-- wp:post-featured-image {"aspectRatio":"4/3","scale":"cover","style":{"border":{"radius":"0.5rem"}}} /-->
+				<!-- wp:post-title {"level":3,"isLink":true} /-->
+				<!-- wp:post-date {"format":"F j, Y","fontSize":"x-small"} /-->
+				<!-- wp:post-excerpt {"moreText":"Read More","excerptLength":22} /-->
+			</div>
+			<!-- /wp:group -->
+			<!-- /wp:post-template -->
+			<!-- wp:query-no-results -->
+			<!-- wp:paragraph -->
+			<p></p>
+			<!-- /wp:paragraph -->
+			<!-- /wp:query-no-results -->
+		</div>
+		<!-- /wp:query -->
+
+		<!-- wp:paragraph {"align":"center","className":"pulse-home-readall"} -->
+		<p class="has-text-align-center pulse-home-readall"><a href="/blog/">Read All Pulse News ››</a></p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

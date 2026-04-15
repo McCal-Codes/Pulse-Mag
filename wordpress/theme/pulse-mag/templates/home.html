@@ -1,0 +1,52 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"className":"pulse-shell","layout":{"type":"constrained"},"anchor":"pulse-primary-content"} -->
+<div class="wp-block-group pulse-shell">
+  <!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group pulse-panel">
+    <!-- wp:paragraph {"className":"pulse-kicker"} -->
+    <p class="pulse-kicker">Pulse Literary Magazine</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:heading {"level":1,"fontSize":"display"} -->
+    <h1 class="wp-block-heading has-display-font-size">Editorial work grounded in craft and timing.</h1>
+    <!-- /wp:heading -->
+    <!-- wp:paragraph -->
+    <p>Use this front page as a left-anchored editorial dashboard: one lead story, one current issue callout, and rolling updates for the magazine team.</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:pattern {"slug":"pulse-mag/hero-story"} /-->
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group pulse-panel">
+    <!-- wp:paragraph {"className":"pulse-kicker"} -->
+    <p class="pulse-kicker">Publishing Queue</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:pattern {"slug":"pulse-mag/loading-skeleton"} /-->
+    <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
+    <!-- wp:pattern {"slug":"pulse-mag/error-state"} /-->
+  </div>
+  <!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group">
+  <!-- wp:query {"query":{"perPage":6,"postType":"post","inherit":false},"layout":{"type":"grid","columnCount":2}} -->
+  <div class="wp-block-query">
+    <!-- wp:post-template {"style":{"spacing":{"blockGap":"1rem"}}} -->
+    <!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group pulse-panel">
+      <!-- wp:post-title {"isLink":true,"level":3} /-->
+      <!-- wp:post-date {"format":"F j, Y"} /-->
+      <!-- wp:post-excerpt {"moreText":"Read full story"} /-->
+    </div>
+    <!-- /wp:group -->
+    <!-- /wp:post-template -->
+    <!-- wp:query-no-results -->
+    <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
+    <!-- /wp:query-no-results -->
+  </div>
+  <!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

@@ -1,0 +1,37 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"anchor":"pulse-primary-content","layout":{"type":"constrained"}} -->
+<div class="wp-block-group">
+  <!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group alignwide pulse-panel">
+    <!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+    <p class="has-text-align-center pulse-kicker">Issues</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+    <h1 class="wp-block-heading has-text-align-center has-display-font-size">Current and Upcoming Issues</h1>
+    <!-- /wp:heading -->
+    <!-- wp:paragraph {"align":"center"} -->
+    <p class="has-text-align-center">Each issue is built around a seasonal theme and editorial brief.</p>
+    <!-- /wp:paragraph -->
+  </div>
+  <!-- /wp:group -->
+  <!-- wp:query {"query":{"postType":"issue","perPage":12,"inherit":false},"align":"wide","layout":{"type":"grid","columnCount":2}} -->
+  <div class="wp-block-query">
+    <!-- wp:post-template {"style":{"spacing":{"blockGap":"1rem"}}} -->
+    <!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group pulse-panel">
+      <!-- wp:post-title {"isLink":true,"level":3} /-->
+      <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"3/4","style":{"border":{"radius":"12px"}}} /-->
+      <!-- wp:post-excerpt {"moreText":"Open issue"} /-->
+      <!-- wp:read-more {"content":"Open issue","fontSize":"small"} /-->
+    </div>
+    <!-- /wp:group -->
+    <!-- /wp:post-template -->
+    <!-- wp:query-no-results -->
+    <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
+    <!-- /wp:query-no-results -->
+    <!-- wp:query-pagination /-->
+  </div>
+  <!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
