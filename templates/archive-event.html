@@ -1,0 +1,38 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:group {"anchor":"pulse-primary-content","layout":{"type":"constrained"}} -->
+<div class="wp-block-group">
+  <!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group alignwide pulse-panel">
+    <!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+    <p class="has-text-align-center pulse-kicker">Events</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
+    <h1 class="wp-block-heading has-text-align-center has-display-font-size">Upcoming and Past Events</h1>
+    <!-- /wp:heading -->
+    <!-- wp:paragraph {"align":"center"} -->
+    <p class="has-text-align-center">Join us for readings, workshops, and community gatherings.</p>
+    <!-- /wp:paragraph -->
+  </div>
+  <!-- /wp:group -->
+  <!-- wp:query {"query":{"postType":"event","perPage":12,"inherit":false},"align":"wide","layout":{"type":"grid","columnCount":2}} -->
+  <div class="wp-block-query">
+    <!-- wp:post-template {"style":{"spacing":{"blockGap":"1rem"}}} -->
+    <!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group pulse-panel">
+      <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"2/1","style":{"border":{"radius":"12px"}}} /-->
+      <!-- wp:post-date {"format":"F j, Y"} /-->
+      <!-- wp:post-title {"isLink":true,"level":3} /-->
+      <!-- wp:post-excerpt {"moreText":"View event"} /-->
+      <!-- wp:read-more {"content":"RSVP / More Info","fontSize":"small"} /-->
+    </div>
+    <!-- /wp:group -->
+    <!-- /wp:post-template -->
+    <!-- wp:query-no-results -->
+    <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
+    <!-- /wp:query-no-results -->
+    <!-- wp:query-pagination /-->
+  </div>
+  <!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

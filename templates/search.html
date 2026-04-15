@@ -1,0 +1,45 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"anchor":"pulse-primary-content","layout":{"type":"constrained"}} -->
+<div class="wp-block-group">
+	<!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignwide pulse-panel">
+		<!-- wp:query-title {"type":"search","level":1,"fontSize":"display","textAlign":"center"} /-->
+		<!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
+		<p class="has-text-align-center pulse-kicker">Search the magazine</p>
+		<!-- /wp:paragraph -->
+		<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Titles, topics, authors…","buttonText":"Search","buttonPosition":"button-inside","buttonUseIcon":true,"align":"center"} /-->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:query {"query":{"inherit":true},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-query">
+		<!-- wp:post-template {"style":{"spacing":{"blockGap":"1.25rem"}}} -->
+		<!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group pulse-panel">
+			<!-- wp:post-title {"isLink":true,"level":3} /-->
+			<!-- wp:post-date {"format":"F j, Y"} /-->
+			<!-- wp:post-excerpt /-->
+		</div>
+		<!-- /wp:group -->
+		<!-- /wp:post-template -->
+		<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+		<!-- wp:query-pagination-previous /-->
+		<!-- wp:query-pagination-numbers /-->
+		<!-- wp:query-pagination-next /-->
+		<!-- /wp:query-pagination -->
+		<!-- wp:query-no-results -->
+		<!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group pulse-panel">
+			<!-- wp:paragraph {"align":"center"} -->
+			<p class="has-text-align-center">No posts matched your search. Try different words or browse <a href="/news/">Pulse News</a>.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
+		<!-- /wp:query-no-results -->
+	</div>
+	<!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

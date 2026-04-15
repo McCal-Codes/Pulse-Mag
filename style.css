@@ -1,0 +1,674 @@
+/*
+Theme Name: Pulse Mag
+Theme URI: https://pulsemag.example
+Author: Pulse Magazine
+Description: Block theme for Pulse Literary Magazine — front page and chrome aligned with apps/web (Vercel) layout and typography.
+Version: 0.2.1
+Requires at least: 6.5
+Tested up to: 6.9
+Requires PHP: 8.1
+Text Domain: pulse-mag
+GitHub Theme URI: https://github.com/McCal-Codes/pulse-mag
+Primary Branch: main
+*/
+
+:root {
+  --pulse-bg: #f4f1ec;
+  --pulse-surface: #ffffff;
+  --pulse-ink: #0b140e;
+  --pulse-muted: #5b625d;
+  --pulse-accent: #3d1419;
+  --pulse-nav: #121b13;
+  --pulse-paper-soft: #e8e5e0;
+  --pulse-paper-deep: #ddd9d3;
+  --pulse-paper-muted: #edeae5;
+  --pulse-gray-600: #6b7280;
+  --pulse-gray-400: #9ca3af;
+}
+
+html {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(18, 27, 19, 0.08), transparent 32%),
+    radial-gradient(circle at 100% 10%, rgba(11, 20, 14, 0.05), transparent 24%),
+    linear-gradient(180deg, #faf9f7 0%, #f4f1ec 42%, #edeae5 100%);
+}
+
+body {
+  position: relative;
+  background: transparent;
+  color: var(--pulse-ink);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, rgba(11, 20, 14, 0.03) 1px, transparent 1px);
+  background-size: 24rem 100%;
+  mask-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 18%, rgba(0, 0, 0, 0.4) 82%, transparent);
+  opacity: 0.12;
+}
+
+.wp-site-blocks {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.pulse-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--pulse-bg);
+  box-shadow: 0 1px 0 rgba(25, 23, 21, 0.08);
+}
+
+.pulse-wordmark {
+  padding-top: 1.1rem;
+  padding-bottom: 0.8rem;
+}
+
+.pulse-wordmark .wp-block-site-title {
+  letter-spacing: 0.12em;
+  font-size: clamp(1.8rem, 4.6vw, 2.6rem);
+  text-transform: uppercase;
+}
+
+.pulse-wordmark .wp-block-site-title a {
+  color: var(--pulse-ink);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.pulse-wordmark .wp-block-site-title a:hover {
+  color: var(--pulse-accent);
+}
+
+.pulse-wordmark-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.pulse-wordmark-star {
+  font-size: 1.1rem;
+  color: var(--pulse-nav);
+}
+
+.pulse-wordmark .wp-block-site-tagline {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  font-style: italic;
+  color: var(--pulse-muted);
+}
+
+.pulse-main-nav {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: color-mix(in srgb, var(--pulse-paper-soft) 88%, #ffffff);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.55rem 1rem;
+}
+
+.pulse-main-nav .wp-block-navigation-item__content {
+  color: color-mix(in srgb, var(--pulse-ink) 88%, transparent);
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.pulse-main-nav .wp-block-navigation-item__content:hover {
+  color: var(--pulse-nav);
+  text-decoration: underline;
+}
+
+/* Mobile overlay: keep readable text on light panel */
+.pulse-main-nav .wp-block-navigation__responsive-dialog {
+  background: var(--pulse-bg);
+}
+
+.pulse-main-nav button.wp-block-navigation__responsive-container-close {
+  color: var(--pulse-ink);
+}
+
+.pulse-main-nav .wp-block-navigation__responsive-container-open:not(.has-text-color) {
+  color: var(--pulse-ink);
+}
+
+.pulse-shell {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.pulse-panel {
+  background: color-mix(in srgb, var(--pulse-surface) 86%, var(--pulse-paper-soft) 14%);
+  border: 1px solid rgba(25, 23, 21, 0.08);
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: 0 20px 40px -24px rgba(25, 23, 21, 0.22);
+}
+
+.pulse-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pulse-muted);
+}
+
+/* Vercel DiamondDivider parity (apps/web/src/components/DiamondDivider.tsx) */
+.pulse-diamond-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+  margin-bottom: 1.25rem;
+  color: var(--pulse-nav);
+  font-size: 0.55rem;
+  line-height: 1;
+  letter-spacing: 0.15em;
+}
+
+.pulse-diamond-divider span:nth-child(1),
+.pulse-diamond-divider span:nth-child(3) {
+  opacity: 0.55;
+  font-size: 0.45rem;
+}
+
+/* --- Home (apps/web/src/app/page.tsx parity) --- */
+
+.pulse-home {
+  padding-bottom: 4rem;
+}
+
+.pulse-home-welcome {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3.5rem 1.5rem 2.5rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .pulse-home-welcome {
+    padding-top: 3.75rem;
+  }
+}
+
+.pulse-home-welcome .pulse-diamond-divider--after-title {
+  margin-top: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.pulse-home-lead {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--pulse-gray-600);
+}
+
+@media (min-width: 640px) {
+  .pulse-home-lead {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+}
+
+.pulse-home-rule {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.pulse-issue-card-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.pulse-issue-card {
+  width: 100%;
+  max-width: 14rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 40px -20px rgba(20, 17, 15, 0.3);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+}
+
+@media (min-width: 640px) {
+  .pulse-issue-card {
+    max-width: 16rem;
+  }
+}
+
+.pulse-issue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -18px rgba(20, 17, 15, 0.38);
+}
+
+.pulse-issue-card-media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background-color: var(--pulse-paper-deep);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: cover;
+  overflow: hidden;
+}
+
+.pulse-issue-card-media .wp-block-post-featured-image {
+  margin: 0;
+  height: 100%;
+}
+
+.pulse-issue-card-media .wp-block-post-featured-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pulse-issue-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.22) 45%, transparent 100%);
+  pointer-events: none;
+}
+
+.pulse-issue-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+.pulse-issue-card-overlay .wp-block-post-title {
+  margin: 0;
+  pointer-events: auto;
+}
+
+.pulse-issue-card-overlay .wp-block-post-title a {
+  color: var(--pulse-accent);
+  text-decoration: none;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.15rem, 3.5vw, 1.5rem);
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.pulse-issue-card-overlay .wp-block-post-title a:hover {
+  color: #f4f1ec;
+}
+
+.pulse-issue-card-caption {
+  background: var(--pulse-paper-soft);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  transition: background-color 0.35s ease;
+}
+
+.pulse-issue-card:hover .pulse-issue-card-caption {
+  background: var(--pulse-bg);
+}
+
+.pulse-issue-card-caption .pulse-issue-caption-kicker {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pulse-gray-600);
+  margin: 0;
+}
+
+.pulse-issue-card-caption .pulse-issue-caption-sub {
+  font-size: 0.7rem;
+  color: var(--pulse-gray-600);
+  margin: 0.25rem 0 0;
+}
+
+.pulse-news-head {
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.pulse-news-head .wp-block-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.pulse-news-rule {
+  width: 100%;
+  max-width: 20rem;
+  height: 1px;
+  margin: 0.25rem auto 2.5rem;
+  background: rgba(0, 0, 0, 0.15);
+  border: 0;
+}
+
+.pulse-news-feature {
+  margin-bottom: 2.5rem;
+}
+
+.pulse-news-feature .wp-block-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pulse-news-feature .wp-block-post-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  line-height: 1.25;
+}
+
+.pulse-news-feature .wp-block-post-title a {
+  color: var(--pulse-ink);
+  text-decoration: none;
+}
+
+.pulse-news-feature .wp-block-post-title a:hover {
+  color: var(--pulse-nav);
+}
+
+.pulse-news-feature .wp-block-post-date {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--pulse-gray-400);
+  margin-top: 0.35rem;
+}
+
+.pulse-news-feature .wp-block-post-excerpt {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--pulse-gray-600);
+}
+
+.pulse-news-feature-plug {
+  position: relative;
+  min-height: 14rem;
+  border-radius: 0.5rem;
+  background: var(--pulse-paper-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pulse-gray-400);
+}
+
+.pulse-news-grid .pulse-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pulse-news-grid .wp-block-post-excerpt {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--pulse-gray-600);
+}
+
+.pulse-home-readall {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.pulse-home-readall a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--pulse-gray-600);
+  text-decoration: none;
+}
+
+.pulse-home-readall a:hover {
+  color: var(--pulse-nav);
+  text-decoration: underline;
+}
+
+/* --- Footer (apps/web Footer.tsx parity) --- */
+
+.pulse-footer-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+
+.pulse-footer-wordmark-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+}
+
+.pulse-footer-wordmark-row .pulse-wordmark-star {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.pulse-site-footer .wp-block-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+}
+
+.pulse-footer-socials {
+  margin-top: 1.5rem !important;
+  margin-bottom: 2rem !important;
+  gap: 0.65rem !important;
+}
+
+.pulse-footer-socials .wp-block-social-link-anchor {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem !important;
+  height: 2.75rem !important;
+  border-radius: 999px !important;
+  background: var(--pulse-ink) !important;
+  color: var(--pulse-bg) !important;
+  box-shadow: 0 4px 12px rgba(11, 20, 14, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pulse-footer-socials .wp-block-social-link-anchor:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(11, 20, 14, 0.22);
+}
+
+.pulse-footer-wordmark {
+  margin-top: 0.5rem;
+}
+
+.pulse-footer-wordmark .wp-block-site-title {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.pulse-footer-wordmark .wp-block-site-title a {
+  color: rgba(11, 20, 14, 0.7);
+  text-decoration: none;
+}
+
+.pulse-footer-wordmark .wp-block-site-tagline {
+  font-size: 0.65rem;
+  font-style: italic;
+  letter-spacing: 0.18em;
+  color: rgba(11, 20, 14, 0.5);
+}
+
+.pulse-footer-copy {
+  margin-top: 1.5rem !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.06em;
+  color: rgba(11, 20, 14, 0.4) !important;
+}
+
+.pulse-footer-inner .wp-block-shortcode {
+  margin: 0;
+}
+
+.pulse-empty,
+.pulse-error,
+.pulse-loading {
+  border: 1px solid rgba(25, 23, 21, 0.08);
+  border-radius: 14px;
+  padding: 1rem;
+  background: var(--pulse-surface);
+}
+
+.pulse-loading-bar {
+  height: 10px;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 118, 110, 0.12) 0%,
+    rgba(15, 118, 110, 0.28) 45%,
+    rgba(15, 118, 110, 0.12) 100%
+  );
+  background-size: 200% 100%;
+  animation: pulseShimmer 1.8s linear infinite;
+}
+
+.pulse-site-footer {
+  margin-top: 4.5rem;
+  padding-top: 2.75rem;
+  padding-bottom: 2.75rem;
+  border-top: 1px solid rgba(25, 23, 21, 0.12);
+  background: linear-gradient(160deg, #f4f1ec 0%, #e8e5e0 45%, #ddd9d3 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.pulse-site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background: radial-gradient(ellipse at 20% 80%, rgba(61, 20, 25, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.pulse-site-footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background: radial-gradient(ellipse at 80% 20%, rgba(18, 27, 19, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.pulse-site-footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pulse-site-footer .wp-block-social-links {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pulse-site-footer .wp-block-social-link {
+  background: var(--pulse-ink);
+}
+
+@keyframes pulseShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Skip link + screen reader text (block theme accessibility pattern). */
+.screen-reader-text,
+.skip-link.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+.skip-link.screen-reader-text:focus {
+  background-color: var(--pulse-surface);
+  clip: auto !important;
+  clip-path: none;
+  color: var(--pulse-ink);
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  height: auto;
+  left: 0.75rem;
+  line-height: normal;
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+  top: 0.75rem;
+  width: auto;
+  z-index: 100000;
+  box-shadow: 0 0 0 2px var(--pulse-ink);
+  border-radius: 4px;
+}
+
+.pulse-main-nav a:focus-visible,
+.pulse-site-footer a:focus-visible,
+.pulse-wordmark a:focus-visible {
+  outline: 2px solid var(--pulse-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-wordmark .wp-block-site-title a,
+  .pulse-main-nav .wp-block-navigation-item__content,
+  .pulse-site-footer .wp-block-social-link {
+    transition: none;
+  }
+
+  .pulse-loading-bar {
+    animation: none;
+    background-position: 0 0;
+  }
+}
+
+@media (max-width: 780px) {
+  .wp-site-blocks {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .pulse-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .pulse-main-nav {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
