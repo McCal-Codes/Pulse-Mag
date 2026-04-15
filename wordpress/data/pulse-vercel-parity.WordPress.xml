@@ -354,9 +354,11 @@
 		<guid isPermaLink="false">https://pulseliterary.com/?post_type=issue&amp;p=5020</guid>
 		<description></description>
 		<content:encoded><![CDATA[<!-- wp:paragraph -->
-<p>Sample issue entry — attach a PDF in the Issue PDF (Flipbook) box or set a PDF URL in Pulse Mag issue fields.</p>
+<!-- wp:pulse/issue-flipbook {"viewerHeight":760,"showDownload":true} /-->
+<!-- wp:paragraph -->
+<p>Sample issue entry — attach a PDF in the Issue PDF (Flipbook) box to power the native Issue Flipbook block render.</p>
 <!-- /wp:paragraph -->]]></content:encoded>
-		<excerpt:encoded><![CDATA[Theme sample for the annual issue — replace with your real theme line.]]></excerpt:encoded>
+		<excerpt:encoded><![CDATA[Essays, dispatches, and criticism about what survives the algorithm: local scenes, durable ideas, and the people who keep culture legible.]]></excerpt:encoded>
 		<wp:post_id>5020</wp:post_id>
 		<wp:post_date><![CDATA[2026-04-15 12:00:00]]></wp:post_date>
 		<wp:post_date_gmt><![CDATA[2026-04-15 12:00:00]]></wp:post_date_gmt>
@@ -373,11 +375,11 @@
 		<wp:is_sticky>0</wp:is_sticky>
 														<wp:postmeta>
 		<wp:meta_key><![CDATA[_pulse_issue_season]]></wp:meta_key>
-		<wp:meta_value><![CDATA[Spring 2026]]></wp:meta_value>
+		<wp:meta_value><![CDATA[Summer 2026]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_pulse_issue_status]]></wp:meta_key>
-		<wp:meta_value><![CDATA[upcoming]]></wp:meta_value>
+		<wp:meta_value><![CDATA[current]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_pulse_issue_number]]></wp:meta_key>
@@ -385,19 +387,23 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_pulse_issue_summary]]></wp:meta_key>
-		<wp:meta_value><![CDATA[Theme sample for the annual issue — replace with your real theme line.]]></wp:meta_value>
+		<wp:meta_value><![CDATA[Essays, dispatches, and criticism about what survives the algorithm: local scenes, durable ideas, and the people who keep culture legible.]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_pulse_issue_window_text]]></wp:meta_key>
-		<wp:meta_value><![CDATA[Submission window dates announced with each issue.]]></wp:meta_value>
+		<wp:meta_value><![CDATA[Open for pitches through June 20]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_pulse_issue_status_note]]></wp:meta_key>
-		<wp:meta_value><![CDATA[Sample issue for Vercel-parity import.]]></wp:meta_value>
+		<wp:meta_value><![CDATA[Brief and reading package publishing soon.]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_pulse_issue_pdf_url]]></wp:meta_key>
 		<wp:meta_value><![CDATA[]]></wp:meta_value>
+		</wp:postmeta>
+							<wp:postmeta>
+		<wp:meta_key><![CDATA[_pulse_issue_pdf_attachment_id]]></wp:meta_key>
+		<wp:meta_value><![CDATA[0]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 		<item>

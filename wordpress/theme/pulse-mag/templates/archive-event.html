@@ -1,36 +1,84 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 <!-- wp:group {"anchor":"pulse-primary-content","layout":{"type":"constrained"}} -->
 <div class="wp-block-group">
-  <!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
-  <div class="wp-block-group alignwide pulse-panel">
+  <!-- wp:group {"align":"wide","className":"pulse-blog-hero pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group alignwide pulse-blog-hero pulse-panel pulse-flow">
     <!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
     <p class="has-text-align-center pulse-kicker">Events</p>
     <!-- /wp:paragraph -->
     <!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
     <h1 class="wp-block-heading has-text-align-center has-display-font-size">Upcoming and Past Events</h1>
     <!-- /wp:heading -->
-    <!-- wp:paragraph {"align":"center"} -->
-    <p class="has-text-align-center">Join us for readings, workshops, and community gatherings.</p>
+    <!-- wp:group {"className":"pulse-diamond-divider pulse-diamond-divider--after-title","layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+    <div class="wp-block-group pulse-diamond-divider pulse-diamond-divider--after-title" aria-hidden="true">
+      <!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+      <hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+      <!-- /wp:separator -->
+      <!-- wp:paragraph {"className":"pulse-diamond-divider-glyph"} -->
+      <p class="pulse-diamond-divider-glyph">◆</p>
+      <!-- /wp:paragraph -->
+      <!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+      <hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+      <!-- /wp:separator -->
+    </div>
+    <!-- /wp:group -->
+    <!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+    <p class="has-text-align-center pulse-body-copy">Join us for readings, workshops, and community gatherings.</p>
     <!-- /wp:paragraph -->
   </div>
   <!-- /wp:group -->
-  <!-- wp:query {"query":{"postType":"event","perPage":12,"inherit":false},"align":"wide","layout":{"type":"grid","columnCount":2}} -->
+
+  <!-- wp:query {"query":{"postType":"event","perPage":1,"inherit":false},"align":"wide","className":"pulse-blog-feature","layout":{"type":"default"}} -->
   <div class="wp-block-query">
-    <!-- wp:post-template {"style":{"spacing":{"blockGap":"1rem"}}} -->
-    <!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
-    <div class="wp-block-group pulse-panel">
-      <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"2/1","style":{"border":{"radius":"12px"}}} /-->
+    <!-- wp:post-template -->
+    <!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"1.75rem"}}}} -->
+    <div class="wp-block-columns">
+      <!-- wp:column {"verticalAlignment":"center","width":"52%"} -->
+      <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:52%">
+        <!-- wp:group {"className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group pulse-panel pulse-flow">
+          <!-- wp:post-date {"format":"F j, Y"} /-->
+          <!-- wp:post-title {"isLink":true,"level":2} /-->
+          <!-- wp:post-excerpt {"moreText":"View Event"} /-->
+          <!-- wp:read-more {"content":"RSVP / More Info"} /-->
+        </div>
+        <!-- /wp:group -->
+      </div>
+      <!-- /wp:column -->
+      <!-- wp:column {"width":"48%"} -->
+      <div class="wp-block-column" style="flex-basis:48%">
+        <!-- wp:group {"className":"pulse-blog-image"} -->
+        <div class="wp-block-group pulse-blog-image">
+          <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"2/1","style":{"border":{"radius":"12px"}}} /-->
+        </div>
+        <!-- /wp:group -->
+      </div>
+      <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+    <!-- /wp:post-template -->
+    <!-- wp:query-no-results -->
+    <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
+    <!-- /wp:query-no-results -->
+  </div>
+  <!-- /wp:query -->
+
+  <!-- wp:query {"query":{"postType":"event","perPage":9,"offset":1,"inherit":false},"align":"wide","className":"pulse-events-grid pulse-section","layout":{"type":"grid","columnCount":3}} -->
+  <div class="wp-block-query alignwide pulse-events-grid pulse-section">
+    <!-- wp:post-template {"style":{"spacing":{"blockGap":"0.75rem"}}} -->
+    <!-- wp:group {"className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group pulse-panel pulse-flow">
+      <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"2/1","style":{"border":{"radius":"10px"}}} /-->
       <!-- wp:post-date {"format":"F j, Y"} /-->
       <!-- wp:post-title {"isLink":true,"level":3} /-->
-      <!-- wp:post-excerpt {"moreText":"View event"} /-->
-      <!-- wp:read-more {"content":"RSVP / More Info","fontSize":"small"} /-->
+      <!-- wp:read-more {"content":"View Event","fontSize":"small"} /-->
     </div>
     <!-- /wp:group -->
     <!-- /wp:post-template -->
     <!-- wp:query-no-results -->
     <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
     <!-- /wp:query-no-results -->
-    <!-- wp:query-pagination /-->
+    <!-- wp:query-pagination {"className":"pulse-blog-pagination"} /-->
   </div>
   <!-- /wp:query -->
 </div>

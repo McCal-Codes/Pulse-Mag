@@ -11,16 +11,26 @@
     "color": {
       "defaultPalette": false,
       "palette": [
-        { "slug": "background", "name": "Background", "color": "#f4f1ec" },
-        { "slug": "surface", "name": "Surface", "color": "#ffffff" },
-        { "slug": "ink", "name": "Ink", "color": "#0b140e" },
+        { "slug": "background", "name": "Background", "color": "#F4F1EC" },
+        { "slug": "surface", "name": "Surface", "color": "#FFFFFF" },
+        { "slug": "ink", "name": "Ink", "color": "#0B140E" },
         { "slug": "muted", "name": "Muted", "color": "#5b625d" },
-        { "slug": "accent", "name": "Accent", "color": "#3d1419" },
-        { "slug": "nav", "name": "Nav", "color": "#121b13" },
-        { "slug": "paper-soft", "name": "Paper Soft", "color": "#e8e5e0" },
-        { "slug": "paper-deep", "name": "Paper Deep", "color": "#ddd9d3" },
+        { "slug": "accent", "name": "Accent", "color": "#3D1419" },
+        { "slug": "nav", "name": "Nav", "color": "#121B13" },
+        { "slug": "paper", "name": "Paper", "color": "#F4F1EC" },
+        { "slug": "paper-light", "name": "Paper Light", "color": "#FAF9F7" },
+        { "slug": "paper-soft", "name": "Paper Soft", "color": "#E8E5E0" },
+        { "slug": "paper-deep", "name": "Paper Deep", "color": "#DDD9D3" },
+        { "slug": "paper-muted", "name": "Paper Muted", "color": "#EDEAE5" },
+        { "slug": "ink-light", "name": "Ink Light", "color": "#1A2820" },
+        { "slug": "accent-light", "name": "Accent Light", "color": "#5A2A30" },
+        { "slug": "nav-light", "name": "Nav Light", "color": "#24302A" },
+        { "slug": "amber", "name": "Amber", "color": "#3D1419" },
+        { "slug": "fuchsia", "name": "Fuchsia", "color": "#3D1419" },
+        { "slug": "verdant", "name": "Verdant", "color": "#121B13" },
+        { "slug": "obsidian", "name": "Obsidian", "color": "#0B140E" },
         { "slug": "subtle", "name": "Subtle Text", "color": "#6b7280" },
-        { "slug": "paper-muted", "name": "Paper Muted", "color": "#edeae5" }
+        { "slug": "gray-400", "name": "Gray 400", "color": "#9ca3af" }
       ]
     },
     "typography": {

@@ -3,7 +3,7 @@ Theme Name: Pulse Mag
 Theme URI: https://pulsemag.example
 Author: Pulse Magazine
 Description: Block theme for Pulse Literary Magazine — front page and chrome aligned with apps/web (Vercel) layout and typography.
-Version: 0.2.2
+Version: 0.2.5
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
@@ -13,15 +13,24 @@ Primary Branch: main
 */
 
 :root {
-  --pulse-bg: #f4f1ec;
-  --pulse-surface: #ffffff;
-  --pulse-ink: #0b140e;
+  --pulse-bg: #F4F1EC;
+  --pulse-surface: #FFFFFF;
+  --pulse-ink: #0B140E;
   --pulse-muted: #5b625d;
-  --pulse-accent: #3d1419;
-  --pulse-nav: #121b13;
-  --pulse-paper-soft: #e8e5e0;
-  --pulse-paper-deep: #ddd9d3;
-  --pulse-paper-muted: #edeae5;
+  --pulse-accent: #3D1419;
+  --pulse-nav: #121B13;
+  --pulse-paper: #F4F1EC;
+  --pulse-paper-light: #FAF9F7;
+  --pulse-paper-soft: #E8E5E0;
+  --pulse-paper-deep: #DDD9D3;
+  --pulse-paper-muted: #EDEAE5;
+  --pulse-ink-light: #1A2820;
+  --pulse-accent-light: #5A2A30;
+  --pulse-nav-light: #24302A;
+  --pulse-amber: #3D1419;
+  --pulse-fuchsia: #3D1419;
+  --pulse-verdant: #121B13;
+  --pulse-obsidian: #0B140E;
   --pulse-gray-600: #6b7280;
   --pulse-gray-400: #9ca3af;
 }
@@ -30,7 +39,7 @@ html {
   background:
     radial-gradient(circle at 12% 0%, rgba(18, 27, 19, 0.08), transparent 32%),
     radial-gradient(circle at 100% 10%, rgba(11, 20, 14, 0.05), transparent 24%),
-    linear-gradient(180deg, #faf9f7 0%, #f4f1ec 42%, #edeae5 100%);
+    linear-gradient(180deg, #FAF9F7 0%, #F4F1EC 42%, #EDEAE5 100%);
 }
 
 body {
@@ -61,8 +70,24 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: var(--pulse-bg);
+  background: color-mix(in srgb, var(--pulse-bg) 90%, #fff);
   box-shadow: 0 1px 0 rgba(25, 23, 21, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.pulse-header-inner {
+  position: relative;
+}
+
+.pulse-header-inner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(11, 20, 14, 0.08);
 }
 
 .pulse-wordmark {
@@ -90,38 +115,70 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.45rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pulse-wordmark-star {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: var(--pulse-nav);
+  opacity: 0.9;
+}
+
+.pulse-wordmark .wp-block-site-title {
+  margin-bottom: 0;
+}
+
+.pulse-wordmark-row .wp-block-site-title {
+  flex: 0 0 auto;
 }
 
 .pulse-wordmark .wp-block-site-tagline {
   font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   font-style: italic;
   color: var(--pulse-muted);
+  margin-top: 0.15rem;
 }
 
 .pulse-main-nav {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
   background: color-mix(in srgb, var(--pulse-paper-soft) 88%, #ffffff);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 0.55rem 1rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  max-width: fit-content;
+  margin: 0 auto 0.7rem;
+  border: 1px solid rgba(11, 20, 14, 0.08);
+  box-shadow: 0 8px 20px -16px rgba(11, 20, 14, 0.28);
 }
 
 .pulse-main-nav .wp-block-navigation-item__content {
   color: color-mix(in srgb, var(--pulse-ink) 88%, transparent);
-  font-size: 0.92rem;
-  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 999px;
+  padding: 0.38rem 0.65rem;
+  transition: color 0.2s ease, background-color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .pulse-main-nav .wp-block-navigation-item__content:hover {
   color: var(--pulse-nav);
-  text-decoration: underline;
+  background: color-mix(in srgb, var(--pulse-paper-muted) 75%, #fff);
+  text-decoration: none !important;
+}
+
+.pulse-main-nav .current-menu-item > .wp-block-navigation-item__content,
+.pulse-main-nav .current-menu-ancestor > .wp-block-navigation-item__content,
+.pulse-main-nav .current_page_item > .wp-block-navigation-item__content {
+  color: var(--pulse-nav);
+  background: color-mix(in srgb, var(--pulse-paper-deep) 45%, #fff);
 }
 
 /* Mobile overlay: keep readable text on light panel */
@@ -135,6 +192,30 @@ body::before {
 
 .pulse-main-nav .wp-block-navigation__responsive-container-open:not(.has-text-color) {
   color: var(--pulse-ink);
+}
+
+.pulse-main-nav .wp-block-navigation__responsive-container-open {
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 1px solid rgba(11, 20, 14, 0.14);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--pulse-paper-muted) 75%, #fff);
+}
+
+.pulse-main-nav .wp-block-navigation__responsive-container-open svg,
+.pulse-main-nav .wp-block-navigation__responsive-container-close svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.pulse-main-nav .wp-block-navigation__responsive-container-content {
+  padding-top: 1rem;
+}
+
+.pulse-main-nav .wp-block-navigation__responsive-container-content .wp-block-navigation-item__content {
+  width: 100%;
+  display: block;
+  padding: 0.7rem 0.85rem;
 }
 
 .pulse-shell {
@@ -159,6 +240,42 @@ body::before {
   color: var(--pulse-muted);
 }
 
+.pulse-flow > * + * {
+  margin-top: 1.25rem;
+}
+
+.pulse-section {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .pulse-section {
+    margin-top: 3rem;
+  }
+}
+
+.wp-block-heading.has-display-font-size {
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.pulse-body-copy {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--pulse-gray-600);
+}
+
+.wp-element-button,
+.wp-block-button__link {
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.wp-element-button:hover,
+.wp-block-button__link:hover {
+  transform: translateY(-1px);
+}
+
 /* Vercel DiamondDivider parity (apps/web/src/components/DiamondDivider.tsx) */
 .pulse-diamond-divider {
   display: flex;
@@ -171,6 +288,22 @@ body::before {
   font-size: 0.55rem;
   line-height: 1;
   letter-spacing: 0.15em;
+}
+
+.pulse-diamond-divider .pulse-diamond-divider-line {
+  width: 0.9rem;
+  min-width: 0.9rem;
+  margin: 0;
+  border: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.pulse-diamond-divider .pulse-diamond-divider-glyph {
+  margin: 0;
+  font-size: 0.45rem;
+  line-height: 1;
 }
 
 .pulse-diamond-divider span:nth-child(1),
@@ -439,6 +572,154 @@ body::before {
   text-decoration: underline;
 }
 
+/* --- Blog archive parity (apps/web/src/app/blog/page.tsx) --- */
+
+.pulse-blog-hero {
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.pulse-blog-feature {
+  margin-top: 2.25rem;
+}
+
+.pulse-blog-feature .wp-block-post-title {
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  line-height: 1.2;
+}
+
+.pulse-blog-feature .wp-block-post-title a {
+  color: var(--pulse-ink);
+  text-decoration: none;
+}
+
+.pulse-blog-feature .wp-block-post-title a:hover {
+  color: var(--pulse-nav);
+}
+
+.pulse-blog-feature .wp-block-post-date {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pulse-gray-400);
+}
+
+.pulse-blog-feature .wp-block-post-excerpt {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--pulse-gray-600);
+}
+
+.pulse-blog-image {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--pulse-paper-deep);
+  min-height: 14rem;
+}
+
+.pulse-blog-image .wp-block-post-featured-image,
+.pulse-blog-image .wp-block-post-featured-image img {
+  height: 100%;
+}
+
+.pulse-blog-image .wp-block-post-featured-image img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.pulse-blog-grid .pulse-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pulse-blog-grid .wp-block-post-title {
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.pulse-blog-grid .wp-block-post-title a {
+  color: var(--pulse-ink);
+  text-decoration: none;
+}
+
+.pulse-blog-grid .wp-block-post-title a:hover {
+  color: var(--pulse-nav);
+}
+
+.pulse-blog-grid .wp-block-post-date {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pulse-gray-400);
+}
+
+.pulse-blog-grid .wp-block-post-excerpt {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--pulse-gray-600);
+}
+
+.pulse-blog-pagination {
+  margin-top: 1.5rem;
+}
+
+.pulse-events-grid .wp-block-post-title,
+.pulse-issues-grid .wp-block-post-title {
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.pulse-events-grid .wp-block-post-title a,
+.pulse-issues-grid .wp-block-post-title a {
+  color: var(--pulse-ink);
+  text-decoration: none;
+}
+
+.pulse-events-grid .wp-block-post-title a:hover,
+.pulse-issues-grid .wp-block-post-title a:hover {
+  color: var(--pulse-nav);
+}
+
+.pulse-issues-feature .wp-block-post-title {
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  line-height: 1.2;
+}
+
+.pulse-issues-feature .wp-block-post-title a {
+  color: var(--pulse-ink);
+  text-decoration: none;
+}
+
+.pulse-issues-feature .wp-block-post-title a:hover {
+  color: var(--pulse-nav);
+}
+
+/* Single content readability parity */
+.single-post .wp-block-post-content,
+.single-event .wp-block-post-content,
+.single-issue .wp-block-post-content {
+  max-width: 52rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--pulse-gray-600);
+}
+
+.single-post .wp-block-post-content h2,
+.single-post .wp-block-post-content h3,
+.single-event .wp-block-post-content h2,
+.single-event .wp-block-post-content h3,
+.single-issue .wp-block-post-content h2,
+.single-issue .wp-block-post-content h3 {
+  color: var(--pulse-ink);
+}
+
 /* --- Footer (apps/web Footer.tsx parity) --- */
 
 .pulse-footer-inner {
@@ -540,6 +821,8 @@ body::before {
 .pulse-loading-bar {
   height: 10px;
   width: 100%;
+  border: 0;
+  margin: 0;
   border-radius: 999px;
   background: linear-gradient(
     90deg,
@@ -585,6 +868,9 @@ body::before {
 }
 
 .pulse-site-footer .wp-block-social-links {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
   margin-top: 1.35rem;
   margin-bottom: 1.9rem;
   gap: 0.75rem;
@@ -599,6 +885,11 @@ body::before {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.pulse-site-footer .wp-block-social-link a {
+  background: var(--pulse-ink) !important;
+  color: var(--pulse-bg) !important;
+}
+
 .pulse-site-footer .wp-block-social-link:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 24px rgba(11, 20, 14, 0.28);
@@ -607,31 +898,33 @@ body::before {
 .pulse-site-footer .wp-social-link svg {
   width: 1.1rem;
   height: 1.1rem;
+  fill: currentColor;
+  color: currentColor;
+  opacity: 1;
 }
 
 .pulse-footer-inner > h2 {
   letter-spacing: -0.02em;
 }
 
-.pulse-footer-blob {
-  position: absolute;
-  pointer-events: none;
+.pulse-footer-ornaments {
+  max-width: 38rem;
+  margin: 0 auto;
+  opacity: 0.35;
 }
 
-.pulse-footer-blob--left {
-  left: -4rem;
-  bottom: -1rem;
-  width: 16rem;
-  height: 16rem;
-  opacity: 0.3;
+.pulse-footer-ornament {
+  border: 0;
+  height: 1px;
 }
 
-.pulse-footer-blob--right {
-  right: -3rem;
-  top: -1.5rem;
-  width: 18rem;
-  height: 18rem;
-  opacity: 0.2;
+.pulse-footer-ornament--accent {
+  margin-bottom: 0.35rem;
+}
+
+.pulse-footer-ornament--nav {
+  margin-top: 0;
+  transform: scaleX(0.88);
 }
 
 .pulse-footer-wordmark-row {
@@ -650,11 +943,19 @@ body::before {
 .pulse-footer-tagline {
   margin-top: 0;
   margin-bottom: 1.25rem;
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-style: italic;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(11, 20, 14, 0.5);
+  color: rgba(11, 20, 14, 0.62);
+}
+
+.pulse-site-footer .pulse-footer-copy,
+.pulse-site-footer .wp-block-shortcode p {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: rgba(11, 20, 14, 0.62);
 }
 
 @keyframes pulseShimmer {
@@ -732,19 +1033,13 @@ body::before {
   }
 
   .pulse-main-nav {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    width: calc(100% - 1rem);
+    max-width: none;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
   }
 
-  .pulse-footer-blob--left {
-    left: -5rem;
-    width: 12rem;
-    height: 12rem;
-  }
-
-  .pulse-footer-blob--right {
-    right: -5rem;
-    width: 13rem;
-    height: 13rem;
+  .pulse-footer-ornaments {
+    max-width: 28rem;
   }
 }

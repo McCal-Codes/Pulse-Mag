@@ -12,8 +12,9 @@
  * If you do not have PHP installed, use the checked-in copy of that file under
  * `wordpress/data/` — it is kept in sync when this script is run in CI or by a maintainer.
  *
- * Import: activate Pulse Mag theme + Pulse Mag Core (and flipbook/SEO) first so
- * issue/event CPTs exist, then run import-wxr.ps1 against this file.
+ * Import: activate Pulse Mag theme + Pulse Mag Core + Pulse Flipbook (and SEO if used)
+ * first so issue/event CPTs and the Issue Flipbook block are available, then run
+ * import-wxr.ps1 against this file.
  */
 
 if (php_sapi_name() !== 'cli') {
@@ -249,13 +250,14 @@ function item_cpt_issue(
     $link = $siteUrl . '/issues/' . $slug . '/';
 
     $meta = [
-        '_pulse_issue_season' => 'Spring 2026',
-        '_pulse_issue_status' => 'upcoming',
+        '_pulse_issue_season' => 'Summer 2026',
+        '_pulse_issue_status' => 'current',
         '_pulse_issue_number' => '1',
         '_pulse_issue_summary' => $summary,
-        '_pulse_issue_window_text' => 'Submission window dates announced with each issue.',
-        '_pulse_issue_status_note' => 'Sample issue for Vercel-parity import.',
+        '_pulse_issue_window_text' => 'Open for pitches through June 20',
+        '_pulse_issue_status_note' => 'Brief and reading package publishing soon.',
         '_pulse_issue_pdf_url' => '',
+        '_pulse_issue_pdf_attachment_id' => '0',
     ];
     $metaXml = '';
     foreach ($meta as $k => $v) {
@@ -270,7 +272,10 @@ function item_cpt_issue(
 \t\t<dc:creator>{$cdata($authorLogin)}</dc:creator>
 \t\t<guid isPermaLink="false">{$cdata($guid)}</guid>
 \t\t<description></description>
-\t\t<content:encoded>{$cdata('<!-- wp:paragraph --><p>Sample issue entry — attach a PDF in the Issue PDF (Flipbook) box or set a PDF URL in Pulse Mag issue fields.</p><!-- /wp:paragraph -->')}</content:encoded>
+\t\t<content:encoded>{$cdata(
+            '<!-- wp:pulse/issue-flipbook {"viewerHeight":760,"showDownload":true} /-->'
+            . '<!-- wp:paragraph --><p>Sample issue entry — attach a PDF in the Issue PDF (Flipbook) box to power the native Issue Flipbook block render.</p><!-- /wp:paragraph -->'
+        )}</content:encoded>
 \t\t<excerpt:encoded>{$cdata($summary)}</excerpt:encoded>
 \t\t<wp:post_id>{$id}</wp:post_id>
 \t\t<wp:post_date>{$cdata($stamp)}</wp:post_date>
@@ -359,7 +364,7 @@ $items[] = item_cpt_issue(
     $ids['issue_1'],
     'Signal / Noise',
     'signal-noise',
-    'Theme sample for the annual issue — replace with your real theme line.',
+    'Essays, dispatches, and criticism about what survives the algorithm: local scenes, durable ideas, and the people who keep culture legible.',
     $siteUrl,
     $stamp,
     $now,

@@ -1,35 +1,78 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 <!-- wp:group {"anchor":"pulse-primary-content","layout":{"type":"constrained"}} -->
 <div class="wp-block-group">
-  <!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
-  <div class="wp-block-group alignwide pulse-panel">
+  <!-- wp:group {"align":"wide","className":"pulse-blog-hero pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group alignwide pulse-blog-hero pulse-panel pulse-flow">
     <!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
     <p class="has-text-align-center pulse-kicker">Issues</p>
     <!-- /wp:paragraph -->
     <!-- wp:heading {"textAlign":"center","level":1,"fontSize":"display"} -->
     <h1 class="wp-block-heading has-text-align-center has-display-font-size">Current and Upcoming Issues</h1>
     <!-- /wp:heading -->
-    <!-- wp:paragraph {"align":"center"} -->
-    <p class="has-text-align-center">Each issue is built around a seasonal theme and editorial brief.</p>
+    <!-- wp:group {"className":"pulse-diamond-divider pulse-diamond-divider--after-title","layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+    <div class="wp-block-group pulse-diamond-divider pulse-diamond-divider--after-title" aria-hidden="true">
+      <!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+      <hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+      <!-- /wp:separator -->
+      <!-- wp:paragraph {"className":"pulse-diamond-divider-glyph"} -->
+      <p class="pulse-diamond-divider-glyph">◆</p>
+      <!-- /wp:paragraph -->
+      <!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+      <hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+      <!-- /wp:separator -->
+    </div>
+    <!-- /wp:group -->
+    <!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+    <p class="has-text-align-center pulse-body-copy">Each issue is built around a seasonal theme, editorial brief, and submission window.</p>
     <!-- /wp:paragraph -->
   </div>
   <!-- /wp:group -->
-  <!-- wp:query {"query":{"postType":"issue","perPage":12,"inherit":false},"align":"wide","layout":{"type":"grid","columnCount":2}} -->
-  <div class="wp-block-query">
-    <!-- wp:post-template {"style":{"spacing":{"blockGap":"1rem"}}} -->
-    <!-- wp:group {"className":"pulse-panel","layout":{"type":"constrained"}} -->
-    <div class="wp-block-group pulse-panel">
+
+  <!-- wp:query {"query":{"postType":"issue","perPage":1,"inherit":false},"align":"wide","className":"pulse-issues-feature","layout":{"type":"default"}} -->
+  <div class="wp-block-query alignwide pulse-issues-feature">
+    <!-- wp:post-template -->
+    <!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"1.75rem"}}}} -->
+    <div class="wp-block-columns">
+      <!-- wp:column {"width":"40%"} -->
+      <div class="wp-block-column" style="flex-basis:40%">
+        <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"3/4","style":{"border":{"radius":"12px"}}} /-->
+      </div>
+      <!-- /wp:column -->
+      <!-- wp:column {"verticalAlignment":"center","width":"60%"} -->
+      <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:60%">
+    <!-- wp:group {"className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group pulse-panel pulse-flow">
+      <!-- wp:post-title {"isLink":true,"level":2} /-->
+      <!-- wp:post-excerpt {"moreText":"Open Issue"} /-->
+      <!-- wp:read-more {"content":"Open Issue"} /-->
+    </div>
+    <!-- /wp:group -->
+      </div>
+      <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+    <!-- /wp:post-template -->
+    <!-- wp:query-no-results -->
+    <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
+    <!-- /wp:query-no-results -->
+  </div>
+  <!-- /wp:query -->
+
+  <!-- wp:query {"query":{"postType":"issue","perPage":9,"offset":1,"inherit":false},"align":"wide","className":"pulse-issues-grid pulse-section","layout":{"type":"grid","columnCount":3}} -->
+  <div class="wp-block-query alignwide pulse-issues-grid pulse-section">
+    <!-- wp:post-template {"style":{"spacing":{"blockGap":"0.75rem"}}} -->
+    <!-- wp:group {"className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group pulse-panel pulse-flow">
+      <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"3/4","style":{"border":{"radius":"10px"}}} /-->
       <!-- wp:post-title {"isLink":true,"level":3} /-->
-      <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"3/4","style":{"border":{"radius":"12px"}}} /-->
-      <!-- wp:post-excerpt {"moreText":"Open issue"} /-->
-      <!-- wp:read-more {"content":"Open issue","fontSize":"small"} /-->
+      <!-- wp:read-more {"content":"Open Issue","fontSize":"small"} /-->
     </div>
     <!-- /wp:group -->
     <!-- /wp:post-template -->
     <!-- wp:query-no-results -->
     <!-- wp:pattern {"slug":"pulse-mag/empty-state"} /-->
     <!-- /wp:query-no-results -->
-    <!-- wp:query-pagination /-->
+    <!-- wp:query-pagination {"className":"pulse-blog-pagination"} /-->
   </div>
   <!-- /wp:query -->
 </div>

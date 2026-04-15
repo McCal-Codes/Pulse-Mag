@@ -75,7 +75,7 @@ function pulse_mag_register_patterns(): void
                 '<!-- wp:group {"className":"pulse-loading","layout":{"type":"constrained"}} -->' .
                 '<div class="wp-block-group pulse-loading">' .
                 '<!-- wp:paragraph {"className":"pulse-kicker"} --><p class="pulse-kicker">Loading</p><!-- /wp:paragraph -->' .
-                '<!-- wp:html --><div class="pulse-loading-bar"></div><!-- /wp:html -->' .
+                '<!-- wp:separator {"className":"pulse-loading-bar"} --><hr class="wp-block-separator has-alpha-channel-opacity pulse-loading-bar"/><!-- /wp:separator -->' .
                 '</div><!-- /wp:group -->',
         ]
     );
@@ -138,7 +138,7 @@ function pulse_mag_register_patterns(): void
                 '<div class="wp-block-group pulse-news-head">' .
                 '<!-- wp:heading {"textAlign":"center","level":2} --><h2 class="wp-block-heading has-text-align-center">Section heading</h2><!-- /wp:heading -->' .
                 '</div><!-- /wp:group -->' .
-                '<!-- wp:html --><hr class="pulse-news-rule" aria-hidden="true" /><!-- /wp:html -->',
+                '<!-- wp:separator {"className":"pulse-news-rule"} --><hr class="wp-block-separator has-alpha-channel-opacity pulse-news-rule"/><!-- /wp:separator -->',
         ]
     );
 

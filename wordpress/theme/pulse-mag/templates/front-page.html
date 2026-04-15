@@ -7,9 +7,19 @@
 		<!-- wp:heading {"textAlign":"center","level":1} -->
 		<h1 class="wp-block-heading has-text-align-center">Welcome</h1>
 		<!-- /wp:heading -->
-		<!-- wp:html -->
-		<div class="pulse-diamond-divider pulse-diamond-divider--after-title" aria-hidden="true"><span>◆</span><span>◆</span><span>◆</span></div>
-		<!-- /wp:html -->
+		<!-- wp:group {"className":"pulse-diamond-divider pulse-diamond-divider--after-title","layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+		<div class="wp-block-group pulse-diamond-divider pulse-diamond-divider--after-title" aria-hidden="true">
+			<!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+			<hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+			<!-- /wp:separator -->
+			<!-- wp:paragraph {"className":"pulse-diamond-divider-glyph"} -->
+			<p class="pulse-diamond-divider-glyph">◆</p>
+			<!-- /wp:paragraph -->
+			<!-- wp:separator {"className":"pulse-diamond-divider-line"} -->
+			<hr class="wp-block-separator has-alpha-channel-opacity pulse-diamond-divider-line"/>
+			<!-- /wp:separator -->
+		</div>
+		<!-- /wp:group -->
 		<!-- wp:paragraph {"align":"center","className":"pulse-home-lead"} -->
 		<p class="has-text-align-center pulse-home-lead">Pulse Literary &amp; Arts Magazine is an annual multimedia literary and arts magazine led by students at Point Park University. As a multimedia magazine, we publish all art forms, including literature, poetry, scripts, art, photography, dance, and music.</p>
 		<!-- /wp:paragraph -->
@@ -69,9 +79,9 @@
 			<!-- /wp:heading -->
 		</div>
 		<!-- /wp:group -->
-		<!-- wp:html -->
-		<hr class="pulse-news-rule" aria-hidden="true" />
-		<!-- /wp:html -->
+		<!-- wp:separator {"className":"pulse-news-rule"} -->
+		<hr class="wp-block-separator has-alpha-channel-opacity pulse-news-rule"/>
+		<!-- /wp:separator -->
 
 		<!-- wp:query {"queryId":10,"query":{"postType":"post","perPage":1,"inherit":false},"layout":{"type":"default"}} -->
 		<div class="wp-block-query">
