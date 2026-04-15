@@ -368,5 +368,59 @@ function pulse_mag_register_patterns(): void
                 '<!-- wp:pattern {"slug":"pulse-mag/contact-strip"} /-->',
         ]
     );
+
+    register_block_pattern(
+        'pulse-mag/nav-primary-bar',
+        [
+            'title'       => __('Primary Nav Bar', 'pulse-mag'),
+            'description' => __('Reusable Pulse primary navigation bar for pages and template parts.', 'pulse-mag'),
+            'categories'  => ['pulse-mag-sections'],
+            'content'     =>
+                '<!-- wp:navigation {"className":"pulse-main-nav","overlayMenu":"mobile","ariaLabel":"Primary","layout":{"type":"flex","justifyContent":"center"}} -->' .
+                '<!-- wp:navigation-link {"label":"About","url":"/about/"} /-->' .
+                '<!-- wp:navigation-link {"label":"Issues","url":"/issues/"} /-->' .
+                '<!-- wp:navigation-link {"label":"News","url":"/news/"} /-->' .
+                '<!-- wp:navigation-link {"label":"Submit","url":"/submit/"} /-->' .
+                '<!-- wp:navigation-link {"label":"Events","url":"/events/"} /-->' .
+                '<!-- wp:navigation-link {"label":"Join","url":"/join/"} /-->' .
+                '<!-- /wp:navigation -->',
+        ]
+    );
+
+    register_block_pattern(
+        'pulse-mag/footer-brand-block',
+        [
+            'title'       => __('Footer Brand Block', 'pulse-mag'),
+            'description' => __('Reusable Pulse footer block with socials and brand line.', 'pulse-mag'),
+            'categories'  => ['pulse-mag-sections'],
+            'content'     =>
+                '<!-- wp:group {"className":"pulse-site-footer","layout":{"type":"constrained"}} -->' .
+                '<div class="wp-block-group pulse-site-footer">' .
+                '<!-- wp:group {"className":"pulse-footer-inner","layout":{"type":"constrained"}} -->' .
+                '<div class="wp-block-group pulse-footer-inner">' .
+                '<!-- wp:heading {"textAlign":"center","level":2} --><h2 class="wp-block-heading has-text-align-center">Stay In Tune</h2><!-- /wp:heading -->' .
+                '<!-- wp:social-links {"iconColor":"background","iconBackgroundColor":"ink","openInNewTab":true,"className":"pulse-footer-socials","layout":{"type":"flex","justifyContent":"center"}} -->' .
+                '<ul class="wp-block-social-links has-icon-color has-icon-background-color pulse-footer-socials">' .
+                '<!-- wp:social-link {"url":"https://instagram.com/pulseliterary","service":"instagram"} /-->' .
+                '<!-- wp:social-link {"url":"https://linkedin.com/company/pulse-literary-magazine","service":"linkedin"} /-->' .
+                '<!-- wp:social-link {"url":"https://pinterest.com/pulseliterary","service":"pinterest"} /-->' .
+                '<!-- wp:social-link {"url":"https://bsky.app/profile/pulseliterary.bsky.social","service":"chain","label":"Bluesky"} /-->' .
+                '<!-- wp:social-link {"url":"mailto:hello@pulseliterary.com","service":"mail"} /-->' .
+                '</ul>' .
+                '<!-- /wp:social-links -->' .
+                '<!-- wp:group {"className":"pulse-footer-wordmark-row","layout":{"type":"flex","justifyContent":"center","flexWrap":"nowrap"}} -->' .
+                '<div class="wp-block-group pulse-footer-wordmark-row">' .
+                '<!-- wp:paragraph {"className":"pulse-wordmark-star"} --><p class="pulse-wordmark-star">✦</p><!-- /wp:paragraph -->' .
+                '<!-- wp:paragraph {"className":"pulse-footer-wordmark-text"} --><p class="pulse-footer-wordmark-text">PULSE</p><!-- /wp:paragraph -->' .
+                '</div>' .
+                '<!-- /wp:group -->' .
+                '<!-- wp:paragraph {"align":"center","className":"pulse-footer-tagline"} --><p class="has-text-align-center pulse-footer-tagline">Literary &amp; Arts Magazine</p><!-- /wp:paragraph -->' .
+                '<!-- wp:shortcode {"className":"pulse-footer-copy"} -->[pulse_copyright_line]<!-- /wp:shortcode -->' .
+                '</div>' .
+                '<!-- /wp:group -->' .
+                '</div>' .
+                '<!-- /wp:group -->',
+        ]
+    );
 }
 add_action('init', 'pulse_mag_register_patterns');

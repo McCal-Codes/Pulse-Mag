@@ -37,7 +37,7 @@ The Hostinger-style site (page builders, imported starter templates) is **not** 
 3. **Settings → Reading**: set **Homepage** to a static page if you use the bundled front page template, or confirm **Your latest posts** if that matches your plan (the theme’s `front-page.html` applies when a static front page is assigned and that page uses the front-page template).
 4. **Appearance → Editor**: confirm **Templates → Front Page** is the Pulse layout (welcome hero, issue query, news grid). Clear any host caching.
 
-After activation, typography should match the Vercel app (Playfair Display + Libre Baskerville are enqueued from Google Fonts).
+After activation, typography uses the Vercel-aligned serif stack with local/system fallbacks (no external Google Fonts dependency).
 
 For a **classic → block** mental model and checklist (with external references), see `docs/classic-to-block-theme.md` — it summarizes [Jetpack’s block theme overview](https://jetpack.com/resources/wordpress-block-themes/) and [switching guide](https://jetpack.com/resources/wordpress-switch-from-classic-to-block-theme/) in Pulse-specific terms.
 
