@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## 0.2.8 - 2026-04-15
+
+- Added a block-native submit guidelines accordion pattern and wired it into the Submit page template.
+- Rebuilt the Team page around live `author_profile` query cards and added a dedicated `single-author_profile` template.
+- Improved team and author presentation styles for profile cards, metadata labels, and author detail layout consistency.
+
 ## 0.2.6 - 2026-04-15
 
 - Replaced remaining `wp:html` usage in template parts, templates, and patterns with native Gutenberg blocks for better editor portability.
