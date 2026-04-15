@@ -3,7 +3,7 @@ Theme Name: Pulse Mag
 Theme URI: https://pulsemag.example
 Author: Pulse Magazine
 Description: Block theme for Pulse Literary Magazine — front page and chrome aligned with apps/web (Vercel) layout and typography.
-Version: 0.2.1
+Version: 0.2.2
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
@@ -585,12 +585,76 @@ body::before {
 }
 
 .pulse-site-footer .wp-block-social-links {
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.35rem;
+  margin-bottom: 1.9rem;
+  gap: 0.75rem;
 }
 
 .pulse-site-footer .wp-block-social-link {
   background: var(--pulse-ink);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  box-shadow: 0 9px 20px rgba(11, 20, 14, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pulse-site-footer .wp-block-social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(11, 20, 14, 0.28);
+}
+
+.pulse-site-footer .wp-social-link svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.pulse-footer-inner > h2 {
+  letter-spacing: -0.02em;
+}
+
+.pulse-footer-blob {
+  position: absolute;
+  pointer-events: none;
+}
+
+.pulse-footer-blob--left {
+  left: -4rem;
+  bottom: -1rem;
+  width: 16rem;
+  height: 16rem;
+  opacity: 0.3;
+}
+
+.pulse-footer-blob--right {
+  right: -3rem;
+  top: -1.5rem;
+  width: 18rem;
+  height: 18rem;
+  opacity: 0.2;
+}
+
+.pulse-footer-wordmark-row {
+  gap: 0.4rem;
+  margin-bottom: 0.2rem;
+}
+
+.pulse-footer-wordmark-text {
+  margin: 0;
+  font-family: var(--wp--preset--font-family--display-serif);
+  font-size: 1.45rem;
+  letter-spacing: 0.12em;
+  color: rgba(11, 20, 14, 0.7);
+}
+
+.pulse-footer-tagline {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  font-size: 0.65rem;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(11, 20, 14, 0.5);
 }
 
 @keyframes pulseShimmer {
@@ -670,5 +734,17 @@ body::before {
   .pulse-main-nav {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+  }
+
+  .pulse-footer-blob--left {
+    left: -5rem;
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .pulse-footer-blob--right {
+    right: -5rem;
+    width: 13rem;
+    height: 13rem;
   }
 }
