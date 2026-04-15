@@ -1,8 +1,8 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 <!-- wp:group {"anchor":"pulse-primary-content","layout":{"type":"constrained"}} -->
 <div class="wp-block-group">
-	<!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group alignwide pulse-panel">
+	<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignwide pulse-panel pulse-flow">
 		<!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
 		<p class="has-text-align-center pulse-kicker">Submit Your Work</p>
 		<!-- /wp:paragraph -->
@@ -20,14 +20,14 @@
 			<!-- /wp:separator -->
 		</div>
 		<!-- /wp:group -->
-		<!-- wp:paragraph {"align":"center"} -->
-		<p class="has-text-align-center">Pulse accepts poetry, fiction, scripts, visual art, dance, and music submissions during the annual reading window.</p>
+		<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+		<p class="has-text-align-center pulse-body-copy">Pulse accepts poetry, fiction, scripts, visual art, dance, and music submissions during the annual reading window.</p>
 		<!-- /wp:paragraph -->
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:group {"align":"wide","className":"pulse-panel pulse-panel-tight","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group alignwide pulse-panel pulse-panel-tight">
+	<!-- wp:group {"align":"wide","className":"pulse-panel pulse-panel-tight pulse-flow pulse-section","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignwide pulse-panel pulse-panel-tight pulse-flow pulse-section">
 		<!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
 		<p class="has-text-align-center pulse-kicker">Open Annually</p>
 		<!-- /wp:paragraph -->
@@ -40,9 +40,11 @@
 	</div>
 	<!-- /wp:group -->
 
+	<!-- wp:group {"className":"pulse-section","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group pulse-section">
 	<!-- wp:pattern {"slug":"pulse-mag/submit-guidelines-block"} /-->
-	<!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group alignwide pulse-panel">
+	<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignwide pulse-panel pulse-flow">
 		<!-- wp:paragraph {"className":"pulse-kicker"} -->
 		<p class="pulse-kicker">Disclosure Statement</p>
 		<!-- /wp:paragraph -->
@@ -52,6 +54,8 @@
 	</div>
 	<!-- /wp:group -->
 	<!-- wp:post-content /-->
+	</div>
+	<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

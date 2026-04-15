@@ -1,8 +1,8 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 <!-- wp:group {"anchor":"pulse-primary-content","layout":{"type":"constrained"}} -->
 <div class="wp-block-group">
-	<!-- wp:group {"align":"wide","className":"pulse-panel","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group alignwide pulse-panel">
+	<!-- wp:group {"align":"wide","className":"pulse-panel pulse-flow","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignwide pulse-panel pulse-flow">
 		<!-- wp:paragraph {"align":"center","className":"pulse-kicker"} -->
 		<p class="has-text-align-center pulse-kicker">Our Staff</p>
 		<!-- /wp:paragraph -->
@@ -20,12 +20,14 @@
 			<!-- /wp:separator -->
 		</div>
 		<!-- /wp:group -->
-		<!-- wp:paragraph {"align":"center"} -->
-		<p class="has-text-align-center">Meet the editors and contributors behind Pulse Literary and Arts Magazine.</p>
+		<!-- wp:paragraph {"align":"center","className":"pulse-body-copy"} -->
+		<p class="has-text-align-center pulse-body-copy">Meet the editors and contributors behind Pulse Literary and Arts Magazine.</p>
 		<!-- /wp:paragraph -->
 	</div>
 	<!-- /wp:group -->
 
+	<!-- wp:group {"className":"pulse-section","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group pulse-section">
 	<!-- wp:pattern {"slug":"pulse-mag/team-profile-card-row"} /-->
 	<!-- wp:post-content /-->
 	<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
@@ -35,6 +37,8 @@
 		<!-- /wp:button -->
 	</div>
 	<!-- /wp:buttons -->
+	</div>
+	<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
