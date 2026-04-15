@@ -3,7 +3,7 @@ Theme Name: Pulse Mag
 Theme URI: https://pulsemag.example
 Author: Pulse Magazine
 Description: Block theme for Pulse Literary Magazine — front page and chrome aligned with apps/web (Vercel) layout and typography.
-Version: 0.2.6
+Version: 0.2.7
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
@@ -74,6 +74,11 @@ body::before {
   box-shadow: 0 1px 0 rgba(25, 23, 21, 0.08);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+}
+
+/* Hide accidental editor-inserted separators inside header chrome. */
+.pulse-site-header .wp-block-separator {
+  display: none;
 }
 
 .pulse-header-inner {
@@ -196,7 +201,9 @@ body::before {
   border: 0 !important;
   box-shadow: none !important;
   border-radius: 999px;
-  padding: 0.38rem 0.65rem;
+  padding: 0.42rem 0.82rem;
+  background: color-mix(in srgb, #ffffff 66%, var(--pulse-paper-soft));
+  box-shadow: inset 0 0 0 1px rgba(11, 20, 14, 0.08);
   transition: color 0.2s ease, background-color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
@@ -207,7 +214,7 @@ body::before {
 
 .pulse-main-nav .wp-block-navigation-item__content:hover {
   color: var(--pulse-nav);
-  background: color-mix(in srgb, var(--pulse-paper-muted) 75%, #fff);
+  background: color-mix(in srgb, var(--pulse-paper-light) 80%, #fff);
   text-decoration: none !important;
 }
 
@@ -215,7 +222,8 @@ body::before {
 .pulse-main-nav .current-menu-ancestor > .wp-block-navigation-item__content,
 .pulse-main-nav .current_page_item > .wp-block-navigation-item__content {
   color: var(--pulse-nav);
-  background: color-mix(in srgb, var(--pulse-paper-deep) 45%, #fff);
+  background: color-mix(in srgb, var(--pulse-paper-deep) 55%, #fff);
+  box-shadow: inset 0 0 0 1px rgba(11, 20, 14, 0.14);
 }
 
 /* Mobile overlay: keep readable text on light panel */
