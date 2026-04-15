@@ -1,0 +1,144 @@
+name: Publish WordPress Packages
+
+on:
+  push:
+    tags:
+      - "pulse-mag-core-v*"
+      - "pulse-seo-v*"
+      - "pulse-flipbook-v*"
+      - "pulse-mag-theme-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      TARGET_OWNER: ${{ vars.WP_PACKAGE_OWNER || github.repository_owner }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve package from tag
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          case "$TAG" in
+            pulse-mag-core-v*)
+              PACKAGE="pulse-mag-core"
+              SOURCE_PATH="wordpress/plugins/pulse-mag-core"
+              VERSION="${TAG#pulse-mag-core-v}"
+              ;;
+            pulse-seo-v*)
+              PACKAGE="pulse-seo"
+              SOURCE_PATH="wordpress/plugins/pulse-seo"
+              VERSION="${TAG#pulse-seo-v}"
+              ;;
+            pulse-flipbook-v*)
+              PACKAGE="pulse-flipbook"
+              SOURCE_PATH="wordpress/plugins/pulse-flipbook"
+              VERSION="${TAG#pulse-flipbook-v}"
+              ;;
+            pulse-mag-theme-v*)
+              PACKAGE="pulse-mag-theme"
+              SOURCE_PATH="wordpress/theme/pulse-mag"
+              VERSION="${TAG#pulse-mag-theme-v}"
+              ;;
+            *)
+              echo "Unsupported tag format: $TAG"
+              exit 1
+              ;;
+          esac
+
+          TARGET_REPO="${TARGET_OWNER}/${PACKAGE}"
+          RELEASE_TAG="v${VERSION}"
+          echo "package=${PACKAGE}" >> "$GITHUB_OUTPUT"
+          echo "source_path=${SOURCE_PATH}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "target_repo=${TARGET_REPO}" >> "$GITHUB_OUTPUT"
+          echo "release_tag=${RELEASE_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate source path exists
+        shell: bash
+        run: |
+          test -d "${{ steps.meta.outputs.source_path }}"
+
+      - name: Build changelog from package path
+        id: notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          PACKAGE="${{ steps.meta.outputs.package }}"
+          SOURCE_PATH="${{ steps.meta.outputs.source_path }}"
+          PREV_TAG="$(git tag --list "${PACKAGE}-v*" --sort=-v:refname | grep -Fxv "$TAG" | head -n 1 || true)"
+
+          {
+            echo "## Changelog"
+            echo
+            if [ -n "$PREV_TAG" ]; then
+              echo "Changes since \`$PREV_TAG\`:"
+              echo
+              git log "${PREV_TAG}..${TAG}" -- "$SOURCE_PATH" --pretty=format:'- %s (%h)' || true
+            else
+              echo "Initial automated package release."
+              echo
+              git log "$TAG" -- "$SOURCE_PATH" --pretty=format:'- %s (%h)' || true
+            fi
+            echo
+            echo
+            echo "## Source"
+            echo
+            echo "- Monorepo tag: \`$TAG\`"
+            echo "- Source path: \`$SOURCE_PATH\`"
+          } > release-notes.md
+
+          echo "prev_tag=${PREV_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Sync package to target repository
+        env:
+          GH_TOKEN: ${{ secrets.WP_PACKAGE_REPO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "Missing secret: WP_PACKAGE_REPO_TOKEN"
+            exit 1
+          fi
+
+          TARGET_REPO="${{ steps.meta.outputs.target_repo }}"
+          SOURCE_PATH="${{ steps.meta.outputs.source_path }}"
+
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/${TARGET_REPO}.git" target-repo
+          rsync -a --delete --exclude='.git/' "${SOURCE_PATH}/" target-repo/
+          cd target-repo
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "Release ${{ steps.meta.outputs.release_tag }} from ${GITHUB_REF_NAME}"
+            git push origin main
+          else
+            echo "No file changes to commit."
+          fi
+
+      - name: Create or update release in target repository
+        env:
+          GH_TOKEN: ${{ secrets.WP_PACKAGE_REPO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET_REPO="${{ steps.meta.outputs.target_repo }}"
+          RELEASE_TAG="${{ steps.meta.outputs.release_tag }}"
+
+          if gh release view "$RELEASE_TAG" -R "$TARGET_REPO" >/dev/null 2>&1; then
+            gh release edit "$RELEASE_TAG" -R "$TARGET_REPO" --notes-file release-notes.md --title "$RELEASE_TAG"
+          else
+            gh release create "$RELEASE_TAG" -R "$TARGET_REPO" --target main --title "$RELEASE_TAG" --notes-file release-notes.md
+          fi
