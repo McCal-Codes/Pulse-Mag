@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## 0.2.6 - 2026-04-15
+
+- Replaced remaining `wp:html` usage in template parts, templates, and patterns with native Gutenberg blocks for better editor portability.
+- Removed inline style payloads from theme templates/patterns and moved spacing/layout/radius behavior into reusable CSS classes.
+- Upgraded parity import seed content to mirror Vercel page and editorial structure more closely, including kicker/lead/CTA composition for sample posts, issues, and events.
+
 ## 0.2.5 - 2026-04-15
 
 - Improved header structure and interaction polish (wordmark framing, nav active states, refined mobile menu control).
